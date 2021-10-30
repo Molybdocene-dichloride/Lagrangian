@@ -31,6 +31,7 @@ class Block {
     short getRuntimeId() const;
     std::string getRawNameId() const;
     bool hasRuntimeId() const;
+    bool canContainLiquid() const;
 };
 static_assert(offsetof(Block, data) == 0, "Block data");
 static_assert(offsetof(BlockLegacy, id) == 212, "Block id");
