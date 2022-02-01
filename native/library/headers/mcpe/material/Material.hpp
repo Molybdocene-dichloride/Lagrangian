@@ -18,14 +18,14 @@ enum class MaterialType {
 };
 
 class Material {
+	public:
 	enum Settings : int {
 		Default
 	};
-	public:
 	Material(MaterialType, Material::Settings, float);
 
-	Color getColor() const;
 	bool getBlocksMotion() const;
+	bool getBlocksPrecipitation() const; //bool?!
 	float getTranslucency() const;
 
 	bool isType(MaterialType) const;
@@ -37,6 +37,7 @@ class Material {
 	bool isReplaceable() const;
 	bool isLiquid() const;
 	bool isSolid() const;
+	bool isTopSolid(bool, bool) const;
 	bool isSuperHot() const;
 
 	void _setReplaceable();
@@ -44,19 +45,22 @@ class Material {
 	void _setNotAlwaysDestroyable();
 	void _setNeverBuildable();
 	void _setNotBlockingMotion();
+	void _setNotBlockingPrecipitation();
 	void _setNotSolid();
+	void _setSolid();
 	void _setSuperHot();
-	void _setMapColor(Color const&);
 
 	static void initMaterials();
 	static void _setupSurfaceMaterials();
 	static void teardownMaterials();
 	static Material const& getMaterial(MaterialType);
-	static void addMaterial(std::unique_ptr<Material, std::default_delete<Material>>);
+	static void addMaterial(std::__ndk1::unique_ptr<Material, std::__ndk1::default_delete<Material>>);
 
-
+	void operator!=(Material const&) const;
+	void operator==(Material const&) const;
+	
 	// static fields
-	static std::vector<std::unique_ptr<Material>> mMaterials;
+	static std::vector<std::__ndk1::unique_ptr<Material>> mMaterials;
 	static bool mInitialized;
 
 };

@@ -54,7 +54,7 @@ class CustomLiquidMaterial : public Material {
 		if(source.getBlock(bp).id == 0 || source.getBlock(bp).canContainLiquid()) return bp;
 		return pos;
 	}
-	bool isInfinitySourcesEnabled() {
+	bool isInfinity() {
 		return this->isInfinity;
 	}
 	void enableInfinitySources() {
@@ -71,7 +71,7 @@ class CustomLiquidMaterial : public Material {
 	}
 };
 class CustomLiquidBlock : public LiquidBlockDynamic {
-	CustomLiquidBlock(std::string const& name, CustomLiquidMaterial const& material) {
+	CustomLiquidBlock(std::__ndk::string const& name, CustomLiquidMaterial const& material) {
 		LiquidBlockDynamic(name, material);
 	} //CustomLiquidMaterial
 	BlockPos getFlow(BlockSource& source, BlockPos const& pos, short side) const {
