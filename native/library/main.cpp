@@ -24,6 +24,7 @@
 #include <Flags.hpp>
 #include <toString.hpp>
 
+#include <LagrangianRegistries.hpp>
 
 std::vector<long>::iterator it;
 
@@ -121,6 +122,7 @@ MAIN {
 }
 
 //JS_MODULE_VERSION(Stones, 1);
+JS_MODULE_VERSION(LagrangianRegistries, 1);
 JS_MODULE_VERSION(Flags, 1);
 JS_MODULE_VERSION(LocalizationSystem, 1);
 
@@ -135,6 +137,7 @@ JS_MODULE_VERSION(LocalizationSystem, 1);
 	Logger::debug("fgj", patch::to_string<size_t>(blockdatas.size()).c_str());
 	return 0;
 });*/
+
 JS_EXPORT(Scientific, NO, "F()", (JNIEnv* env) {
 	return NativeJS::wrapDoubleResult(-1);
 });
@@ -235,6 +238,19 @@ JS_EXPORT_COMPLEX(LocalizationSystem, _translate, "S(SS)", (JNIEnv* env, NativeJ
 JS_EXPORT_COMPLEX(LocalizationSystem, _translateToCurrent, "S(SS)", (JNIEnv* env, NativeJS::ComplexArgs ca) {
 	Logger::debug("89fh", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(ca.get("_pointer").asPointer())).c_str());
 	return NativeJS::wrapStringResult(env, ((LocalizationSystem::PrefixPostfixTranslator*)ca.get("_pointer").asPointer())->translateToCurrent(ca.get("key").asString()).c_str());
+});
+
+JS_EXPORT_COMPLEX(LagrangianRegistries, registerCategory, "S(SI)", (JNIEnv* env, NativeJS::ComplexArgs ca) {
+	Logger::debug("u89fh", ca.get("id").asString());
+        Logger::debug("u89fh", patch::to_string<long>(ca.get("index").asInt()).c_str());
+        
+        std::__ndk1::string str = std::__ndk1::string(ca.get("id").asString());
+        std::__ndk1::string& stri = str;
+        CreativeItemCategory ci = CreativeItemCategory(ca.get("index").asInt());
+        CreativeItemCategory& cic = ci;
+        CreativeItemGroupCategory* cat = LagrangianRegistries::registerCategory(stri, cic);
+
+	return NativeJS::wrapIntegerResult(reinterpret_cast<uintptr_t>(cat));
 });
 // native js signature rules:
 /* signature represents parameters and return type, RETURN_TYPE(PARAMETERS...) example: S(OI)

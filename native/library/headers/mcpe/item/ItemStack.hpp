@@ -19,6 +19,8 @@ class ItemStack : public ItemStackBase {
     ItemStack(Item const&, int);
     ItemStack(Item const&, int, int);
 };
+class ItemInstance {
+};
 
 class ItemStackInfo {
     public:
