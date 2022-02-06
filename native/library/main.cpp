@@ -9,21 +9,19 @@
 #include <nativejs.h>
 
 #include <mcpe/common.hpp>
-#include <mcpe/PerlinSimplexNoise.hpp>
-#include <mcpe/LevelChunk.hpp>
 //#include <mcpe\VanillaBlocks.h>
-#include <mcpe/ChunkSource.hpp>
-#include <mcpe/IBlockWorldGenAPI.hpp>
-#include <mcpe/RenderParams.hpp>
-#include <mcpe/NativeBlockSource.hpp>
-#include <mcpe/Block.hpp>
+//#include <mcpe/ChunkSource.hpp>
+//#include <mcpe/IBlockWorldGenAPI.hpp>
+//#include <mcpe/RenderParams.hpp>
+//#include <mcpe/NativeBlockSource.hpp>
+#include <mcpe/block/Block.hpp>
 
 #include <horizon/pool.h>
 #include <innercore/block_registry.h>
 #include <innercore/id_conversion_map.h>
 
 #include <Localization.hpp>
-#include <flags.hpp>
+#include <Flags.hpp>
 #include <toString.hpp>
 
 
@@ -40,7 +38,7 @@ std::map<float, long> iblockdatas;
 std::map<float, std::shared_ptr<Block>> blks;
 std::map<float, std::shared_ptr<Block>>::iterator cur;
 
-namespace Stones {
+/*namespace Stones {
 	void ends() {
 		//FurnaceSystem::addFurnaceRecipes
 
@@ -66,30 +64,6 @@ namespace Stones {
 		Logger::debug("grt", patch::to_string<size_t>(iblockids.size()).c_str());
 		Logger::debug("grt", patch::to_string<size_t>(iblockdatas.size()).c_str());
 	}
-}
-namespace Scientific {
-	namespace TemperaturePoints { //for Kelvin's
-		long double NO = -0.1;
-		long double ABSOLUTE_ZERO = 0; //temperature couldn't and impossible be same or lower!
-		long double CELCIUS_ZERO = 273.15;
-  		long double PLANK = 1.4167841616e32; //events for same and higher temperature is unknown and indescribable (Quantum gravity is not fully developed), is couldn't to use.
-  		long double kelvinsToCelsius(long double point) {
-    		return point + 273.15;
-		}
-  		long double celsiusToKelvins(long double point) {
-    		return point - 273.15;
-  		}
-	} 
-	namespace Plank { //Plank values enum
-		long double CONST = 6.62607015e-34;
-		long double TEMPERATURE = 1.4167841616e32; //events for same and higher temperature is unknown and indescribable (Quantum gravity is not fully developed), is couldn't to use.
-		long double DENSITY = 5.1550e96; //
-		long double MASS = 2.176e-8; //
-		long double CHARGE = 2.5e-8; //
-		long double LENGTH = 1.6162551818e-35; //
-		long double TIME = 5.391161313e-19; //
-		long double PRESSURE = 4.63309e113; //
-	} //d0bed0b1d0b8d0b0d0bd20d182d0b5d0b1d18f
 }
 long getNearest(long pos, short mode) {
 	switch(mode) {
@@ -139,19 +113,18 @@ void generate(long x, long z) {
 				if(iblockids[getNearest(psn->getValue(*new Vec3(*new BlockPos(cp, *cbp, 256))), 0)] != 0 && iblockdatas[getNearest(psn->getValue(*new Vec3(*new BlockPos(cp, *cbp, 256))), 1)] != 0) BlockSourceProvider::getBlockSource().setBlock(*new BlockPos(chunk.getPosition().x + x, chunk.getPosition().y + y, chunk.getPosition().z + z), *blks[iblockids[getNearest(psn->getValue(*new Vec3(*new BlockPos(*cp, *cbp, 256))), 0)]], iblockdatas[getNearest(psn->getValue(*new Vec3(*new BlockPos(*cp, *cbp, 256))), 1)], nullptr);
 			}
 		}
-	}*/
-}
+	}
+}*/
 
 MAIN {
 	Module* localization_module = new LocalizationSystem::CustomLocalizationLoadingModule("gregtech.loading_localizations_module");
 }
 
-JS_MODULE_VERSION(Scientific, 1);
-JS_MODULE_VERSION(Stones, 1);
+//JS_MODULE_VERSION(Stones, 1);
 JS_MODULE_VERSION(Flags, 1);
 JS_MODULE_VERSION(LocalizationSystem, 1);
 
-JS_EXPORT(Stones, registerID, "V(II)", (JNIEnv* env, long id, long data) {
+/*JS_EXPORT(Stones, registerID, "V(II)", (JNIEnv* env, long id, long data) {
 	Logger::debug("j", "wew");
 	Logger::debug("j", patch::to_string<long>(id).c_str());
 	Logger::debug("jf", patch::to_string<long>(data).c_str());
@@ -161,17 +134,17 @@ JS_EXPORT(Stones, registerID, "V(II)", (JNIEnv* env, long id, long data) {
 	Logger::debug("sj", patch::to_string<size_t>(blockids.size()).c_str());
 	Logger::debug("fgj", patch::to_string<size_t>(blockdatas.size()).c_str());
 	return 0;
-});
+});*/
 JS_EXPORT(Scientific, NO, "F()", (JNIEnv* env) {
-	return NativeJS::wrapDoubleResult(Scientific::TemperaturePoints::NO);
+	return NativeJS::wrapDoubleResult(-1);
 });
 JS_EXPORT(Flags, hasFlag, "I(LL)", (JNIEnv* env, long long value1, long long value2) {
 	return NativeJS::wrapIntegerResult(hasFlag(value1, value2));
 });
-JS_EXPORT(Flags, generate, "V(II)", (JNIEnv* env, long x, long z) {
+/*JS_EXPORT(Stones, generate, "V(II)", (JNIEnv* env, long x, long z) {
 	generate(x, z);
 	return 0;
-});
+});*/
 JS_EXPORT(Flags, createFlag, "I(L)", (JNIEnv* env, long long value1) {
 	return NativeJS::wrapIntegerResult(createFlag(value1));
 });

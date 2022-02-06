@@ -21,12 +21,12 @@ class CreativeItemRegistry { /* PlaceHolder Structure */
     //Methods
     CreativeItemRegistry();
     ~CreativeItemRegistry();
-    CreativeItemGroupCategory newCreativeCategory(std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, std::__ndk1::allocator<char> > const&, CreativeItemCategory);
+    CreativeItemGroupCategory* newCreativeCategory(std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, std::__ndk1::allocator<char> > const&, CreativeItemCategory);
     void reset();
     void setCurrentRegistry(std::__ndk1::unique_ptr<CreativeItemRegistry, std::__ndk1::default_delete<CreativeItemRegistry> >&&);
     void logRegistry(std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, std::__ndk1::allocator<char> > const&);
     //CreativeItemEntry newItemEntry(TypedServerNetId<CreativeItemNetIdTag, unsigned int, 0u> const&, ItemInstance const&);
-    CreativeItemGroupCategory getCreativeCategory(CreativeItemCategory);
+    CreativeItemGroupCategory* getCreativeCategory(CreativeItemCategory);
     CreativeGroupInfo getCreativeGroup(unsigned int);
     void _forEachCreativeItemInstance(std::__ndk1::function<bool (ItemInstance&)>);
     void resetGroups();
@@ -46,7 +46,7 @@ class CreativeItemRegistry { /* PlaceHolder Structure */
 	public:
     //Objects
     static CreativeItemRegistry* mCurrentRegistry;
-    static CreativeItemRegistry* mCreativeListMutex;
+    //static CreativeItemRegistry* mCreativeListMutex;
 };
 
 static_assert(offsetof(ActorDefinitionIdentifier) == 8, "CreativeItemRegistry items position");

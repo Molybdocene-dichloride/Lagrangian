@@ -1,6 +1,6 @@
 {
     	"shared": {
-        	"name": "gregtech",
+        	"name": "lagrangianknl",
 		"include": [
 			"headers"
 		]
