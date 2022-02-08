@@ -8,8 +8,16 @@
 
 namespace LagrangianRegistries {
 	CreativeItemRegistry* _vanillaCreativeRegister;
-	void prepare() {
+	std::__ndk1::map<std::__ndk1::string, ItemCategory> categories;
+
+	std::__ndk1::map<std::__ndk1::string, CreativeItemGroupCategory> registered;
+
+	void registerAll() {
 		_vanillaCreativeRegister = CreativeItemRegistry::mCurrentRegistry;
+		std::__ndk1::map<std::__ndk1::string, ItemCategory>::iterator at;
+        for(at = categories.begin(); at != categories.end(); ++at) {
+			_vanillaCreativeRegister->newCreativeCategory(at->second.id, CreativeItemCategory(at->second.index));
+		}
 	}
 	/*void registryEffect(PotionEffect* effect) {
 		mMobEffects.add(effect.nms());
@@ -17,10 +25,7 @@ namespace LagrangianRegistries {
 	/*PotionEffect* getEffect(id) {
 		return eff;
 	}*/
-	CreativeItemGroupCategory* registerCategory(std::__ndk1::string& id, CreativeItemCategory& cic) {
-  		return _vanillaCreativeRegister->newCreativeCategory(id, cic);
-	}
-	CreativeItemGroupCategory* getCategory(CreativeItemCategory& cic) {
-	  return _vanillaCreativeRegister->getCreativeCategory(cic);
+	void registerCategory(ItemCategory& cic) {
+  		categories.insert(std::__ndk1::pair<std::__ndk1::string&, ItemCategory&>(cic.id, cic));
 	}
 }

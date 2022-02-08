@@ -13,6 +13,8 @@
 #include <mcpe/creative/CreativeGroupInfo.hpp>
 #include <mcpe/creative/CreativeItemEntry.hpp>
 
+#include <multiversion/ItemCategory.hpp>
+
 class CreativeItemRegistry { /* PlaceHolder Structure */
     public:
     void* filler[2];
@@ -36,7 +38,7 @@ class CreativeItemRegistry { /* PlaceHolder Structure */
     //void _forEachCreativeItemInstance(std::__ndk1::function<bool (ItemInstance&)>);
     void resetGroups();
     CreativeItemEntry newItemEntry(ItemInstance const&);
-    CreativeItemRegistry current();
+    static CreativeItemRegistry* current();
     CreativeItemEntry getItemEntry(unsigned int);
     void takeCreativeList(std::__ndk1::vector<CreativeItemEntry, std::__ndk1::allocator<CreativeItemEntry> >&&);
     void forEachCreativeItemInstance(std::__ndk1::function<bool (ItemInstance&)>);

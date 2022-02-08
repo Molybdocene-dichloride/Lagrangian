@@ -39,6 +39,8 @@ std::map<float, long> iblockdatas;
 std::map<float, std::shared_ptr<Block>> blks;
 std::map<float, std::shared_ptr<Block>>::iterator cur;
 
+
+
 /*namespace Stones {
 	void ends() {
 		//FurnaceSystem::addFurnaceRecipes
@@ -116,10 +118,6 @@ void generate(long x, long z) {
 		}
 	}
 }*/
-
-MAIN {
-	Module* localization_module = new LocalizationSystem::CustomLocalizationLoadingModule("gregtech.loading_localizations_module");
-}
 
 //JS_MODULE_VERSION(Stones, 1);
 JS_MODULE_VERSION(LagrangianRegistries, 1);
@@ -240,18 +238,50 @@ JS_EXPORT_COMPLEX(LocalizationSystem, _translateToCurrent, "S(SS)", (JNIEnv* env
 	return NativeJS::wrapStringResult(env, ((LocalizationSystem::PrefixPostfixTranslator*)ca.get("_pointer").asPointer())->translateToCurrent(ca.get("key").asString()).c_str());
 });
 
-JS_EXPORT_COMPLEX(LagrangianRegistries, registerCategory, "S(SI)", (JNIEnv* env, NativeJS::ComplexArgs ca) {
+
+
+JS_EXPORT_COMPLEX(LagrangianRegistries, registerCategory, "I(SI)", (JNIEnv* env, NativeJS::ComplexArgs ca) {
 	Logger::debug("u89fh", ca.get("id").asString());
-        Logger::debug("u89fh", patch::to_string<long>(ca.get("index").asInt()).c_str());
+    Logger::debug("u89fh", patch::to_string<long>(ca.get("index").asInt()).c_str());
         
-        std::__ndk1::string str = std::__ndk1::string(ca.get("id").asString());
+	Logger::debug("u81", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(CreativeItemRegistry::current())).c_str());
+
+	ItemCategory cc = ItemCategory(ca.get("index").asInt(), ca.get("id").asString());
+	ItemCategory& ic = cc;
+
+	LagrangianRegistries::registerCategory(ic);
+        /*std::__ndk1::string str = std::__ndk1::string(ca.get("id").asString());
         std::__ndk1::string& stri = str;
         CreativeItemCategory ci = CreativeItemCategory(ca.get("index").asInt());
         CreativeItemCategory& cic = ci;
-        CreativeItemGroupCategory* cat = LagrangianRegistries::registerCategory(stri, cic);
+        CreativeItemGroupCategory* cat = LagrangianRegistries::registerCategory(stri, cic);*/
 
-	return NativeJS::wrapIntegerResult(reinterpret_cast<uintptr_t>(cat));
+	return /*NativeJS::wrapIntegerResult(reinterpret_cast<uintptr_t>(cat))*/ 12;
 });
+
+
+
+class CategoryModule : public Module { //destroy vanilla ore generation
+    public:
+    CategoryModule(const char* id): Module(id) {};
+	virtual void initialize() {	
+        // any HookManager::addCallback calls must be in initialize method of a module
+            // any other initialization also highly recommended to happen here
+        	DLHandleManager::initializeHandle("libminecraftpe.so", "mcpe");
+			HookManager::addCallback(SYMBOL("mcpe", "_ZN12ItemRegistry23initCreativeItemsServerEP17ActorInfoRegistryP20BlockDefinitionGroupbRK15BaseGameVersionRK11ExperimentsNSt6__ndk18functionIFvS1_S3_P20CreativeItemRegistrybS6_S9_EEE"), LAMBDA((HookManager::CallbackController* controller), {
+			Logger::debug("u81", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(CreativeItemRegistry::current())).c_str());
+			
+			LagrangianRegistries::registerAll();
+
+			return 0;
+		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER | HookManager::RESULT);
+	}
+};
+
+MAIN {
+	Module* localization_module = new LocalizationSystem::CustomLocalizationLoadingModule("gregtech.loading_localizations_module");
+	Module* cat_module = new CategoryModule("gregtech.loading");
+}
 // native js signature rules:
 /* signature represents parameters and return type, RETURN_TYPE(PARAMETERS...) example: S(OI)
 	return types:
@@ -271,3 +301,5 @@ JS_EXPORT_COMPLEX(LagrangianRegistries, registerCategory, "S(SI)", (JNIEnv* env,
 	in case of complex functions parameters are ignored
 	JNIEnv* is always passed as first parameter
 */
+
+
