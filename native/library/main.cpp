@@ -260,21 +260,36 @@ JS_EXPORT_COMPLEX(LagrangianRegistries, registerCategory, "I(SI)", (JNIEnv* env,
 });
 
 
-
+void deo() {
+	std::__ndk1::unordered_map<ContainerEnumName, std::__ndk1::string,ContainerEnumNameHasher>::iterator at;
+	for(at = ContainerCollectionNameMap.begin(); at != ContainerCollectionNameMap.end(); ++at) {
+		Logger::debug("Lg0", patch::to_string<ContainerEnumName>(at->first).c_str());
+		Logger::debug("Lg1", at->second.c_str());
+	}
+}
 class CategoryModule : public Module { //destroy vanilla ore generation
     public:
-    CategoryModule(const char* id): Module(id) {};
+    CategoryModule(const char* id): Module(id) {}; 
 	virtual void initialize() {	
         // any HookManager::addCallback calls must be in initialize method of a module
             // any other initialization also highly recommended to happen here
-        	DLHandleManager::initializeHandle("libminecraftpe.so", "mcpe");
-			HookManager::addCallback(SYMBOL("mcpe", "_ZN12ItemRegistry23initCreativeItemsServerEP17ActorInfoRegistryP20BlockDefinitionGroupbRK15BaseGameVersionRK11ExperimentsNSt6__ndk18functionIFvS1_S3_P20CreativeItemRegistrybS6_S9_EEE"), LAMBDA((HookManager::CallbackController* controller), {
+        DLHandleManager::initializeHandle("libminecraftpe.so", "mcpe");
+		HookManager::addCallback(SYMBOL("mcpe", "_ZN12ItemRegistry23initCreativeItemsServerEP17ActorInfoRegistryP20BlockDefinitionGroupbRK15BaseGameVersionRK11ExperimentsNSt6__ndk18functionIFvS1_S3_P20CreativeItemRegistrybS6_S9_EEE"), LAMBDA((HookManager::CallbackController* controller), {
 			Logger::debug("u81", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(CreativeItemRegistry::current())).c_str());
 			
 			LagrangianRegistries::registerAll();
 
 			return 0;
 		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER | HookManager::RESULT);
+		HookManager::addCallback(SYMBOL("mcpe", "_ZN29CraftingContainerManagerModel9_postInitEv"), LAMBDA((HookManager::CallbackController* controller), {
+			Logger::debug("u81", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(CreativeItemRegistry::current())).c_str());
+			
+			//int o = *((int*)0);
+			deo();
+			
+			return 0;
+		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER | HookManager::RESULT);
+		
 	}
 };
 

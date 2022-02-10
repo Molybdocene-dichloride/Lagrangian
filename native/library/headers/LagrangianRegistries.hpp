@@ -6,6 +6,14 @@
 #include <mcpe/creative/CreativeItemCategory.hpp>
 #include <mcpe/creative/CreativeItemGroupCategory.hpp>
 
+typedef int ContainerEnumName;
+class ContainerEnumNameHasher {
+	size_t operator()(ContainerEnumName c) const {
+		return 11;
+	}
+};
+extern std::__ndk1::unordered_map<ContainerEnumName, std::__ndk1::string,ContainerEnumNameHasher> ContainerCollectionNameMap;
+
 namespace LagrangianRegistries {
 	CreativeItemRegistry* _vanillaCreativeRegister;
 	std::__ndk1::map<std::__ndk1::string, ItemCategory> categories;
