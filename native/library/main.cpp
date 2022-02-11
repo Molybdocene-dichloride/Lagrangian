@@ -1,4 +1,5 @@
 #include <string>
+#include <stl/list>
 #include <sstream>
 #include <cmath>
 
@@ -271,7 +272,7 @@ void deo() {
 
 class Player {
 	public:
-	virtual std::__ndk1::vector<ItemInstance*> getCreativeItemList();
+	virtual std::__ndk1::list<ItemInstance*> getCreativeItemList();
 };
 
 class ServerPlayer : public Player {
@@ -314,8 +315,10 @@ class CategoryModule : public Module { //destroy vanilla ore generation
 			
 			//int o = *((int*)0);
 			
-			Logger::debug("uio3", patch::to_string<int>(GlobalContext::getServerPlayer()->getCreativeItemList()[0]->getId()).c_str());
-
+			std::__ndk1::list<ItemInstance*>::iterator at;
+			for(at = GlobalContext::getServerPlayer()->getCreativeItemList().begin(); at != GlobalContext::getServerPlayer()->getCreativeItemList().end(); ++at) {
+				Logger::debug("uio3", patch::to_string<int>((*at)->getId()).c_str());
+			}
 			Logger::debug("uio1", patch::to_string<ContainerEnumName>(param_1).c_str());
 
 			//Logger::debug("u8o1", patch::to_string<ContainerID>(ths->getContainerID()).c_str());
