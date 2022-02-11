@@ -76,6 +76,7 @@ namespace patch {
 }
 //crutch for template class
 void crutch() {
+    patch::to_string<const char*>(0);
     patch::to_string<size_t>(0);
     patch::to_string<int>(0);
     patch::to_string<unsigned char>(0);

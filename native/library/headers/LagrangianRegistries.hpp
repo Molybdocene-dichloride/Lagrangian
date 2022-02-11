@@ -6,6 +6,16 @@
 #include <mcpe/creative/CreativeItemCategory.hpp>
 #include <mcpe/creative/CreativeItemGroupCategory.hpp>
 
+typedef std::__ndk1::string ContainerID;
+
+class ContainerManagerModel {
+	public:
+	virtual ContainerID getContainerID();
+};
+class CraftingContainerManagerModel : public ContainerManagerModel {
+
+};
+
 typedef int ContainerEnumName;
 class ContainerEnumNameHasher {
 	size_t operator()(ContainerEnumName c) const {

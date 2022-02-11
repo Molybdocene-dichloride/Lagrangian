@@ -1,13 +1,14 @@
 #pragma once
 
 #include <mcpe/item/Item.hpp>
+
 class ItemStackBase {
     public:
     char filler1[16-4]; // 4
 	short damage; // 16
 	unsigned char count; //18
 	char filler2[84-19];
-    int getId() const;
+    virtual int getId() const;
     int getDamageValue() const;
     ItemStackBase(Item const&);
     ItemStackBase(Item const&, int);
@@ -19,7 +20,8 @@ class ItemStack : public ItemStackBase {
     ItemStack(Item const&, int);
     ItemStack(Item const&, int, int);
 };
-class ItemInstance {
+class ItemInstance : public ItemStackBase {
+	
 };
 
 class ItemStackInfo {

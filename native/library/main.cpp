@@ -17,6 +17,7 @@
 #include <mcpe/block/Block.hpp>
 
 #include <horizon/pool.h>
+#include <innercore/global_context.h>
 #include <innercore/block_registry.h>
 #include <innercore/id_conversion_map.h>
 
@@ -267,6 +268,21 @@ void deo() {
 		Logger::debug("Lg1", at->second.c_str());
 	}
 }
+
+class Player {
+	public:
+	virtual std::__ndk1::vector<ItemInstance*> getCreativeItemList();
+};
+
+class ServerPlayer : public Player {
+
+};
+
+//typedef vector<ItemInstance*> FilterResult;
+/*FilterResult too(ItemInstance const& i) {
+	return GlobalContext::getServerPlayer()->getCreativeItemList();
+}*/
+
 class CategoryModule : public Module { //destroy vanilla ore generation
     public:
     CategoryModule(const char* id): Module(id) {}; 
@@ -287,15 +303,31 @@ class CategoryModule : public Module { //destroy vanilla ore generation
 			//int o = *((int*)0);
 			deo();
 			
+			//std::__ndk1::function<FilterResult(ItemInstance const&)> ff = too();
+			
+			//CraftingContainerManagerModel ccmm = CraftingContainerManagerModel();
+			//ccmm._createContainerModel((ContainerEnumName)1531798928, (*CreativeItemGroupCategory)7, true, ff);
 			return 0;
 		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER | HookManager::RESULT);
-		
+		HookManager::addCallback(SYMBOL("mcpe", "_ZN29CraftingContainerManagerModel21_createContainerModelE17ContainerEnumNameP25CreativeItemGroupCategorybNSt6__ndk18functionIF12FilterResultRK12ItemInstanceEEE"), LAMBDA((HookManager::CallbackController* controller, CraftingContainerManagerModel *ths,ContainerEnumName param_1), {
+			Logger::debug("u81", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(CreativeItemRegistry::current())).c_str());
+			
+			//int o = *((int*)0);
+			
+			Logger::debug("uio3", patch::to_string<int>(GlobalContext::getServerPlayer()->getCreativeItemList()[0]->getId()).c_str());
+
+			Logger::debug("uio1", patch::to_string<ContainerEnumName>(param_1).c_str());
+
+			//Logger::debug("u8o1", patch::to_string<ContainerID>(ths->getContainerID()).c_str());
+			
+			return 0;
+		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER | HookManager::RESULT);
 	}
 };
 
 MAIN {
 	Module* localization_module = new LocalizationSystem::CustomLocalizationLoadingModule("gregtech.loading_localizations_module");
-	Module* cat_module = new CategoryModule("gregtech.loading");
+	Module* cat_module = new CategoryModule("gregtech.categories");
 }
 // native js signature rules:
 /* signature represents parameters and return type, RETURN_TYPE(PARAMETERS...) example: S(OI)
