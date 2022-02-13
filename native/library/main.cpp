@@ -16,6 +16,7 @@
 //#include <mcpe/RenderParams.hpp>
 //#include <mcpe/NativeBlockSource.hpp>
 #include <mcpe/block/Block.hpp>
+#include <mcpe/math/BlockPos.hpp>
 
 #include <horizon/pool.h>
 #include <innercore/global_context.h>
@@ -265,26 +266,20 @@ JS_EXPORT_COMPLEX(LagrangianRegistries, registerCategory, "I(SI)", (JNIEnv* env,
 void deo() {
 	std::__ndk1::unordered_map<ContainerEnumName, std::__ndk1::string,ContainerEnumNameHasher>::iterator at;
 	for(at = ContainerCollectionNameMap.begin(); at != ContainerCollectionNameMap.end(); ++at) {
+		Logger::debug("Lgy", patch::to_string<const char*>(typeid(at->first).name()).c_str());
+
 		Logger::debug("Lg0", patch::to_string<ContainerEnumName>(at->first).c_str());
 		Logger::debug("Lg1", at->second.c_str());
 	}
 }
 
-class Player {
-	public:
-	virtual std::__ndk1::list<ItemInstance*> getCreativeItemList();
-};
-
-class ServerPlayer : public Player {
-
-};
-
-//typedef vector<ItemInstance*> FilterResult;
-/*FilterResult too(ItemInstance const& i) {
+//typedef int ContainerID;
+typedef bool FilterResult;
+FilterResult too(const ItemInstance& i) {
 	return GlobalContext::getServerPlayer()->getCreativeItemList();
-}*/
+}
 
-class CategoryModule : public Module { //destroy vanilla ore generation
+class CategoryModule : public Module { //
     public:
     CategoryModule(const char* id): Module(id) {}; 
 	virtual void initialize() {	
@@ -301,55 +296,24 @@ class CategoryModule : public Module { //destroy vanilla ore generation
 		HookManager::addCallback(SYMBOL("mcpe", "_ZN29CraftingContainerManagerModel9_postInitEv"), LAMBDA((HookManager::CallbackController* controller), {
 			Logger::debug("u81", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(CreativeItemRegistry::current())).c_str());
 			
-			//int o = *((int*)0);
 			deo();
 			
-			//std::__ndk1::function<FilterResult(ItemInstance const&)> ff = too();
-			
-			//CraftingContainerManagerModel ccmm = CraftingContainerManagerModel();
-			//ccmm._createContainerModel((ContainerEnumName)1531798928, (*CreativeItemGroupCategory)7, true, ff);
 			return 0;
 		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER | HookManager::RESULT);
-		HookManager::addCallback(SYMBOL("mcpe", "_ZN29CraftingContainerManagerModel21_createContainerModelE17ContainerEnumNameP25CreativeItemGroupCategorybNSt6__ndk18functionIF12FilterResultRK12ItemInstanceEEE"), LAMBDA((HookManager::CallbackController* controller, CraftingContainerManagerModel *ths,ContainerEnumName param_1), {
-			Logger::debug("u81", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(CreativeItemRegistry::current())).c_str());
-			
-			//int o = *((int*)0);
-			
-			std::__ndk1::list<ItemInstance*>::iterator at;
-			for(at = GlobalContext::getServerPlayer()->getCreativeItemList().begin(); at != GlobalContext::getServerPlayer()->getCreativeItemList().end(); ++at) {
-				Logger::debug("uio3", patch::to_string<int>((*at)->getId()).c_str());
-			}
-			Logger::debug("uio1", patch::to_string<ContainerEnumName>(param_1).c_str());
-
-			//Logger::debug("u8o1", patch::to_string<ContainerID>(ths->getContainerID()).c_str());
-			
-			return 0;
-		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER | HookManager::RESULT);
+		
 	}
 };
+
+//ContainerEnumName as int
+//normal, pointer-like
+//as string
+//unnormal, sigsegv error
+//as uintptr
+//pointer like, pointer like, no exists in list.
+//as char
+//err
 
 MAIN {
 	Module* localization_module = new LocalizationSystem::CustomLocalizationLoadingModule("gregtech.loading_localizations_module");
 	Module* cat_module = new CategoryModule("gregtech.categories");
 }
-// native js signature rules:
-/* signature represents parameters and return type, RETURN_TYPE(PARAMETERS...) example: S(OI)
-	return types:
-		V - void      - return 0
-		I - long int  - wrapIntegerResult
-		F - double    - wrapDoubleResult
-		S - string    - wrapStringResult
-		O - object    - wrapObjectResult
-	parameter types:
-		I - int (4 bits) 
-		L - long (8 bits)
-		F - float (4 bits)
-		D - double (8 bits)
-		B - boolean (1 bit)
-		C - char (1 bit)
-	as seen, basic call functions cannot receive string and objects for sake of performance, so complex functions come in place
-	in case of complex functions parameters are ignored
-	JNIEnv* is always passed as first parameter
-*/
-
-

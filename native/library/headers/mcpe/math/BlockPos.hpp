@@ -1,6 +1,6 @@
 #pragma once
 
-#include <mcpe/ChunkBlockPos.hpp>
+#include <mcpe/math/ChunkBlockPos.hpp>
 
 class Rotation;
 class Mirror;
@@ -8,13 +8,13 @@ class SubChunkPos;
 struct BlockPos;
 class Vec3 {
 	public:
-    float x, y, z;
+    	float x, y, z;
 	public:
 	Vec3(BlockPos const&);
 };
 class ChunkPos {
 	public:
-    int chunkXPos, chunkZPos;
+    	int chunkXPos, chunkZPos;
 	ChunkPos(Vec3 const&);
 	ChunkPos(BlockPos const&);
 	BlockPos getMiddleBlockPosition(int) const;
@@ -26,8 +26,8 @@ class BlockPos {
 	double x, y, z;
 	public:
 	BlockPos(Vec3 const&);
-	BlockPos(ChunkPos const&, int);
-	BlockPos(SubChunkPos const&, int);
+	//BlockPos(ChunkPos const&, int);
+	//BlockPos(SubChunkPos const&, int);
 	BlockPos(ChunkPos const&, ChunkBlockPos const&, short);
 	BlockPos(float, float, float);
 	BlockPos(double, double, double);
@@ -35,9 +35,9 @@ class BlockPos {
 	void randomFloat() const;
 	void randomSeed() const;
 	void neighbor(unsigned char) const;
-	std::string toString() const;
+	std::__ndk1::string toString() const;
 	void center() const;
-	void transform(Rotation, Mirror, Vec3 const&) const;
+	//void transform(Rotation, Mirror, Vec3 const&) const;
 	public:
 	static BlockPos * ZERO;
 	static BlockPos * MIN;

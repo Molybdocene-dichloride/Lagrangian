@@ -29,6 +29,9 @@ class ItemStackInfo {
     int id;
     int data;
     int count;
+	ItemStackInfo() {
+
+	}
     ItemStackInfo(int id, int data, int count) {
         this->id = id;
         this->data = data;

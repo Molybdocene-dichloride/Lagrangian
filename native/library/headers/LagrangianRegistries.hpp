@@ -6,17 +6,51 @@
 #include <mcpe/creative/CreativeItemCategory.hpp>
 #include <mcpe/creative/CreativeItemGroupCategory.hpp>
 
-typedef std::__ndk1::string ContainerID;
+#include <innercore/global_context.h>
+
+enum class ContainerID : char {
+	UNK,
+};
+
+class Player {
+	public:
+	virtual const int getCreativeItemList();
+};
+
+class ServerPlayer : public Player {
+
+};
+class LocalPlayer : public Player {
+
+};
+
+class ContainerModel {};
+class ExpandoContainerModel : public ContainerModel {};
+class FilteredContainerModel : public ExpandoContainerModel {};
 
 class ContainerManagerModel {
 	public:
-	virtual ContainerID getContainerID();
+	public:
+	void* filler[4];
+	ContainerID ci;
+	void* filler2[6];
+	std::__ndk1::unordered_map<std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>,std::__ndk1::shared_ptr<ContainerModel>,std::__ndk1::hash<std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>>,std::__ndk1::equal_to<std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>>,std::__ndk1::allocator<std::__ndk1::pair<std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>const,std::__ndk1::shared_ptr<ContainerModel>>>> containers;
+	public:
+	virtual ContainerID getContainerId();
 };
+
+static_assert(offsetof(ContainerManagerModel, ci) == 20, "CreativeItemRegistry items position");
+static_assert(offsetof(ContainerManagerModel, containers) == 48, "CreativeItemRegistry items position");
+
 class CraftingContainerManagerModel : public ContainerManagerModel {
-
+	public:
+	CraftingContainerManagerModel(ContainerID param_1,Player& param_2,bool param_3,
+          bool param_4,bool param_5,BlockPos const& param_6, std::__ndk1::string const& param_7);
 };
 
-typedef int ContainerEnumName;
+//FilteredContainerModel::setItemInstance(int, ItemInstance const&) vtable
+
+typedef unsigned char ContainerEnumName;
 class ContainerEnumNameHasher {
 	size_t operator()(ContainerEnumName c) const {
 		return 11;
@@ -33,8 +67,8 @@ namespace LagrangianRegistries {
 	void registerAll() {
 		_vanillaCreativeRegister = CreativeItemRegistry::mCurrentRegistry;
 		std::__ndk1::map<std::__ndk1::string, ItemCategory>::iterator at;
-        for(at = categories.begin(); at != categories.end(); ++at) {
-			_vanillaCreativeRegister->newCreativeCategory(at->second.id, CreativeItemCategory(at->second.index));
+        	for(at = categories.begin(); at != categories.end(); ++at) {
+			//registered.insert(std::__ndk1::pair<std::__ndk1::string, ItemCategory>(_vanillaCreativeRegister->newCreativeCategory(at->second.id, CreativeItemCategory(at->second.index)));
 		}
 	}
 	/*void registryEffect(PotionEffect* effect) {
