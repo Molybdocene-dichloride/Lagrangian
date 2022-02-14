@@ -23,7 +23,7 @@ class ChunkBlockPos;
 class BlockPos {
 	public:
 	//char filler_BlockPos[UNKNOW_SIZE];
-	double x, y, z;
+	int x, y, z;
 	public:
 	BlockPos(Vec3 const&);
 	//BlockPos(ChunkPos const&, int);

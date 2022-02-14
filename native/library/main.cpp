@@ -23,6 +23,8 @@
 #include <innercore/block_registry.h>
 #include <innercore/id_conversion_map.h>
 
+#include "vtable.h"
+
 #include <Localization.hpp>
 #include <Flags.hpp>
 #include <toString.hpp>
@@ -263,21 +265,20 @@ JS_EXPORT_COMPLEX(LagrangianRegistries, registerCategory, "I(SI)", (JNIEnv* env,
 });
 
 
-void deo() {
-	std::__ndk1::unordered_map<ContainerEnumName, std::__ndk1::string,ContainerEnumNameHasher>::iterator at;
-	for(at = ContainerCollectionNameMap.begin(); at != ContainerCollectionNameMap.end(); ++at) {
-		Logger::debug("Lgy", patch::to_string<const char*>(typeid(at->first).name()).c_str());
-
-		Logger::debug("Lg0", patch::to_string<ContainerEnumName>(at->first).c_str());
-		Logger::debug("Lg1", at->second.c_str());
+void deo(CraftingContainerManagerModel* ths) {
+	std::__ndk1::unordered_map<std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>,std::__ndk1::shared_ptr<ContainerModel>,std::__ndk1::hash<std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>>,std::__ndk1::equal_to<std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>>,std::__ndk1::allocator<std::__ndk1::pair<std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>const,std::__ndk1::shared_ptr<ContainerModel>>>>::iterator at;
+	for(at = ths->containers.begin(); at != ths->containers.end(); ++at) {
+		Logger::debug("Lg0", at->first.c_str());
+		Logger::debug("Lg1", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(at->second.get())).c_str());
 	}
 }
 
-//typedef int ContainerID;
 typedef bool FilterResult;
 FilterResult too(const ItemInstance& i) {
 	return GlobalContext::getServerPlayer()->getCreativeItemList();
 }
+
+ItemInstance* ii;
 
 class CategoryModule : public Module { //
     public:
@@ -290,16 +291,27 @@ class CategoryModule : public Module { //
 			Logger::debug("u81", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(CreativeItemRegistry::current())).c_str());
 			
 			LagrangianRegistries::registerAll();
+			
+			Item* i = ItemRegistry::getItemById(335);
+			Logger::debug("u81", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(i)).c_str());
+
+			ii = new ItemInstance(*i, 0, 1);
+			
+			VTABLE_FIND_OFFSET(setItemsToTab, _ZN22FilteredContainerModel, _ZN22FilteredContainerModel15setItemInstanceEiRK12ItemInstance);
 
 			return 0;
 		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER | HookManager::RESULT);
-		HookManager::addCallback(SYMBOL("mcpe", "_ZN29CraftingContainerManagerModel9_postInitEv"), LAMBDA((HookManager::CallbackController* controller), {
+		HookManager::addCallback(SYMBOL("mcpe", "_ZN29CraftingContainerManagerModel4tickEv"), LAMBDA((HookManager::CallbackController* controller, CraftingContainerManagerModel* ths), {
 			Logger::debug("u81", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(CreativeItemRegistry::current())).c_str());
 			
-			deo();
+			deo(ths);
+			ContainerModel cm = *ths->containers.at("recipe_nature");
 			
+			//VTABLE_CALL<void>(setItemsToTab, cm, 0, *ii);
+			//Logger::debug("bvc", patch::to_string<int>(BlockPos::ONE->x).c_str());
+			//
 			return 0;
-		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER | HookManager::RESULT);
+		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER);
 		
 	}
 };
