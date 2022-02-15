@@ -297,7 +297,7 @@ class CategoryModule : public Module { //
 
 			ii = new ItemInstance(*i, 0, 1);
 			
-			VTABLE_FIND_OFFSET(setItemsToTab, _ZN22FilteredContainerModel, _ZN22FilteredContainerModel15setItemInstanceEiRK12ItemInstance);
+			VTABLE_FIND_OFFSET(setItemsToTab, _ZTV22FilteredContainerModel, _ZN22FilteredContainerModel15setItemInstanceEiRK12ItemInstance);
 
 			return 0;
 		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER | HookManager::RESULT);
