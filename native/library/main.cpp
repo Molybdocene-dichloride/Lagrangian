@@ -278,6 +278,7 @@ FilterResult too(const ItemInstance& i) {
 	return GlobalContext::getServerPlayer()->getCreativeItemList();
 }
 
+
 ItemInstance* ii;
 
 class CategoryModule : public Module { //
@@ -292,12 +293,10 @@ class CategoryModule : public Module { //
 			
 			LagrangianRegistries::registerAll();
 			
-			Item* i = ItemRegistry::getItemById(335);
+			Item* i = ItemRegistry::getItemByName("golden_helmet");
 			Logger::debug("u81", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(i)).c_str());
 
-			ii = new ItemInstance(*i, 0, 1);
-			
-			VTABLE_FIND_OFFSET(setItemsToTab, _ZTV22FilteredContainerModel, _ZN22FilteredContainerModel15setItemInstanceEiRK12ItemInstance);
+			ii = new ItemInstance(*i, 1, 1);
 
 			return 0;
 		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER | HookManager::RESULT);
@@ -305,9 +304,13 @@ class CategoryModule : public Module { //
 			Logger::debug("u81", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(CreativeItemRegistry::current())).c_str());
 			
 			deo(ths);
-			ContainerModel cm = *ths->containers.at("recipe_nature");
+			ContainerModel* cm = ths->containers.at("recipe_nature").get();
 			
-			//VTABLE_CALL<void>(setItemsToTab, cm, 0, *ii);
+			VTABLE_FIND_OFFSET(setItemsToTab, _ZTV22FilteredContainerModel, _ZN22FilteredContainerModel15setItemInstanceEiRK12ItemInstance);
+			//if(TabSystem::invalidated) {
+				VTABLE_CALL<void>(setItemsToTab, cm, 0, *ii);
+				//TabSystem::invalidated = false;
+			//}
 			//Logger::debug("bvc", patch::to_string<int>(BlockPos::ONE->x).c_str());
 			//
 			return 0;

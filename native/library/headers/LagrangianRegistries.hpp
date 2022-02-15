@@ -60,6 +60,8 @@ extern std::__ndk1::unordered_map<ContainerEnumName, std::__ndk1::string,Contain
 
 namespace LagrangianRegistries {
 	CreativeItemRegistry* _vanillaCreativeRegister;
+	int last_cat = 6;
+	int last_cat_inCreative = 3;
 	std::__ndk1::map<std::__ndk1::string, ItemCategory> categories;
 
 	std::__ndk1::map<std::__ndk1::string, CreativeItemGroupCategory> registered;
@@ -68,7 +70,7 @@ namespace LagrangianRegistries {
 		_vanillaCreativeRegister = CreativeItemRegistry::mCurrentRegistry;
 		std::__ndk1::map<std::__ndk1::string, ItemCategory>::iterator at;
         	for(at = categories.begin(); at != categories.end(); ++at) {
-			//registered.insert(std::__ndk1::pair<std::__ndk1::string, ItemCategory>(_vanillaCreativeRegister->newCreativeCategory(at->second.id, CreativeItemCategory(at->second.index)));
+			registered.insert(std::__ndk1::pair<std::__ndk1::string, ItemCategory>(_vanillaCreativeRegister->newCreativeCategory(at->second.id, CreativeItemCategory(at->second.index)));
 		}
 	}
 	/*void registryEffect(PotionEffect* effect) {
@@ -78,6 +80,9 @@ namespace LagrangianRegistries {
 		return eff;
 	}*/
 	void registerCategory(ItemCategory& cic) {
+		last_cat += 1;
+		if(cic.isCreative) last_cat_inCreative += 1;
   		categories.insert(std::__ndk1::pair<std::__ndk1::string&, ItemCategory&>(cic.id, cic));
+
 	}
 }
