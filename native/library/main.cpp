@@ -247,21 +247,15 @@ JS_EXPORT_COMPLEX(LocalizationSystem, _translateToCurrent, "S(SS)", (JNIEnv* env
 
 JS_EXPORT_COMPLEX(LagrangianRegistries, registerCategory, "I(SI)", (JNIEnv* env, NativeJS::ComplexArgs ca) {
 	Logger::debug("u89fh", ca.get("id").asString());
-    Logger::debug("u89fh", patch::to_string<long>(ca.get("index").asInt()).c_str());
         
 	Logger::debug("u81", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(CreativeItemRegistry::current())).c_str());
 
-	ItemCategory cc = ItemCategory(ca.get("index").asInt(), ca.get("id").asString());
+	ItemCategory cc = ItemCategory(ca.get("id").asString());
 	ItemCategory& ic = cc;
 
 	LagrangianRegistries::registerCategory(ic);
-        /*std::__ndk1::string str = std::__ndk1::string(ca.get("id").asString());
-        std::__ndk1::string& stri = str;
-        CreativeItemCategory ci = CreativeItemCategory(ca.get("index").asInt());
-        CreativeItemCategory& cic = ci;
-        CreativeItemGroupCategory* cat = LagrangianRegistries::registerCategory(stri, cic);*/
 
-	return /*NativeJS::wrapIntegerResult(reinterpret_cast<uintptr_t>(cat))*/ 12;
+	return /*NativeJS::wrapIntegerResult(reinterpret_cast<uintptr_t>(ic))*/ 11;
 });
 
 
@@ -293,10 +287,10 @@ class CategoryModule : public Module { //
 			
 			LagrangianRegistries::registerAll();
 			
-			Item* i = ItemRegistry::getItemByName("golden_helmet");
+			Item* i = ItemRegistry::getItemByName("iron_block");
 			Logger::debug("u81", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(i)).c_str());
 
-			ii = new ItemInstance(*i, 1, 1);
+			ii = new ItemInstance(*i, 1, 0);
 
 			return 0;
 		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER | HookManager::RESULT);
@@ -307,10 +301,8 @@ class CategoryModule : public Module { //
 			ContainerModel* cm = ths->containers.at("recipe_nature").get();
 			
 			VTABLE_FIND_OFFSET(setItemsToTab, _ZTV22FilteredContainerModel, _ZN22FilteredContainerModel15setItemInstanceEiRK12ItemInstance);
-			//if(TabSystem::invalidated) {
-				VTABLE_CALL<void>(setItemsToTab, cm, 0, *ii);
-				//TabSystem::invalidated = false;
-			//}
+			VTABLE_CALL<void>(setItemsToTab, cm, 0, *ii);
+
 			//Logger::debug("bvc", patch::to_string<int>(BlockPos::ONE->x).c_str());
 			//
 			return 0;

@@ -2,11 +2,18 @@
 
 #include <stl/string>
 
+#include <mcpe/block/Block.hpp>
+#include <mcpe/math/BlockPos.hpp>
+#include <mcpe/ContainerModel.hpp>
+
 #include <mcpe/creative/CreativeItemRegistry.hpp>
 #include <mcpe/creative/CreativeItemCategory.hpp>
 #include <mcpe/creative/CreativeItemGroupCategory.hpp>
 
 #include <innercore/global_context.h>
+
+#include <multiversion/ItemCategory.hpp>
+#include <multiversion/Tabs.hpp>
 
 enum class ContainerID : char {
 	UNK,
@@ -23,10 +30,6 @@ class ServerPlayer : public Player {
 class LocalPlayer : public Player {
 
 };
-
-class ContainerModel {};
-class ExpandoContainerModel : public ContainerModel {};
-class FilteredContainerModel : public ExpandoContainerModel {};
 
 class ContainerManagerModel {
 	public:
@@ -60,8 +63,6 @@ extern std::__ndk1::unordered_map<ContainerEnumName, std::__ndk1::string,Contain
 
 namespace LagrangianRegistries {
 	CreativeItemRegistry* _vanillaCreativeRegister;
-	int last_cat = 6;
-	int last_cat_inCreative = 3;
 	std::__ndk1::map<std::__ndk1::string, ItemCategory> categories;
 
 	std::__ndk1::map<std::__ndk1::string, CreativeItemGroupCategory> registered;
@@ -70,7 +71,7 @@ namespace LagrangianRegistries {
 		_vanillaCreativeRegister = CreativeItemRegistry::mCurrentRegistry;
 		std::__ndk1::map<std::__ndk1::string, ItemCategory>::iterator at;
         	for(at = categories.begin(); at != categories.end(); ++at) {
-			registered.insert(std::__ndk1::pair<std::__ndk1::string, ItemCategory>(_vanillaCreativeRegister->newCreativeCategory(at->second.id, CreativeItemCategory(at->second.index)));
+			registered.insert(std::__ndk1::pair<std::__ndk1::string, CreativeItemGroupCategory>(at->first, *_vanillaCreativeRegister->newCreativeCategory(at->second.id, CreativeItemCategory(at->second.index))));
 		}
 	}
 	/*void registryEffect(PotionEffect* effect) {
@@ -80,9 +81,13 @@ namespace LagrangianRegistries {
 		return eff;
 	}*/
 	void registerCategory(ItemCategory& cic) {
-		last_cat += 1;
-		if(cic.isCreative) last_cat_inCreative += 1;
-  		categories.insert(std::__ndk1::pair<std::__ndk1::string&, ItemCategory&>(cic.id, cic));
+		categories.insert(std::__ndk1::pair<std::__ndk1::string&, ItemCategory&>(cic.id, cic));
+		TabSystem::cat_count++;
+		if(cic.isCreative) {
+			TabSystem::forIt.insert(std::__ndk1::pair<int, ItemCategory&>(cic.creative_index, cic));
 
+			if(TabSystem::cat_count_inCreative / 4 >= TabSystem::page_count) TabSystem::page_count++;
+			TabSystem::cat_count_inCreative++;
+  		}
 	}
 }

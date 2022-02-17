@@ -13,8 +13,6 @@
 #include <mcpe/creative/CreativeGroupInfo.hpp>
 #include <mcpe/creative/CreativeItemEntry.hpp>
 
-#include <multiversion/ItemCategory.hpp>
-
 class CreativeItemRegistry { /* PlaceHolder Structure */
     public:
     void* filler[2];
