@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stl/string>
+
 #include <mcpe/item/Item.hpp>
 
 class ItemStackBase {
@@ -27,12 +29,11 @@ class ItemInstance : public ItemStackBase {
 
 class ItemStackInfo {
     public:
+    std::__ndk1::string nameId;
     int id;
     int data;
     int count;
-	ItemStackInfo() {
-
-	}
+    ItemStackInfo() {}
     ItemStackInfo(int id, int data, int count) {
         this->id = id;
         this->data = data;

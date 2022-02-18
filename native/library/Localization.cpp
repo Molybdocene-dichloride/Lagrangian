@@ -197,18 +197,18 @@ namespace LocalizationSystem {
 namespace FurnaceSystem {
     std::__ndk1::map<ItemStackInfo, ItemStackInfo> custom;
     void addFurnaceRecipes(ItemStackInfo& item1, ItemStackInfo& item2) {
-		custom.insert(std::__ndk1::pair<ItemStackInfo, ItemStackInfo>(item1, item2));
-	}
+        custom.insert(std::__ndk1::pair<ItemStackInfo, ItemStackInfo>(item1, item2));
+    }
     void addFurnaceRecipes(ItemStack& item1, ItemStack& item2) {
-		custom.insert(std::__ndk1::pair<ItemStackInfo, ItemStackInfo>(ItemStackInfo(item1), ItemStackInfo(item2)));
-	}
+        custom.insert(std::__ndk1::pair<ItemStackInfo, ItemStackInfo>(ItemStackInfo(item1), ItemStackInfo(item2)));
+    }
     void addFurnaceRecipes(Item& item1, int data1, int count1, Item& item2, int data2, int count2) {
         custom.insert(std::__ndk1::pair<ItemStackInfo, ItemStackInfo>(ItemStackInfo(item1, data1, count1), ItemStackInfo(item2, data1, count1)));
-	}
-	void addFurnaceRecipes(int id1, int data1, int count1, int id2, int data2, int count2) {
+    }
+    void addFurnaceRecipes(int id1, int data1, int count1, int id2, int data2, int count2) {
         custom.insert(std::__ndk1::pair<ItemStackInfo, ItemStackInfo>(ItemStackInfo(id1, data1, count1), ItemStackInfo(id1, data1, count1)));
-	}
-    class GTFurnaceModule : public Module { //adding custom recipes to furnace
+    }
+   class GTFurnaceModule : public Module { //adding custom recipes to furnace
 		public:
 		GTFurnaceModule(const char* id): Module(id) {};
 	    virtual void initialize() {	

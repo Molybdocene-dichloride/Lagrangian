@@ -129,6 +129,9 @@ JS_MODULE_VERSION(LagrangianRegistries, 1);
 JS_MODULE_VERSION(Flags, 1);
 JS_MODULE_VERSION(LocalizationSystem, 1);
 
+JS_MODULE_VERSION(Category, 1);
+
+
 /*JS_EXPORT(Stones, registerID, "V(II)", (JNIEnv* env, long id, long data) {
 	Logger::debug("j", "wew");
 	Logger::debug("j", patch::to_string<long>(id).c_str());
@@ -247,15 +250,22 @@ JS_EXPORT_COMPLEX(LocalizationSystem, _translateToCurrent, "S(SS)", (JNIEnv* env
 
 JS_EXPORT_COMPLEX(LagrangianRegistries, registerCategory, "I(SI)", (JNIEnv* env, NativeJS::ComplexArgs ca) {
 	Logger::debug("u89fh", ca.get("id").asString());
-        
-	Logger::debug("u81", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(CreativeItemRegistry::current())).c_str());
 
-	ItemCategory cc = ItemCategory(ca.get("id").asString());
+	ItemCategory cc = ItemCategory(ca);
+	
 	ItemCategory& ic = cc;
-
 	LagrangianRegistries::registerCategory(ic);
 
-	return /*NativeJS::wrapIntegerResult(reinterpret_cast<uintptr_t>(ic))*/ 11;
+	return NativeJS::wrapIntegerResult(reinterpret_cast<uintptr_t>(&ic));
+});
+
+JS_EXPORT_COMPLEX(Category, addItems, "I(SI)", (JNIEnv* env, NativeJS::ComplexArgs ca) {
+	
+	ItemCategory* cat = reinterpret_cast<ItemCategory*>(ca.get("_pointer").asPointer());
+	
+	cat->addItem(ca);
+
+	return 0;
 });
 
 
@@ -273,7 +283,7 @@ FilterResult too(const ItemInstance& i) {
 }
 
 
-ItemInstance* ii;
+//ItemInstance* ii;
 
 class CategoryModule : public Module { //
     public:
@@ -283,42 +293,28 @@ class CategoryModule : public Module { //
             // any other initialization also highly recommended to happen here
         DLHandleManager::initializeHandle("libminecraftpe.so", "mcpe");
 		HookManager::addCallback(SYMBOL("mcpe", "_ZN12ItemRegistry23initCreativeItemsServerEP17ActorInfoRegistryP20BlockDefinitionGroupbRK15BaseGameVersionRK11ExperimentsNSt6__ndk18functionIFvS1_S3_P20CreativeItemRegistrybS6_S9_EEE"), LAMBDA((HookManager::CallbackController* controller), {
-			Logger::debug("u81", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(CreativeItemRegistry::current())).c_str());
+			//Logger::debug("u81", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(CreativeItemRegistry::current())).c_str());
 			
-			LagrangianRegistries::registerAll();
-			
-			Item* i = ItemRegistry::getItemByName("iron_block");
-			Logger::debug("u81", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(i)).c_str());
-
-			ii = new ItemInstance(*i, 1, 0);
-
+			LagrangianRegistries::postInit();
+	
 			return 0;
-		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER | HookManager::RESULT);
-		HookManager::addCallback(SYMBOL("mcpe", "_ZN29CraftingContainerManagerModel4tickEv"), LAMBDA((HookManager::CallbackController* controller, CraftingContainerManagerModel* ths), {
+		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER);
+		/*HookManager::addCallback(SYMBOL("mcpe", "_ZN29CraftingContainerManagerModel4tickEv"), LAMBDA((HookManager::CallbackController* controller, CraftingContainerManagerModel* ths), {
 			Logger::debug("u81", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(CreativeItemRegistry::current())).c_str());
 			
 			deo(ths);
 			ContainerModel* cm = ths->containers.at("recipe_nature").get();
 			
-			VTABLE_FIND_OFFSET(setItemsToTab, _ZTV22FilteredContainerModel, _ZN22FilteredContainerModel15setItemInstanceEiRK12ItemInstance);
-			VTABLE_CALL<void>(setItemsToTab, cm, 0, *ii);
+			//VTABLE_FIND_OFFSET(setItemsToTab, _ZTV22FilteredContainerModel, _ZN22FilteredContainerModel15setItemInstanceEiRK12ItemInstance);
+			//VTABLE_CALL<void>(setItemsToTab, cm, 0, *ii);
 
 			//Logger::debug("bvc", patch::to_string<int>(BlockPos::ONE->x).c_str());
 			//
 			return 0;
-		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER);
+		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER);*/
 		
 	}
 };
-
-//ContainerEnumName as int
-//normal, pointer-like
-//as string
-//unnormal, sigsegv error
-//as uintptr
-//pointer like, pointer like, no exists in list.
-//as char
-//err
 
 MAIN {
 	Module* localization_module = new LocalizationSystem::CustomLocalizationLoadingModule("gregtech.loading_localizations_module");
