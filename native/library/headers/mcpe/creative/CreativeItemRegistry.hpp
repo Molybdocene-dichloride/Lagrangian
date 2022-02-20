@@ -41,7 +41,7 @@ class CreativeItemRegistry { /* PlaceHolder Structure */
     void takeCreativeList(std::__ndk1::vector<CreativeItemEntry, std::__ndk1::allocator<CreativeItemEntry> >&&);
     void forEachCreativeItemInstance(std::__ndk1::function<bool (ItemInstance&)>);
     void updateNetIdMap();
-    CreativeGroupInfo newCreativeGroup(CreativeItemCategory, HashedString const&, ItemInstance const&);
+    //CreativeGroupInfo newCreativeGroup(CreativeItemCategory, HashedString const&, ItemInstance const&);
     std::__ndk1::vector<CreativeItemEntry>* getCreativeItemEntries();
     CreativeItemRegistry getOrCreateCurrent();
     //CreativeItemEntry findCreativeItemEntry(TypedServerNetId<CreativeItemNetIdTag, unsigned int, 0u> const&);

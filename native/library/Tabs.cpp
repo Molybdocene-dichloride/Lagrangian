@@ -5,34 +5,42 @@
 
 #include "vtable.h"
 
+#include <mcpe/tileentity/ContainerModel.hpp>
+
 #include <multiversion/Tabs.hpp>
 
-std::__ndk1::map<int, ItemCategory> TabSystem::forIt = std::__ndk1::map<int, ItemCategory>();
+std::__ndk1::vector<ContainerModel*> CreativeTabs::models = std::__ndk1::vector<ContainerModel*>();
 
-int TabSystem::PER_PAGE = 4;
+std::__ndk1::map<int, ItemCategory> CreativeTabs::forIt = std::__ndk1::map<int, ItemCategory>();
 
-int TabSystem::cat_count = 7;
-int TabSystem::cat_count_inCreative = 4;
+int CreativeTabs::PER_PAGE = 4;
 
-int TabSystem::page_count = 0;
-int TabSystem::current_page = 0;
+int CreativeTabs::cat_count = 7;
+int CreativeTabs::cat_count_inCreative = 4;
 
-void TabSystem::setPage(int page) {
-	current_page = page;
+int CreativeTabs::page_count = 1;
+int CreativeTabs::current_page = 0;
+
+void CreativeTabs::setPage(int page) {
+	if(page < page_count) {
+		Callbacks::invokeCallback("CreativePageChanged", page, current_page);
+		JavaCallbacks::invokeCallback("CreativePageChanged", "", page, current_page);
+		current_page = page;
+	}
 }
-void TabSystem::nextPage() {
+void CreativeTabs::nextPage() {
 	setPage(current_page + 1);
 }
-void TabSystem::prevPage() {
+void CreativeTabs::prevPage() {
 	setPage(current_page - 1);
 }
-void TabSystem::populateItems(std::__ndk1::vector<ContainerModel*> cm) {
+void CreativeTabs::populateItems() {
 	VTABLE_FIND_OFFSET(setItemsToTab, _ZTV22FilteredContainerModel, _ZN22FilteredContainerModel15setItemInstanceEiRK12ItemInstance);
 	if(current_page == 0) return;
 	int first_offset = current_page * PER_PAGE;
 	for(int a = 0; first_offset + a < cat_count_inCreative && a < PER_PAGE; a++) {
 		for(int i = 0; i < forIt.at(first_offset + a).v_items.size(); i++) {
-			VTABLE_CALL<void>(setItemsToTab, cm.at(a), i, forIt.at(first_offset + a).v_items.at(i));
+			VTABLE_CALL<void>(setItemsToTab, models.at(a), i, forIt.at(first_offset + a).v_items.at(i));
 		}
 	}
 }

@@ -31,6 +31,8 @@
 
 #include <LagrangianRegistries.hpp>
 
+//#include <mcpe/ContainerModel.hpp>
+
 std::vector<long>::iterator it;
 
 std::vector<long> blockids;
@@ -130,7 +132,7 @@ JS_MODULE_VERSION(Flags, 1);
 JS_MODULE_VERSION(LocalizationSystem, 1);
 
 JS_MODULE_VERSION(Category, 1);
-
+JS_MODULE_VERSION(CreativeTabs, 1);
 
 /*JS_EXPORT(Stones, registerID, "V(II)", (JNIEnv* env, long id, long data) {
 	Logger::debug("j", "wew");
@@ -268,6 +270,27 @@ JS_EXPORT_COMPLEX(Category, addItems, "I(SI)", (JNIEnv* env, NativeJS::ComplexAr
 	return 0;
 });
 
+JS_EXPORT_COMPLEX(CreativeTabs, getCategoryCount, "I(SI)", (JNIEnv* env, NativeJS::ComplexArgs ca) {
+	return CreativeTabs::cat_count;
+});
+JS_EXPORT_COMPLEX(CreativeTabs, getPageCount, "I(SI)", (JNIEnv* env, NativeJS::ComplexArgs ca) {
+	return CreativeTabs::page_count;
+});
+JS_EXPORT_COMPLEX(CreativeTabs, getCurrentPage, "I(SI)", (JNIEnv* env, NativeJS::ComplexArgs ca) {
+	return CreativeTabs::current_page;
+});
+
+JS_EXPORT_COMPLEX(CreativeTabs, setPage, "I(SI)", (JNIEnv* env, NativeJS::ComplexArgs ca) {
+	CreativeTabs::setPage(ca.get("page").asInt());
+});
+
+JS_EXPORT_COMPLEX(CreativeTabs, prevPage, "I(SI)", (JNIEnv* env, NativeJS::ComplexArgs ca) {
+	CreativeTabs::prevPage();
+});
+
+JS_EXPORT_COMPLEX(CreativeTabs, nextPage, "I(SI)", (JNIEnv* env, NativeJS::ComplexArgs ca) {
+	CreativeTabs::nextPage();
+});
 
 void deo(CraftingContainerManagerModel* ths) {
 	std::__ndk1::unordered_map<std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>,std::__ndk1::shared_ptr<ContainerModel>,std::__ndk1::hash<std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>>,std::__ndk1::equal_to<std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>>,std::__ndk1::allocator<std::__ndk1::pair<std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>const,std::__ndk1::shared_ptr<ContainerModel>>>>::iterator at;
@@ -275,6 +298,14 @@ void deo(CraftingContainerManagerModel* ths) {
 		Logger::debug("Lg0", at->first.c_str());
 		Logger::debug("Lg1", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(at->second.get())).c_str());
 	}
+	ContainerModel* cm0 = ths->containers.at("recipe_nature").get();
+	ContainerModel* cm1 = ths->containers.at("recipe_construction").get();
+	ContainerModel* cm2 = ths->containers.at("recipe_items").get();
+	ContainerModel* cm3 = ths->containers.at("recipe_equipment").get();
+	CreativeTabs::models.push_back(cm0);
+	CreativeTabs::models.push_back(cm1);
+	CreativeTabs::models.push_back(cm2);
+	CreativeTabs::models.push_back(cm3);
 }
 
 typedef bool FilterResult;
@@ -284,7 +315,7 @@ FilterResult too(const ItemInstance& i) {
 
 
 //ItemInstance* ii;
-
+bool is = true;
 class CategoryModule : public Module { //
     public:
     CategoryModule(const char* id): Module(id) {}; 
@@ -292,31 +323,33 @@ class CategoryModule : public Module { //
         // any HookManager::addCallback calls must be in initialize method of a module
             // any other initialization also highly recommended to happen here
         DLHandleManager::initializeHandle("libminecraftpe.so", "mcpe");
-		HookManager::addCallback(SYMBOL("mcpe", "_ZN12ItemRegistry23initCreativeItemsServerEP17ActorInfoRegistryP20BlockDefinitionGroupbRK15BaseGameVersionRK11ExperimentsNSt6__ndk18functionIFvS1_S3_P20CreativeItemRegistrybS6_S9_EEE"), LAMBDA((HookManager::CallbackController* controller), {
-			//Logger::debug("u81", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(CreativeItemRegistry::current())).c_str());
-			
+		HookManager::addCallback(SYMBOL("mcpe", "_ZN12ItemRegistry23initCreativeItemsServerEP17ActorInfoRegistryP20BlockDefinitionGroupbRK15BaseGameVersionRK11ExperimentsNSt6__ndk18functionIFvS1_S3_P20CreativeItemRegistrybS6_S9_EEE"), LAMBDA((HookManager::CallbackController* controller), {	
 			LagrangianRegistries::postInit();
 	
 			return 0;
 		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER);
-		/*HookManager::addCallback(SYMBOL("mcpe", "_ZN29CraftingContainerManagerModel4tickEv"), LAMBDA((HookManager::CallbackController* controller, CraftingContainerManagerModel* ths), {
-			Logger::debug("u81", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(CreativeItemRegistry::current())).c_str());
-			
-			deo(ths);
-			ContainerModel* cm = ths->containers.at("recipe_nature").get();
-			
-			//VTABLE_FIND_OFFSET(setItemsToTab, _ZTV22FilteredContainerModel, _ZN22FilteredContainerModel15setItemInstanceEiRK12ItemInstance);
-			//VTABLE_CALL<void>(setItemsToTab, cm, 0, *ii);
+		
+		HookManager::addCallback(SYMBOL("mcpe", "_ZN29CraftingContainerManagerModel19_populateContainersERj"), LAMBDA((HookManager::CallbackController* controller, CraftingContainerManagerModel* ths), {
+			if(CreativeTabs::current_page != 0) controller->prevent();
 
-			//Logger::debug("bvc", patch::to_string<int>(BlockPos::ONE->x).c_str());
-			//
 			return 0;
-		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER);*/
+		}, ), HookManager::CALL | HookManager::LISTENER | HookManager::CONTROLLER);
+
+		HookManager::addCallback(SYMBOL("mcpe", "_ZN29CraftingContainerManagerModel4tickEv"), LAMBDA((HookManager::CallbackController* controller, CraftingContainerManagerModel* ths), {
+			if(is) {
+				deo(ths);
+				is = false;
+			}
+			
+			CreativeTabs::populateItems();
+
+			return 0;
+		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER);
 		
 	}
 };
 
 MAIN {
-	Module* localization_module = new LocalizationSystem::CustomLocalizationLoadingModule("gregtech.loading_localizations_module");
-	Module* cat_module = new CategoryModule("gregtech.categories");
+	Module* localization_module = new LocalizationSystem::CustomLocalizationLoadingModule("lagrangiankernel.localizations_module");
+	Module* cat_module = new CategoryModule("lagrangiankernel.categories");
 }

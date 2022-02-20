@@ -9,14 +9,14 @@
 
 ItemCategory::ItemCategory(std::__ndk1::string id, bool isCreative) {
 	this->creative_index = -1;
-	this->index = TabSystem::cat_count;
+	this->index = CreativeTabs::cat_count;
 	this->id = id;
 	this->isCreative = isCreative;
 	this->items = std::__ndk1::vector<ItemStackInfo>();
 	this->v_items = std::__ndk1::vector<ItemInstance>();
 		
 	if(isCreative) {
-		this->creative_index = TabSystem::cat_count_inCreative;
+		this->creative_index = CreativeTabs::cat_count_inCreative;
 	}
 
 	Logger::debug("333gret", patch::to_string<int>(this->index).c_str());
@@ -49,9 +49,9 @@ void ItemCategory::postInit() {
 	for(int i = 0; i < this->items.size(); i++) {
 		Item* it = ItemRegistry::getItemById(this->items.at(i).id);
 		Item e = *it;
-		//ItemInstance ii = ItemInstance(*ItemRegistry::getItemById(ca.get(std::string("item") + "_id").asInt()), ca.get(std::string("item") + "_count").asInt(), ca.get(std::string("item") + "_data").asInt());
-		//ItemInstance& ie = ii;
+		ItemInstance ii = ItemInstance(e, this->items.at(i).count, this->items.at(i).data);
+		ItemInstance& ie = ii;
 	
-		//this->v_items.push_back(ie);
+		this->v_items.push_back(ie);
 	}
 }

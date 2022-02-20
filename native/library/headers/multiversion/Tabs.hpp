@@ -3,12 +3,14 @@
 #include <stl/map>
 #include <stl/vector>
 
+#include <mcpe/tileentity/ContainerModel.hpp>
 #include <multiversion/ItemCategory.hpp>
 
 class ItemCategory;
-class ContainerModel;
 
-namespace TabSystem {
+namespace CreativeTabs {
+	extern std::__ndk1::vector<ContainerModel*> models;
+
 	extern std::__ndk1::map<int, ItemCategory> forIt;
 
 	extern int PER_PAGE;
@@ -22,5 +24,5 @@ namespace TabSystem {
 	void setPage(int page);
 	void nextPage();
 	void prevPage();
-	void populateItems(std::__ndk1::vector<ContainerModel*> cm);
+	void populateItems();
 }
