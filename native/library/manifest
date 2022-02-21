@@ -10,6 +10,7 @@
 		"gnustl_shared",
     		"minecraftpe",
     		"innercore",
-		"nativejs"
+		"nativejs",
+		"callbacks"
 	]
 }

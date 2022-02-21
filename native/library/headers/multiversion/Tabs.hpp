@@ -25,4 +25,6 @@ namespace CreativeTabs {
 	void nextPage();
 	void prevPage();
 	void populateItems();
+	
+	void deo(CraftingContainerManagerModel* ths);
 }

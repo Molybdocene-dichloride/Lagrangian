@@ -292,22 +292,6 @@ JS_EXPORT_COMPLEX(CreativeTabs, nextPage, "I(SI)", (JNIEnv* env, NativeJS::Compl
 	CreativeTabs::nextPage();
 });
 
-void deo(CraftingContainerManagerModel* ths) {
-	std::__ndk1::unordered_map<std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>,std::__ndk1::shared_ptr<ContainerModel>,std::__ndk1::hash<std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>>,std::__ndk1::equal_to<std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>>,std::__ndk1::allocator<std::__ndk1::pair<std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>const,std::__ndk1::shared_ptr<ContainerModel>>>>::iterator at;
-	for(at = ths->containers.begin(); at != ths->containers.end(); ++at) {
-		Logger::debug("Lg0", at->first.c_str());
-		Logger::debug("Lg1", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(at->second.get())).c_str());
-	}
-	ContainerModel* cm0 = ths->containers.at("recipe_nature").get();
-	ContainerModel* cm1 = ths->containers.at("recipe_construction").get();
-	ContainerModel* cm2 = ths->containers.at("recipe_items").get();
-	ContainerModel* cm3 = ths->containers.at("recipe_equipment").get();
-	CreativeTabs::models.push_back(cm0);
-	CreativeTabs::models.push_back(cm1);
-	CreativeTabs::models.push_back(cm2);
-	CreativeTabs::models.push_back(cm3);
-}
-
 typedef bool FilterResult;
 FilterResult too(const ItemInstance& i) {
 	return GlobalContext::getServerPlayer()->getCreativeItemList();
@@ -337,10 +321,10 @@ class CategoryModule : public Module { //
 
 		HookManager::addCallback(SYMBOL("mcpe", "_ZN29CraftingContainerManagerModel4tickEv"), LAMBDA((HookManager::CallbackController* controller, CraftingContainerManagerModel* ths), {
 			if(is) {
-				deo(ths);
+				CreativeTabs::deo(ths);
 				is = false;
 			}
-			
+			Logger::debug("derr", "ddytty");
 			CreativeTabs::populateItems();
 
 			return 0;

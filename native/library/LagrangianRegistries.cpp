@@ -1,6 +1,8 @@
 #include <LagrangianRegistries.hpp>
 #include <toString.hpp>
 
+CreativeItemRegistry* LagrangianRegistries::_vanillaCreativeRegister;
+
 std::__ndk1::map<std::__ndk1::string, ItemCategory> LagrangianRegistries::categories = std::__ndk1::map<std::__ndk1::string, ItemCategory>();
 
 std::__ndk1::map<std::__ndk1::string, CreativeItemGroupCategory> LagrangianRegistries::registered = std::__ndk1::map<std::__ndk1::string, CreativeItemGroupCategory>();
