@@ -21,6 +21,8 @@ class LocalPlayer : public Player {
 
 };
 
+class Container {};
+
 class ContainerModel {};
 class ExpandoContainerModel : public ContainerModel {};
 class FilteredContainerModel : public ExpandoContainerModel {};

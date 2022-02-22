@@ -253,12 +253,11 @@ JS_EXPORT_COMPLEX(LocalizationSystem, _translateToCurrent, "S(SS)", (JNIEnv* env
 JS_EXPORT_COMPLEX(LagrangianRegistries, registerCategory, "I(SI)", (JNIEnv* env, NativeJS::ComplexArgs ca) {
 	Logger::debug("u89fh", ca.get("id").asString());
 
-	ItemCategory cc = ItemCategory(ca);
-	
-	ItemCategory& ic = cc;
-	LagrangianRegistries::registerCategory(ic);
+	ItemCategory* cc = new ItemCategory(ca);
 
-	return NativeJS::wrapIntegerResult(reinterpret_cast<uintptr_t>(&ic));
+	LagrangianRegistries::registerCategory(cc);
+
+	return NativeJS::wrapIntegerResult(reinterpret_cast<uintptr_t>(cc));
 });
 
 JS_EXPORT_COMPLEX(Category, addItems, "I(SI)", (JNIEnv* env, NativeJS::ComplexArgs ca) {
@@ -313,15 +312,10 @@ class CategoryModule : public Module { //
 			return 0;
 		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER);
 		
-		HookManager::addCallback(SYMBOL("mcpe", "_ZN29CraftingContainerManagerModel19_populateContainersERj"), LAMBDA((HookManager::CallbackController* controller, CraftingContainerManagerModel* ths), {
-			if(CreativeTabs::current_page != 0) controller->prevent();
-
-			return 0;
-		}, ), HookManager::CALL | HookManager::LISTENER | HookManager::CONTROLLER);
 
 		HookManager::addCallback(SYMBOL("mcpe", "_ZN29CraftingContainerManagerModel4tickEv"), LAMBDA((HookManager::CallbackController* controller, CraftingContainerManagerModel* ths), {
 			if(is) {
-				CreativeTabs::deo(ths);
+				CreativeTabs::invalidateModels(ths);
 				is = false;
 			}
 			Logger::debug("derr", "ddytty");

@@ -17,7 +17,7 @@
 
 namespace LagrangianRegistries {
 	extern CreativeItemRegistry* _vanillaCreativeRegister;
-	extern std::__ndk1::map<std::__ndk1::string, ItemCategory> categories;
+	extern std::__ndk1::map<std::__ndk1::string, ItemCategory*> categories;
 
 	extern std::__ndk1::map<std::__ndk1::string, CreativeItemGroupCategory> registered;
 
@@ -28,5 +28,5 @@ namespace LagrangianRegistries {
 	/*PotionEffect* getEffect(id) {
 		return eff;
 	}*/
-	void registerCategory(ItemCategory& cic);
+	void registerCategory(ItemCategory* cic);
 }

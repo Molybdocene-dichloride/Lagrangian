@@ -11,7 +11,7 @@ class ItemCategory;
 namespace CreativeTabs {
 	extern std::__ndk1::vector<ContainerModel*> models;
 
-	extern std::__ndk1::map<int, ItemCategory> forIt;
+	extern std::__ndk1::map<int, ItemCategory*> forIt;
 
 	extern int PER_PAGE;
 
@@ -26,5 +26,5 @@ namespace CreativeTabs {
 	void prevPage();
 	void populateItems();
 	
-	void deo(CraftingContainerManagerModel* ths);
+	void invalidateModels(CraftingContainerManagerModel* ths);
 }

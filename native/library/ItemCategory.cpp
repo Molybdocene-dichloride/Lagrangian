@@ -47,9 +47,12 @@ void ItemCategory::setIcon(ItemStackInfo icon) {
 
 void ItemCategory::postInit() {
 	for(int i = 0; i < this->items.size(); i++) {
+		
+		Logger::debug("Lgyt", patch::to_string<int>(this->items.at(i).id).c_str());
+		
 		Item* it = ItemRegistry::getItemById(this->items.at(i).id);
-		Item e = *it;
-		ItemInstance ii = ItemInstance(e, this->items.at(i).count, this->items.at(i).data);
+		//Item e = *it;
+		ItemInstance ii = ItemInstance(*it, this->items.at(i).count, this->items.at(i).data);
 		ItemInstance& ie = ii;
 	
 		this->v_items.push_back(ie);
