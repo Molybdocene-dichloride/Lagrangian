@@ -1,9 +1,16 @@
 #pragma once
 
 #include <stl/string>
+
+#include <stl/vector>
+
 #include <stl/unordered_map>
 
 #include <mcpe/math/BlockPos.hpp>
+
+#include <mcpe/item/ItemStack.hpp>
+
+#include <innercore/item_registry.h>
 
 enum class ContainerID : char {
 	UNK,
@@ -21,14 +28,20 @@ class LocalPlayer : public Player {
 
 };
 
-class Container {};
+//class Container {};
 
 class ContainerModel {};
-class ExpandoContainerModel : public ContainerModel {};
+class ExpandoContainerModel : public ContainerModel {
+	public:
+	void* filler[24];
+	std::__ndk1::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>> items;
+};
+
+static_assert(offsetof(ExpandoContainerModel, items) == 96, "CreativeItemRegistry items position");
+
 class FilteredContainerModel : public ExpandoContainerModel {};
 
 class ContainerManagerModel {
-	public:
 	public:
 	void* filler[4];
 	ContainerID ci;

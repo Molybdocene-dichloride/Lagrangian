@@ -290,6 +290,10 @@ JS_EXPORT_COMPLEX(CreativeTabs, prevPage, "I(SI)", (JNIEnv* env, NativeJS::Compl
 JS_EXPORT_COMPLEX(CreativeTabs, nextPage, "I(SI)", (JNIEnv* env, NativeJS::ComplexArgs ca) {
 	CreativeTabs::nextPage();
 });
+bool is = true;
+JS_EXPORT(CreativeTabs, invalidate, "I()", (JNIEnv* env) {
+	is = true;
+});
 
 typedef bool FilterResult;
 FilterResult too(const ItemInstance& i) {
@@ -297,8 +301,6 @@ FilterResult too(const ItemInstance& i) {
 }
 
 
-//ItemInstance* ii;
-bool is = true;
 class CategoryModule : public Module { //
     public:
     CategoryModule(const char* id): Module(id) {}; 

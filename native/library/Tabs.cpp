@@ -12,7 +12,7 @@
 
 #include <toString.hpp>
 
-std::__ndk1::vector<ContainerModel*> CreativeTabs::models = std::__ndk1::vector<ContainerModel*>();
+std::__ndk1::vector<FilteredContainerModel*> CreativeTabs::models = std::__ndk1::vector<FilteredContainerModel*>();
 
 std::__ndk1::map<int, ItemCategory*> CreativeTabs::forIt = std::__ndk1::map<int, ItemCategory*>();
 
@@ -23,15 +23,25 @@ int CreativeTabs::cat_count_inCreative = 4;
 
 int CreativeTabs::page_count = 1;
 int CreativeTabs::current_page = 0;
-//
+
 void CreativeTabs::setPage(int page) {
 	if(page < page_count && page >= 0) {
-		Logger::debug("jokier", patch::to_string<int>(current_page).c_str());
-		Callbacks::invokeCallback("CreativePageChanged", page, current_page);
-		Logger::debug("joc", patch::to_string<int>(current_page).c_str());
+		Logger::debug("noop", patch::to_string<int>(current_page).c_str());
+
 		//JavaCallbacks::invokeCallback("CreativePageChanged", "", page, current_page);
 		current_page = page;
-		Logger::debug("jokier_uu", patch::to_string<int>(current_page).c_str());
+		Logger::debug("jop", patch::to_string<int>(current_page).c_str());
+
+		if(current_page == 0) return;
+
+		int first_offset = current_page * PER_PAGE;
+		for(int a = 0; a < PER_PAGE; a++) {
+			if(first_offset + a < cat_count_inCreative) {
+				models.at(a)->items.clear(); //forIt.at(first_offset + a)->v_items.size()
+			} else {
+				models.at(a)->items.clear();
+			}
+		}
 	}
 }
 void CreativeTabs::nextPage() {
@@ -40,17 +50,15 @@ void CreativeTabs::nextPage() {
 void CreativeTabs::prevPage() {
 	setPage(current_page - 1);
 }
+
 void CreativeTabs::populateItems() {
 	VTABLE_FIND_OFFSET(setItemsToTab, _ZTV22FilteredContainerModel, _ZN22FilteredContainerModel15setItemInstanceEiRK12ItemInstance);
-	VTABLE_FIND_OFFSET(getContainer, _ZTV22FilteredContainerModel, _ZNK14ContainerModel13_getContainerEv);
-	//VTABLE_FIND_OFFSET(removeAll, _ZTV9Container, _ZN9Container14removeAllItemsEv);
-	//VTABLE_FIND_OFFSET(addItem, _ZTV9Container, _ZN9Container7addItemER9ItemStack);
-	//_ZN9Container14removeAllItemsEv
+	VTABLE_FIND_OFFSET(refresh, _ZTV22FilteredContainerModel, _ZN22FilteredContainerModel16refreshContainerEb);
+	
 	if(current_page == 0) return;
 	
-	
-
 	int first_offset = current_page * PER_PAGE;
+
 	Logger::debug("niobiv0", patch::to_string<int>(current_page).c_str());
 	Logger::debug("niobiv1", patch::to_string<int>(PER_PAGE).c_str());
 
@@ -62,13 +70,10 @@ void CreativeTabs::populateItems() {
 
 		for(int i = 0; i < forIt.at(first_offset + a)->v_items.size(); i++) {
 			Logger::debug("aplortery", patch::to_string<int>(i).c_str());
-			Container* c = VTABLE_CALL<Container*>(getContainer, models.at(a));
 
-			//VTABLE_CALL<void>(removeAll, models.at(a));
-			//VTABLE_CALL<void>(addItem, models.at(a), forIt.at(first_offset + a)->v_items.at(i));
-
-			//VTABLE_CALL<void>(setItemsToTab, models.at(a), i, forIt.at(first_offset + a)->v_items.at(i));
+			VTABLE_CALL<void>(setItemsToTab, models.at(a), i, forIt.at(first_offset + a)->v_items.at(i));
 		}
+		VTABLE_CALL<void>(refresh, models.at(a), false);
 	}
 }
 
@@ -78,10 +83,13 @@ void CreativeTabs::invalidateModels(CraftingContainerManagerModel* ths) {
 		Logger::debug("Lg0", at->first.c_str());
 		Logger::debug("Lg1", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(at->second.get())).c_str());
 	}
-	ContainerModel* cm0 = ths->containers.at("recipe_nature").get();
-	ContainerModel* cm1 = ths->containers.at("recipe_construction").get();
-	ContainerModel* cm2 = ths->containers.at("recipe_items").get();
-	ContainerModel* cm3 = ths->containers.at("recipe_equipment").get();
+
+	CreativeTabs::models.clear();
+	
+	FilteredContainerModel* cm0 = (FilteredContainerModel*) ths->containers.at("recipe_construction").get();
+	FilteredContainerModel* cm1 = (FilteredContainerModel*) ths->containers.at("recipe_equipment").get();
+	FilteredContainerModel* cm2 = (FilteredContainerModel*) ths->containers.at("recipe_items").get();
+	FilteredContainerModel* cm3 = (FilteredContainerModel*) ths->containers.at("recipe_nature").get();
 	CreativeTabs::models.push_back(cm0);
 	CreativeTabs::models.push_back(cm1);
 	CreativeTabs::models.push_back(cm2);

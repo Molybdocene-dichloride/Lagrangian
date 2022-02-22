@@ -4,9 +4,9 @@ Library in alpha development, use with caution.
 
 ## Capabilities
 ### Flags
-Performance & 64 bit numbers supporting API for Flags creation, combining, check
+Performance & 64 bit numbers supporting API for creating, combining, checking Flags
 ### Low level manipulation of Localizations
-Vanilla Minecraft BE Localization Strings manipulation API
-### Low level creative inventory editor & Creative category & tab
-API for Creative category & tab creation & managing
+Vanilla Minecraft Bedrock Edition localizations manipulation API
+### Low level creative inventory editor
+API for Creative category & Creative tab creation and managing
 ## Thanks

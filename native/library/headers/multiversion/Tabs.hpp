@@ -9,7 +9,7 @@
 class ItemCategory;
 
 namespace CreativeTabs {
-	extern std::__ndk1::vector<ContainerModel*> models;
+	extern std::__ndk1::vector<FilteredContainerModel*> models;
 
 	extern std::__ndk1::map<int, ItemCategory*> forIt;
 

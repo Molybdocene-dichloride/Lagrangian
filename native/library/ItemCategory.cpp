@@ -38,7 +38,6 @@ void ItemCategory::addItem(NativeJS::ComplexArgs ca) {
 
 void ItemCategory::addItem(ItemStackInfo item) {
 	this->items.push_back(item);
-	//this->v_items.push_back(ItemInstance(*ItemRegistry::getItemById(item.id), item.count, item.data));
 }
 
 void ItemCategory::setIcon(ItemStackInfo icon) {
