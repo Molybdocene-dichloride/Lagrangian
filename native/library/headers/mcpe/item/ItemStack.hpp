@@ -23,8 +23,9 @@ class ItemStack : public ItemStackBase {
     ItemStack(Item const&, int, int);
 };
 class ItemInstance : public ItemStackBase {
-    public:
+	public:
 	ItemInstance(const Item& param_1,int param_2,int param_3);
+	ItemInstance();
 };
 
 class ItemStackInfo {

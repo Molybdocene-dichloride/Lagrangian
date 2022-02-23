@@ -5,6 +5,8 @@
 
 #include "vtable.h"
 
+#include "stl/utility"
+
 #include <mcpe/tileentity/ContainerModel.hpp>
 
 #include <multiversion/Tabs.hpp>
@@ -35,12 +37,16 @@ void CreativeTabs::setPage(int page) {
 		if(current_page == 0) return;
 
 		int first_offset = current_page * PER_PAGE;
+
+		VTABLE_FIND_OFFSET(refresh, _ZTV22FilteredContainerModel, _ZN22FilteredContainerModel16refreshContainerEb);
 		for(int a = 0; a < PER_PAGE; a++) {
 			if(first_offset + a < cat_count_inCreative) {
-				models.at(a)->items.clear(); //forIt.at(first_offset + a)->v_items.size()
+				Logger::debug("jop", patch::to_string<int>(forIt.at(first_offset + a)->v_items.size()).c_str());
+				models.at(a)->items.resize(forIt.at(first_offset + a)->v_items.size() + 1);
 			} else {
-				models.at(a)->items.clear();
+				models.at(a)->items.resize(0);
 			}
+			VTABLE_CALL<void>(refresh, models.at(a), false);
 		}
 	}
 }
@@ -70,11 +76,18 @@ void CreativeTabs::populateItems() {
 
 		for(int i = 0; i < forIt.at(first_offset + a)->v_items.size(); i++) {
 			Logger::debug("aplortery", patch::to_string<int>(i).c_str());
+			
+			/*std::__ndk1::pair<ItemInstance, unsigned int> pr(forIt.at(first_offset + a)->v_items.at(i), i);
+			Logger::debug("aplorte", patch::to_string<int>(i).c_str());
+			
+			std::__ndk1::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>>::iterator it = models.at(a)->items.begin() + i;
 
+			models.at(a)->items.insert(it, pr);*/
 			VTABLE_CALL<void>(setItemsToTab, models.at(a), i, forIt.at(first_offset + a)->v_items.at(i));
 		}
 		VTABLE_CALL<void>(refresh, models.at(a), false);
 	}
+	Logger::debug("aplorte", "derrtoip");
 }
 
 void CreativeTabs::invalidateModels(CraftingContainerManagerModel* ths) {
