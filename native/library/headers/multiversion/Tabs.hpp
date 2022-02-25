@@ -21,6 +21,8 @@ namespace CreativeTabs {
 	extern int page_count;
 	extern int current_page;
 
+	extern std::__ndk1::vector<std::__ndk1::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>>> cache;
+
 	void setPage(int page);
 	void nextPage();
 	void prevPage();

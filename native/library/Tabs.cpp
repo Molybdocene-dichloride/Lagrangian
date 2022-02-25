@@ -26,11 +26,14 @@ int CreativeTabs::cat_count_inCreative = 4;
 int CreativeTabs::page_count = 1;
 int CreativeTabs::current_page = 0;
 
+std::__ndk1::vector<std::__ndk1::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>>> CreativeTabs::cache;
+
 void CreativeTabs::setPage(int page) {
 	if(page < page_count && page >= 0) {
 		Logger::debug("noop", patch::to_string<int>(current_page).c_str());
-
-		//JavaCallbacks::invokeCallback("CreativePageChanged", "", page, current_page);
+		
+		//jclass ccls = getDefaultCallbackClass();
+		//JavaCallbacks::invokeCallback(ccls, "invokeAPICallback", "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/Throwable;", "CreativePageChanged", page, current_page);
 		current_page = page;
 		Logger::debug("jop", patch::to_string<int>(current_page).c_str());
 
@@ -47,6 +50,7 @@ void CreativeTabs::setPage(int page) {
 				models.at(a)->items.resize(0);
 			}
 			VTABLE_CALL<void>(refresh, models.at(a), false);
+			//LagrangianRegistries::_vanillaCreativeRegister.categories(LagrangianRegistries::registries.at[]);
 		}
 	}
 }
@@ -107,4 +111,26 @@ void CreativeTabs::invalidateModels(CraftingContainerManagerModel* ths) {
 	CreativeTabs::models.push_back(cm1);
 	CreativeTabs::models.push_back(cm2);
 	CreativeTabs::models.push_back(cm3);
+
+	CreativeTabs::cache.clear();
+
+	//std::__ndk1::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>> items0 = cm0->items;
+	//std::__ndk1::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>> items1 = cm1->items;
+	//std::__ndk1::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>> items2 = cm2->items;
+	//std::__ndk1::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>> items3 = cm3->items;
+	Logger::debug("Lg0", "fretka");
+	std::__ndk1::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>>::iterator eet;
+	for(eet = cm0->items.begin(); eet != cm0->items.end(); ++eet) {
+		//Logger::debug("Lg0", eet->first.c_str());
+		Logger::debug("Lg1", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(&(*eet))).c_str());
+		unsigned int ii = std::__ndk1::get<1>(*eet);
+		Logger::debug("Lg10", patch::to_string<unsigned int>(ii).c_str());
+
+		ItemInstance itemi = std::__ndk1::get<0>(*eet);
+		Logger::debug("Lg101", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(&itemi)).c_str());
+	}
+	//cache.push_back(items0);
+	//cache.push_back(items1);
+	//cache.push_back(items2);
+	//cache.push_back(items3);
 }
