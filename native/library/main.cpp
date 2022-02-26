@@ -8,30 +8,21 @@
 #include <hook.h>
 #include <logger.h>
 #include <nativejs.h>
-
-#include <mcpe/common.hpp>
-//#include <mcpe\VanillaBlocks.h>
-//#include <mcpe/ChunkSource.hpp>
-//#include <mcpe/IBlockWorldGenAPI.hpp>
-//#include <mcpe/RenderParams.hpp>
-//#include <mcpe/NativeBlockSource.hpp>
-#include <mcpe/block/Block.hpp>
-#include <mcpe/math/BlockPos.hpp>
-
+#include "vtable.h"
 #include <horizon/pool.h>
 #include <innercore/global_context.h>
 #include <innercore/block_registry.h>
 #include <innercore/id_conversion_map.h>
 
-#include "vtable.h"
+#include <mcpe/common.hpp>
+#include <mcpe/block/Block.hpp>
+#include <mcpe/math/BlockPos.hpp>
 
 #include <Localization.hpp>
 #include <Flags.hpp>
 #include <toString.hpp>
 
 #include <LagrangianRegistries.hpp>
-
-//#include <mcpe/ContainerModel.hpp>
 
 std::vector<long>::iterator it;
 
@@ -225,7 +216,7 @@ JS_EXPORT_COMPLEX(LocalizationSystem, loadTranslationDir, "V(SS)", (JNIEnv* env,
 //technical for JS PrefixPostfixTranslator
 JS_EXPORT_COMPLEX(LocalizationSystem, _createNativeTranslatorObj, "I(SS)", (JNIEnv* env, NativeJS::ComplexArgs ca) {
 	if(LocalizationSystem::trmap.find(std::__ndk1::pair<std::__ndk1::string, std::__ndk1::string>(ca.get("pre").asString(), ca.get("post").asString())) != LocalizationSystem::trmap.end()) {
-		Logger::debug("89h", "ddd");
+		Logger::debug(/*hy=*/"89h", "ddd");
 		return NativeJS::wrapIntegerResult(reinterpret_cast<uintptr_t>(LocalizationSystem::trmap[std::__ndk1::pair<std::__ndk1::string, std::__ndk1::string>(ca.get("pre").asString(), ca.get("post").asString())]));
 	} else {
 		Logger::debug("89fh", "{}");
