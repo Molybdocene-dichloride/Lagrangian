@@ -1,0 +1,7 @@
+---
+InheritParentConfig: true
+User: user
+FormatStyle: file
+CheckOptions:
+  - key: bugprone-argument-comment.IgnoreSingleArgument
+    value: false

@@ -1,0 +1,6 @@
+[
+  { "directory": "/home/user/llvm/build",
+    "arguments": ["/usr/bin/clang++", "-I/home/fr/android-ndk-r16b/sysroot/usr/include/", "-I/home/fr/projects/ot/Kernel/toolchain/stdincludes/gnu_stl/", "-I/home/fr/projects/ot/Kernel/toolchain/stdincludes/horizon/", "-I/home/fr/projects/ot/Kernel/src/native/library/headers/", "-DSOMEDEF=With spaces, quotes and \\-es.", "-c", "-o", "file.o", "/home/fr/projects/ot/Kernel/src/native/library/main.cpp"],
+    "file": "/home/fr/projects/ot/Kernel/src/native/library/main.cpp" 
+  }
+]
