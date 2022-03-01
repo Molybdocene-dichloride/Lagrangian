@@ -101,6 +101,18 @@
 			}
 		},
 		{
+			"label": "Push Native",
+			"type": "shell",
+			"options": {
+				"cwd": "./toolchain/python"
+			},
+			"command": "./launch.sh",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
 			"label": "Connect to ADB",
 			"type": "shell",
 			"options": {
