@@ -33,7 +33,13 @@ void CreativeTabs::setPage(int page) {
 		Logger::debug("noop", patch::to_string<int>(current_page).c_str());
 		
 		//jclass ccls = getDefaultCallbackClass();
-		//JavaCallbacks::invokeCallback(ccls, "invokeAPICallback", "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/Throwable;", "CreativePageChanged", page, current_page);
+		JavaCallbacks::invokeCallback("invokeAPICallback", "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/Throwable;", "CreativePageChanged", page, current_page);
+		
+		//jmethodID mid_getName = env->GetMethodID(JavaCallbacks::getDefaultCallbackClass(), "getName", "()Ljava/lang/String;");
+		//jstring name = env->CallObjectMethod(JavaCallbacks::getDefaultCallbackClass(), mid_getName);
+		//const char* str = env->GetStringUTFChars(name, NULL);
+		//Logger::debug("joomp", str);
+		
 		current_page = page;
 		Logger::debug("jop", patch::to_string<int>(current_page).c_str());
 
@@ -127,8 +133,9 @@ void CreativeTabs::invalidateModels(CraftingContainerManagerModel* ths) {
 		Logger::debug("Lg10", patch::to_string<unsigned int>(ii).c_str());
 
 		ItemInstance itemi = std::__ndk1::get<0>(*eet);
-		Logger::debug("Lg101", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(&itemi)).c_str());
+		Logger::debug("Lg101", patch::to_string<int>(reinterpret_cast<int>(itemi->getId())).c_str());
 	}
+	Logger::debug("Lg101", "conool");
 	//cache.push_back(items0);
 	//cache.push_back(items1);
 	//cache.push_back(items2);
