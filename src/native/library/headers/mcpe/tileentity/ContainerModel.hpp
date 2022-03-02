@@ -16,6 +16,19 @@ enum class ContainerID : char {
 	UNK,
 };
 
+enum class ContainerCategory : char {
+	UNK,
+};
+enum class ContainerEnumName : char {
+	UNK,
+};
+
+class ContainerEnumNameHasher {
+	size_t operator()(ContainerEnumName c) const {
+		return 11;
+	}
+};
+
 class Player {
 	public:
 	virtual const int getCreativeItemList();
@@ -29,6 +42,8 @@ class LocalPlayer : public Player {
 };
 
 class ContainerModel {
+	ContainerCategory getContainerCategory();
+	ContainerEnumName getContainerEnumName();
 };
 class ExpandoContainerModel : public ContainerModel {
 	public:
@@ -38,7 +53,9 @@ class ExpandoContainerModel : public ContainerModel {
 
 static_assert(offsetof(ExpandoContainerModel, items) == 96, "CreativeItemRegistry items position");
 
-class FilteredContainerModel : public ExpandoContainerModel {};
+class FilteredContainerModel : public ExpandoContainerModel {
+	FilteredContainerModel(ContainerEnumName, int, ContainerCategory, bool, bool, std::__ndk1::function<FilterResult (ItemInstance const&)>);
+};
 
 class ContainerManagerModel {
 	public:
@@ -60,10 +77,3 @@ class CraftingContainerManagerModel : public ContainerManagerModel {
 };
 
 //FilteredContainerModel::setItemInstance(int, ItemInstance const&) vtable
-
-typedef unsigned char ContainerEnumName;
-class ContainerEnumNameHasher {
-	size_t operator()(ContainerEnumName c) const {
-		return 11;
-	}
-};
