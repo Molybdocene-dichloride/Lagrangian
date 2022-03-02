@@ -14,9 +14,11 @@
 
 #include <toString.hpp>
 
-std::__ndk1::vector<FilteredContainerModel*> CreativeTabs::models = std::__ndk1::vector<FilteredContainerModel*>();
+#include "stdCrutch.hpp"
 
-std::__ndk1::map<int, ItemCategory*> CreativeTabs::forIt = std::__ndk1::map<int, ItemCategory*>();
+newstd::vector<FilteredContainerModel*> CreativeTabs::models = newstd::vector<FilteredContainerModel*>();
+
+newstd::map<int, ItemCategory*> CreativeTabs::forIt = newstd::map<int, ItemCategory*>();
 
 int CreativeTabs::PER_PAGE = 4;
 
@@ -26,14 +28,15 @@ int CreativeTabs::cat_count_inCreative = 4;
 int CreativeTabs::page_count = 1;
 int CreativeTabs::current_page = 0;
 
-std::__ndk1::vector<std::__ndk1::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>>> CreativeTabs::cache;
+newstd::vector<newstd::vector<newstd::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>>> CreativeTabs::cache;
 
 void CreativeTabs::setPage(int page) {
 	if(page < page_count && page >= 0) {
 		Logger::debug("noop", patch::to_string<int>(current_page).c_str());
 		
 		//jclass ccls = getDefaultCallbackClass();
-		JavaCallbacks::invokeCallback("invokeAPICallback", "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/Throwable;", "CreativePageChanged", page, current_page);
+		
+		//JavaCallbacks::invokeCallback("invokeAPICallback", "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/Throwable;", "CreativePageChanged", page, current_page);
 		
 		//jmethodID mid_getName = env->GetMethodID(JavaCallbacks::getDefaultCallbackClass(), "getName", "()Ljava/lang/String;");
 		//jstring name = env->CallObjectMethod(JavaCallbacks::getDefaultCallbackClass(), mid_getName);
@@ -49,6 +52,7 @@ void CreativeTabs::setPage(int page) {
 
 		VTABLE_FIND_OFFSET(refresh, _ZTV22FilteredContainerModel, _ZN22FilteredContainerModel16refreshContainerEb);
 		for(int a = 0; a < PER_PAGE; a++) {
+			Logger::debug("Lg0", patch::to_string<size_t>(models.at(a)->items.size()).c_str());
 			if(first_offset + a < cat_count_inCreative) {
 				Logger::debug("jop", patch::to_string<int>(forIt.at(first_offset + a)->v_items.size()).c_str());
 				models.at(a)->items.resize(forIt.at(first_offset + a)->v_items.size() + 1);
@@ -101,7 +105,7 @@ void CreativeTabs::populateItems() {
 }
 
 void CreativeTabs::invalidateModels(CraftingContainerManagerModel* ths) {
-	std::__ndk1::unordered_map<std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>,std::__ndk1::shared_ptr<ContainerModel>,std::__ndk1::hash<std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>>,std::__ndk1::equal_to<std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>>,std::__ndk1::allocator<std::__ndk1::pair<std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>const,std::__ndk1::shared_ptr<ContainerModel>>>>::iterator at;
+	newstd::unordered_map<newstd::string, newstd::shared_ptr<ContainerModel>>::iterator at;
 	for(at = ths->containers.begin(); at != ths->containers.end(); ++at) {
 		Logger::debug("Lg0", at->first.c_str());
 		Logger::debug("Lg1", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(at->second.get())).c_str());
@@ -120,22 +124,31 @@ void CreativeTabs::invalidateModels(CraftingContainerManagerModel* ths) {
 
 	CreativeTabs::cache.clear();
 
-	//std::__ndk1::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>> items0 = cm0->items;
-	//std::__ndk1::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>> items1 = cm1->items;
-	//std::__ndk1::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>> items2 = cm2->items;
-	//std::__ndk1::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>> items3 = cm3->items;
-	Logger::debug("Lg0", "fretka");
+	Logger::debug("size[]", patch::to_string<size_t>(cm0->items.size()).c_str());
+	Logger::debug("size[]", patch::to_string<size_t>(cm1->items.size()).c_str());
+	Logger::debug("size[]", patch::to_string<size_t>(cm2->items.size()).c_str());
+	Logger::debug("size[]", patch::to_string<size_t>(cm3->items.size()).c_str());
 	std::__ndk1::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>>::iterator eet;
 	for(eet = cm0->items.begin(); eet != cm0->items.end(); ++eet) {
 		//Logger::debug("Lg0", eet->first.c_str());
-		Logger::debug("Lg1", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(&(*eet))).c_str());
-		unsigned int ii = std::__ndk1::get<1>(*eet);
-		Logger::debug("Lg10", patch::to_string<unsigned int>(ii).c_str());
+		//Logger::debug("Lg1", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(&(*eet))).c_str());
+		
+		//unsigned int ii = std::__ndk1::get<1>(*eet);
+		Logger::debug("Lg10", patch::to_string<unsigned int>((*eet).second).c_str());
 
-		ItemInstance itemi = std::__ndk1::get<0>(*eet);
-		Logger::debug("Lg101", patch::to_string<int>(reinterpret_cast<int>(itemi->getId())).c_str());
+		//ItemInstance itemi = std::__ndk1::get<0>(*eet);
+		Logger::debug("Pointer", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(&(*eet).first)).c_str());
+		
+		//VTABLE_FIND_OFFSET(getId, _ZTV22FilteredContainerModel, _ZN22FilteredContainerModel16refreshContainerEb);
+		//Logger::debug("Lg101", (*eet).first.getName().c_str());
 	}
 	Logger::debug("Lg101", "conool");
+
+	//newstd::vector<newstd::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>> items0 = cm0->items;
+	//newstd::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>> items1 = cm1->items;
+	//std::__ndk1::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>> items2 = cm2->items;
+	//std::__ndk1::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>> items3 = cm3->items;
+
 	//cache.push_back(items0);
 	//cache.push_back(items1);
 	//cache.push_back(items2);

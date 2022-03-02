@@ -10,11 +10,14 @@ class ItemStackBase {
 	short damage; // 16
 	unsigned char count; //18
 	char filler2[84-19];
-    virtual int getId() const;
-    int getDamageValue() const;
+    
     ItemStackBase(Item const&);
     ItemStackBase(Item const&, int);
     ItemStackBase(Item const&, int, int);
+
+    int getId() const;
+    int getDamageValue() const;
+    std::__ndk1::string getName() const;
 };
 class ItemStack : public ItemStackBase {
     public:

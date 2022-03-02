@@ -1,4 +1,6 @@
 #pragma once
+#include "string"
+#include "stl/string"
 
-typedef std::__ndk1 newstd;
-typedef std zheka_update_compiler_please;
+namespace newstd = std::__ndk1;
+namespace zheka_update_compiler_please = std;

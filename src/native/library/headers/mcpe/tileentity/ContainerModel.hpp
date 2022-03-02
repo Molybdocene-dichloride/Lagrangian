@@ -28,7 +28,8 @@ class LocalPlayer : public Player {
 
 };
 
-class ContainerModel {};
+class ContainerModel {
+};
 class ExpandoContainerModel : public ContainerModel {
 	public:
 	void* filler[24];
