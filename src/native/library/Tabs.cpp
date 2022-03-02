@@ -156,7 +156,8 @@ void CreativeTabs::invalidateModels(CraftingContainerManagerModel* ths) {
 	*/
 	
 	//ContainerCategory cc = cm0->getContainerCategory();
-	//ContainerEnumName cen = cm1->getContainerEnumName();
+	//ContainerEnumName cen = cm0->getContainerEnumName();
+	//newstd::function v = [](ItemInstance const& i) { return 0 }; 
 
 	//Logger::debug("ContainerCategory", patch::to_string<char>(reinterpret_cast<char>(cc)).c_str());
 	//Logger::debug("ContainerEnumName", patch::to_string<char>(reinterpret_cast<char>(cc)).c_str());

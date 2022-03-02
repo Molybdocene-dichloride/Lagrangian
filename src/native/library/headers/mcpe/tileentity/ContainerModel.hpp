@@ -12,6 +12,10 @@
 
 #include <innercore/item_registry.h>
 
+enum class FilterResult : char {
+	UNK,
+};
+
 enum class ContainerID : char {
 	UNK,
 };
@@ -54,7 +58,7 @@ class ExpandoContainerModel : public ContainerModel {
 static_assert(offsetof(ExpandoContainerModel, items) == 96, "CreativeItemRegistry items position");
 
 class FilteredContainerModel : public ExpandoContainerModel {
-	FilteredContainerModel(ContainerEnumName, int, ContainerCategory, bool, bool, std::__ndk1::function<FilterResult (ItemInstance const&)>);
+	FilteredContainerModel(ContainerEnumName, int, ContainerCategory, bool, bool, std::__ndk1::function<FilterResult(ItemInstance const&)>);
 };
 
 class ContainerManagerModel {
