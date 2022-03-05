@@ -1,5 +1,6 @@
 #pragma once
 
+#include "mcpe/item/Item.hpp"
 #include <stl/map>
 #include <stl/vector>
 
@@ -8,25 +9,34 @@
 
 class ItemCategory;
 
-namespace CreativeTabs {
-	extern std::__ndk1::vector<FilteredContainerModel*> models;
+class CreativeTabs : public ItemCategory {
+	public:
+	static std::__ndk1::vector<FilteredContainerModel*> models;
 
-	extern std::__ndk1::map<int, ItemCategory*> forIt;
+	static std::__ndk1::map<int, ItemCategory*> forIt;
 
-	extern int PER_PAGE;
+	static int PER_PAGE;
 
-	extern int cat_count;
-	extern int cat_count_inCreative;
+	static int cat_count;
+	static int cat_count_inCreative;
 
-	extern int page_count;
-	extern int current_page;
+	static int page_count;
+	static int current_page;
 
-	extern std::__ndk1::vector<std::__ndk1::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>>> cache;
+	static std::__ndk1::vector<std::__ndk1::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>>> cache;
 
-	void setPage(int page);
-	void nextPage();
-	void prevPage();
-	void populateItems();
+	static void setPage(int page);
+	static void nextPage();
+	static void prevPage();
+	static void populateItems();
 	
-	void invalidateModels(CraftingContainerManagerModel* ths);
-}
+	static void invalidateModels(CraftingContainerManagerModel* ths);
+	private:
+	ItemStackInfo icon;
+	int creative_index;
+	public:
+	CreativeTabs(NativeJS::ComplexArgs ca);
+	CreativeTabs(std::__ndk1::string id, bool isCreative = false);
+
+	void setIcon(ItemStackInfo icon);
+};

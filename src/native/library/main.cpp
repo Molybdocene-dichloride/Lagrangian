@@ -286,12 +286,6 @@ JS_EXPORT(CreativeTabs, invalidate, "I()", (JNIEnv* env) {
 	is = true;
 });
 
-typedef bool FilterResult;
-FilterResult too(const ItemInstance& i) {
-	return GlobalContext::getServerPlayer()->getCreativeItemList();
-}
-
-
 class CategoryModule : public Module { //
     public:
     CategoryModule(const char* id): Module(id) {}; 

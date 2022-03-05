@@ -15,12 +15,13 @@ class ItemCategory {
 	public:
 	std::__ndk1::string id;
 	int index;
+
+	std::__ndk1::vector<ItemStackInfo> items;
+	std::__ndk1::vector<ItemInstance> v_items;
+
 	int creative_index;
 	bool isCreative;
 	ItemStackInfo icon;
-	std::__ndk1::vector<ItemStackInfo> items;
-	std::__ndk1::vector<ItemInstance> v_items;
-	//list<ItemGroupInfo> items;
 	public:
 	ItemCategory(NativeJS::ComplexArgs ca);
 	ItemCategory(std::__ndk1::string id, bool isCreative = false);

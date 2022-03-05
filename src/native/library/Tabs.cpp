@@ -105,7 +105,7 @@ void CreativeTabs::populateItems() {
 }
 
 void CreativeTabs::invalidateModels(CraftingContainerManagerModel* ths) {
-	/*newstd::unordered_map<newstd::string, newstd::shared_ptr<ContainerModel>>::iterator at;
+	newstd::unordered_map<newstd::string, newstd::shared_ptr<ContainerModel>>::iterator at;
 	for(at = ths->containers.begin(); at != ths->containers.end(); ++at) {
 		Logger::debug("Lg0", at->first.c_str());
 		Logger::debug("Lg1", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(at->second.get())).c_str());
@@ -124,7 +124,7 @@ void CreativeTabs::invalidateModels(CraftingContainerManagerModel* ths) {
 
 	CreativeTabs::cache.clear();
 
-	Logger::debug("size[]", patch::to_string<size_t>(cm0->items.size()).c_str());
+	/*Logger::debug("size[]", patch::to_string<size_t>(cm0->items.size()).c_str());
 	Logger::debug("size[]", patch::to_string<size_t>(cm1->items.size()).c_str());
 	Logger::debug("size[]", patch::to_string<size_t>(cm2->items.size()).c_str());
 	Logger::debug("size[]", patch::to_string<size_t>(cm3->items.size()).c_str());
@@ -155,12 +155,12 @@ void CreativeTabs::invalidateModels(CraftingContainerManagerModel* ths) {
 	//cache.push_back(items3);
 	*/
 	
-	//ContainerCategory cc = cm0->getContainerCategory();
-	//ContainerEnumName cen = cm0->getContainerEnumName();
+	ContainerCategory cc = cm0->getContainerCategory();
+	ContainerEnumName cen = cm0->getContainerEnumName();
 	//newstd::function v = [](ItemInstance const& i) { return 0 }; 
 
-	//Logger::debug("ContainerCategory", patch::to_string<char>(reinterpret_cast<char>(cc)).c_str());
-	//Logger::debug("ContainerEnumName", patch::to_string<char>(reinterpret_cast<char>(cc)).c_str());
+	Logger::debug("ContainerCategory", patch::to_string<int>(static_cast<char>(cc)).c_str());
+	Logger::debug("ContainerEnumName", patch::to_string<int>(static_cast<char>(cc)).c_str());
 
 	//new FilteredContainerModel(1, 1, 1, false, false, function);
 }

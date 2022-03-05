@@ -20,10 +20,10 @@ enum class ContainerID : char {
 	UNK,
 };
 
-enum class ContainerCategory : char {
+enum class ContainerCategory : int {
 	UNK,
 };
-enum class ContainerEnumName : char {
+enum class ContainerEnumName : int {
 	UNK,
 };
 
@@ -46,8 +46,9 @@ class LocalPlayer : public Player {
 };
 
 class ContainerModel {
-	ContainerCategory getContainerCategory();
-	ContainerEnumName getContainerEnumName();
+	public:
+	ContainerCategory getContainerCategory() const;
+	ContainerEnumName getContainerEnumName() const;
 };
 class ExpandoContainerModel : public ContainerModel {
 	public:
