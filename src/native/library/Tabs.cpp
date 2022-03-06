@@ -157,10 +157,108 @@ void CreativeTabs::invalidateModels(CraftingContainerManagerModel* ths) {
 	
 	ContainerCategory cc = cm0->getContainerCategory();
 	ContainerEnumName cen = cm0->getContainerEnumName();
+
+	ContainerCategory cc1 = cm1->getContainerCategory();
+	ContainerEnumName cen1= cm1->getContainerEnumName();
+
+	ContainerCategory cc2 = cm2->getContainerCategory();
+	ContainerEnumName cen2 = cm2->getContainerEnumName();
+
+	ContainerCategory cc3 = cm3->getContainerCategory();
+	ContainerEnumName cen3 = cm3->getContainerEnumName();
+
 	//newstd::function v = [](ItemInstance const& i) { return 0 }; 
 
 	Logger::debug("ContainerCategory", patch::to_string<int>(static_cast<char>(cc)).c_str());
-	Logger::debug("ContainerEnumName", patch::to_string<int>(static_cast<char>(cc)).c_str());
+	Logger::debug("ContainerEnumName", patch::to_string<int>(static_cast<char>(cen)).c_str());
 
-	//new FilteredContainerModel(1, 1, 1, false, false, function);
+	Logger::debug("ContainerCategory", patch::to_string<int>(static_cast<char>(cc1)).c_str());
+	Logger::debug("ContainerEnumName", patch::to_string<int>(static_cast<char>(cen1)).c_str());
+
+	Logger::debug("ContainerCategory", patch::to_string<int>(static_cast<char>(cc2)).c_str());
+	Logger::debug("ContainerEnumName", patch::to_string<int>(static_cast<char>(cen2)).c_str());
+
+	Logger::debug("ContainerCategory", patch::to_string<int>(static_cast<char>(cc3)).c_str());
+	Logger::debug("ContainerEnumName", patch::to_string<int>(static_cast<char>(cen3)).c_str());
+
+	//new FilteredContainerModel(3, 1, 15, false, false, function);
+
+	//get
+	/*ContainerModel* w = ths->containers.at("inventory_items").get();
+	ContainerModel* v = ths->containers.at("hotbar_items").get();
+	ContainerModel* x = ths->containers.at("creative_output_items").get();
+	ContainerModel* y = ths->containers.at("crafting_output_items").get();
+	ContainerModel* z = ths->containers.at("cursor_items").get();
+	ContainerModel* t = ths->containers.at("offhand_items").get();
+
+	ContainerModel* a = ths->containers.at("recipe_items").get();
+	ContainerModel* b = ths->containers.at("armor_items").get();
+
+	ContainerModel* u = ths->containers.at("crafting_input_items").get();
+	ContainerModel* p = ths->containers.at("combined_hotbar_and_inventory_items").get();
+	
+	ContainerModel* r = ths->containers.at("recipe_search").get();
+	
+	ContainerCategory wc = w->getContainerCategory();
+	ContainerEnumName wen = w->getContainerEnumName();
+
+	ContainerCategory vc1 = v->getContainerCategory();
+	ContainerEnumName ven1= v->getContainerEnumName();
+
+	ContainerCategory xc2 = x->getContainerCategory();
+	ContainerEnumName xen2 = x->getContainerEnumName();
+
+	ContainerCategory yc3 = y->getContainerCategory();
+	ContainerEnumName yen3 = y->getContainerEnumName();
+
+	ContainerCategory zc3 = z->getContainerCategory();
+	ContainerEnumName zen3 = z->getContainerEnumName();
+
+	ContainerCategory tc3 = t->getContainerCategory();
+	ContainerEnumName ten3 = t->getContainerEnumName();
+
+	ContainerCategory ac3 = a->getContainerCategory();
+	ContainerEnumName aen3 = a->getContainerEnumName();
+
+	ContainerCategory bc3 = b->getContainerCategory();
+	ContainerEnumName ben3 = b->getContainerEnumName();
+
+	ContainerCategory uc3 = u->getContainerCategory();
+	ContainerEnumName uen3 = u->getContainerEnumName();
+
+	ContainerCategory pc3 = p->getContainerCategory();
+	ContainerEnumName pen3 = p->getContainerEnumName();
+
+	ContainerCategory rc3 = r->getContainerCategory();
+	ContainerEnumName ren3 = r->getContainerEnumName();
+
+	Logger::debug("ContainerCategory", patch::to_string<int>(static_cast<char>(vc1)).c_str());
+	Logger::debug("ContainerEnumName", patch::to_string<int>(static_cast<char>(ven1)).c_str());
+
+	Logger::debug("ContainerCategory", patch::to_string<int>(static_cast<char>(wc)).c_str());
+	Logger::debug("ContainerEnumName", patch::to_string<int>(static_cast<char>(wen)).c_str());
+
+	Logger::debug("ContainerCategory", patch::to_string<int>(static_cast<char>(xc2)).c_str());
+	Logger::debug("ContainerEnumName", patch::to_string<int>(static_cast<char>(xen2)).c_str());
+
+	Logger::debug("ContainerCategory", patch::to_string<int>(static_cast<char>(yc3)).c_str());
+	Logger::debug("ContainerEnumName", patch::to_string<int>(static_cast<char>(yen3)).c_str());
+
+	Logger::debug("ContainerCategory", patch::to_string<int>(static_cast<char>(zc3)).c_str());
+	Logger::debug("ContainerEnumName", patch::to_string<int>(static_cast<char>(zen3)).c_str());
+
+	Logger::debug("ContainerCategory", patch::to_string<int>(static_cast<char>(tc3)).c_str());
+	Logger::debug("ContainerEnumName", patch::to_string<int>(static_cast<char>(ten3)).c_str());
+	
+	//Logger::debug("ContainerCategory", patch::to_string<int>(static_cast<char>(ac3)).c_str());
+	//Logger::debug("ContainerEnumName", patch::to_string<int>(static_cast<char>(aen3)).c_str());
+	//Logger::debug("ContainerCategory", patch::to_string<int>(static_cast<char>(bc3)).c_str());
+	//Logger::debug("ContainerEnumName", patch::to_string<int>(static_cast<char>(ben3)).c_str());
+	//Logger::debug("ContainerCategory", patch::to_string<int>(static_cast<char>(uc3)).c_str());
+	//Logger::debug("ContainerEnumName", patch::to_string<int>(static_cast<char>(uen3)).c_str());
+	//Logger::debug("ContainerCategory", patch::to_string<int>(static_cast<char>(pc3)).c_str());
+	//Logger::debug("ContainerEnumName", patch::to_string<int>(static_cast<char>(pen3)).c_str());
+	//Logger::debug("ContainerCategory", patch::to_string<int>(static_cast<char>(rc3)).c_str());
+	//Logger::debug("ContainerEnumName", patch::to_string<int>(static_cast<char>(ren3)).c_str());*/
+
 }

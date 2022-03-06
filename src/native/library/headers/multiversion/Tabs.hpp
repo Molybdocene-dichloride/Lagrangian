@@ -35,8 +35,8 @@ class CreativeTabs : public ItemCategory {
 	ItemStackInfo icon;
 	int creative_index;
 	public:
-	CreativeTabs(NativeJS::ComplexArgs ca);
-	CreativeTabs(std::__ndk1::string id, bool isCreative = false);
+	//CreativeTabs(NativeJS::ComplexArgs ca);
+	//CreativeTabs(std::__ndk1::string id, bool isCreative = false);
 
-	void setIcon(ItemStackInfo icon);
+	//void setIcon(ItemStackInfo icon);
 };
