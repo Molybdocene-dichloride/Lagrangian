@@ -60,6 +60,7 @@ static_assert(offsetof(ExpandoContainerModel, items) == 96, "CreativeItemRegistr
 
 class FilteredContainerModel : public ExpandoContainerModel {
 	FilteredContainerModel(ContainerEnumName, int, ContainerCategory, bool, bool, std::__ndk1::function<FilterResult(ItemInstance const&)>);
+	bool isFiltering() const;
 };
 
 class ContainerManagerModel {

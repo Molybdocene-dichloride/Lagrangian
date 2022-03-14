@@ -167,21 +167,17 @@ void CreativeTabs::invalidateModels(CraftingContainerManagerModel* ths) {
 	ContainerCategory cc3 = cm3->getContainerCategory();
 	ContainerEnumName cen3 = cm3->getContainerEnumName();
 
-	//newstd::function v = [](ItemInstance const& i) { return 0 }; 
+	newstd::function<FilterResult(ItemInstance const&)> filtering_function([](ItemInstance const& i) { return (FilterResult) 0; }); 
 
-	Logger::debug("ContainerCategory", patch::to_string<int>(static_cast<char>(cc)).c_str());
-	Logger::debug("ContainerEnumName", patch::to_string<int>(static_cast<char>(cen)).c_str());
-
-	Logger::debug("ContainerCategory", patch::to_string<int>(static_cast<char>(cc1)).c_str());
-	Logger::debug("ContainerEnumName", patch::to_string<int>(static_cast<char>(cen1)).c_str());
-
-	Logger::debug("ContainerCategory", patch::to_string<int>(static_cast<char>(cc2)).c_str());
-	Logger::debug("ContainerEnumName", patch::to_string<int>(static_cast<char>(cen2)).c_str());
-
-	Logger::debug("ContainerCategory", patch::to_string<int>(static_cast<char>(cc3)).c_str());
-	Logger::debug("ContainerEnumName", patch::to_string<int>(static_cast<char>(cen3)).c_str());
-
-	//new FilteredContainerModel(3, 1, 15, false, false, function);
+	Logger::debug("isFlter", patch::to_string<bool>(cm0->isFiltering()).c_str());
+	
+	Logger::debug("isFlter1", patch::to_string<bool>(cm1->isFiltering()).c_str());
+	
+	Logger::debug("isFlter2", patch::to_string<bool>(cm2->isFiltering()).c_str());
+	
+	Logger::debug("isFlter3", patch::to_string<bool>(cm3->isFiltering()).c_str());
+	
+	//FilteredContainerModel nfcm = new FilteredContainerModel((ContainerEnumName)15, 1, (ContainerCategory)3, false, false, filtering_function);
 
 	//get
 	/*ContainerModel* w = ths->containers.at("inventory_items").get();
