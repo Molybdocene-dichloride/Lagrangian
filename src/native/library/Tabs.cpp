@@ -159,7 +159,7 @@ void CreativeTabs::invalidateModels(CraftingContainerManagerModel* ths) {
 	ContainerEnumName cen = cm0->getContainerEnumName();
 
 	ContainerCategory cc1 = cm1->getContainerCategory();
-	ContainerEnumName cen1= cm1->getContainerEnumName();
+	ContainerEnumName cen1 = cm1->getContainerEnumName();
 
 	ContainerCategory cc2 = cm2->getContainerCategory();
 	ContainerEnumName cen2 = cm2->getContainerEnumName();
@@ -177,8 +177,14 @@ void CreativeTabs::invalidateModels(CraftingContainerManagerModel* ths) {
 	
 	Logger::debug("isFlter3", patch::to_string<bool>(cm3->isFiltering()).c_str());
 	
-	//FilteredContainerModel nfcm = new FilteredContainerModel((ContainerEnumName)15, 1, (ContainerCategory)3, false, false, filtering_function);
+	FilteredContainerModel* nfcm = new FilteredContainerModel((ContainerEnumName)15, 1, (ContainerCategory)3, false, false, nullptr);
 
+	Logger::debug("isFlter_custom", patch::to_string<bool>(nfcm->isFiltering()).c_str());
+	Logger::debug("cc_custom", patch::to_string<int>((int)nfcm->getContainerCategory()).c_str());
+	Logger::debug("cen_custom", patch::to_string<int>((int)nfcm->getContainerEnumName()).c_str());
+
+	newstd::shared_ptr<ContainerModel> spcm = newstd::shared_ptr<ContainerModel>(nfcm);
+	ths->containers.insert(newstd::pair<newstd::string, newstd::shared_ptr<ContainerModel>>("recipe_construction", spcm));
 	//get
 	/*ContainerModel* w = ths->containers.at("inventory_items").get();
 	ContainerModel* v = ths->containers.at("hotbar_items").get();

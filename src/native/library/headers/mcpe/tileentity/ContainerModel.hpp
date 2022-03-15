@@ -12,6 +12,8 @@
 
 #include <innercore/item_registry.h>
 
+#include "stdCrutch.hpp"
+
 enum class FilterResult : char {
 	UNK,
 };
@@ -59,10 +61,13 @@ class ExpandoContainerModel : public ContainerModel {
 static_assert(offsetof(ExpandoContainerModel, items) == 96, "CreativeItemRegistry items position");
 
 class FilteredContainerModel : public ExpandoContainerModel {
+	public:
+	newstd::function<FilterResult(ItemInstance const&)> filtering_function;
 	FilteredContainerModel(ContainerEnumName, int, ContainerCategory, bool, bool, std::__ndk1::function<FilterResult(ItemInstance const&)>);
 	bool isFiltering() const;
 };
 
+//static_assert(offsetof(FilteredContainerModel, filtering_function) == 192, "CreativeItemRegistry items position");
 class ContainerManagerModel {
 	public:
 	void* filler[4];
