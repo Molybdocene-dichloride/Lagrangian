@@ -26,7 +26,6 @@ void LagrangianRegistries::registerCategory(ItemCategory* cic) {
 	CreativeTabs::cat_count++;
 	if(cic->isCreative) {
 		CreativeTabs::forIt.insert(std::__ndk1::pair<int, ItemCategory*>(cic->creative_index, cic));
-
 		if(CreativeTabs::cat_count_inCreative / 4 >= CreativeTabs::page_count) CreativeTabs::page_count++;
 		CreativeTabs::cat_count_inCreative++;
   	}

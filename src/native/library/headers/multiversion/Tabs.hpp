@@ -15,6 +15,8 @@ class CreativeTabs : public ItemCategory {
 
 	static std::__ndk1::map<int, ItemCategory*> forIt;
 
+	static newstd::vector<newstd::shared_ptr<ContainerModel>> containers;
+
 	static int PER_PAGE;
 
 	static int cat_count;

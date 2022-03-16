@@ -16,6 +16,8 @@
 
 #include "stdCrutch.hpp"
 
+#include <bits/stdc++.h>
+
 newstd::vector<FilteredContainerModel*> CreativeTabs::models = newstd::vector<FilteredContainerModel*>();
 
 newstd::map<int, ItemCategory*> CreativeTabs::forIt = newstd::map<int, ItemCategory*>();
@@ -27,6 +29,8 @@ int CreativeTabs::cat_count_inCreative = 4;
 
 int CreativeTabs::page_count = 1;
 int CreativeTabs::current_page = 0;
+
+newstd::vector<newstd::shared_ptr<ContainerModel>> CreativeTabs::containers = newstd::vector<newstd::shared_ptr<ContainerModel>>();
 
 newstd::vector<newstd::vector<newstd::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>>> CreativeTabs::cache;
 
@@ -55,9 +59,9 @@ void CreativeTabs::setPage(int page) {
 			Logger::debug("Lg0", patch::to_string<size_t>(models.at(a)->items.size()).c_str());
 			if(first_offset + a < cat_count_inCreative) {
 				Logger::debug("jop", patch::to_string<int>(forIt.at(first_offset + a)->v_items.size()).c_str());
-				models.at(a)->items.resize(forIt.at(first_offset + a)->v_items.size() + 1);
+				//models.at(a)->items.resize(forIt.at(first_offset + a)->v_items.size() + 1);
 			} else {
-				models.at(a)->items.resize(0);
+				//models.at(a)->items.resize(0);
 			}
 			VTABLE_CALL<void>(refresh, models.at(a), false);
 			//LagrangianRegistries::_vanillaCreativeRegister.categories(LagrangianRegistries::registries.at[]);
@@ -97,9 +101,12 @@ void CreativeTabs::populateItems() {
 			std::__ndk1::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>>::iterator it = models.at(a)->items.begin() + i;
 
 			models.at(a)->items.insert(it, pr);*/
-			VTABLE_CALL<void>(setItemsToTab, models.at(a), i, forIt.at(first_offset + a)->v_items.at(i));
+			//VTABLE_CALL<void>(setItemsToTab, models.at(a), i, forIt.at(first_offset + a)->v_items.at(i));
+			Logger::debug("aplortery", "dd");
 		}
+		Logger::debug("sssss", "dddd");
 		VTABLE_CALL<void>(refresh, models.at(a), false);
+		Logger::debug("qqqqwww", "wd");
 	}
 	Logger::debug("aplorte", "derrtoip");
 }
@@ -182,9 +189,19 @@ void CreativeTabs::invalidateModels(CraftingContainerManagerModel* ths) {
 	Logger::debug("isFlter_custom", patch::to_string<bool>(nfcm->isFiltering()).c_str());
 	Logger::debug("cc_custom", patch::to_string<int>((int)nfcm->getContainerCategory()).c_str());
 	Logger::debug("cen_custom", patch::to_string<int>((int)nfcm->getContainerEnumName()).c_str());
-
+	time_t start, end;
+	time(&start);
 	newstd::shared_ptr<ContainerModel> spcm = newstd::shared_ptr<ContainerModel>(nfcm);
-	ths->containers.insert(newstd::pair<newstd::string, newstd::shared_ptr<ContainerModel>>("recipe_construction", spcm));
+	time(&end);
+
+	double time_taken = double(end - start);
+	Logger::debug("time of sharing", patch::to_string<double>(time_taken).c_str());
+	
+	CreativeTabs::containers.clear();
+	CreativeTabs::containers.push_back(spcm);
+	
+	//ths->containers.insert(newstd::pair<newstd::string, newstd::shared_ptr<ContainerModel>>("recipe_construction", spcm));
+	
 	//get
 	/*ContainerModel* w = ths->containers.at("inventory_items").get();
 	ContainerModel* v = ths->containers.at("hotbar_items").get();
