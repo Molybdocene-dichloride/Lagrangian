@@ -30,7 +30,7 @@ class CreativeTabs : public ItemCategory {
 	static void setPage(int page);
 	static void nextPage();
 	static void prevPage();
-	static void populateItems();
+	static void populateItems(CraftingContainerManagerModel* ths);
 	
 	static void invalidateModels(CraftingContainerManagerModel* ths);
 	private:

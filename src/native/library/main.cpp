@@ -299,14 +299,17 @@ class CategoryModule : public Module { //
 			return 0;
 		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER);
 		
-
+		HookManager::addCallback(SYMBOL("mcpe", "_ZN29CraftingContainerManagerModel19_populateContainersERj"), LAMBDA((HookManager::CallbackController* controller), {
+			controller->prevent();
+		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER);
+		
 		HookManager::addCallback(SYMBOL("mcpe", "_ZN29CraftingContainerManagerModel4tickEv"), LAMBDA((HookManager::CallbackController* controller, CraftingContainerManagerModel* ths), {
 			if(is) {
 				CreativeTabs::invalidateModels(ths);
 				is = false;
 			}
 			Logger::debug("derr", "ddytty");
-			CreativeTabs::populateItems();
+			CreativeTabs::populateItems(ths);
 
 			return 0;
 		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER);

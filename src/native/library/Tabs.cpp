@@ -1,3 +1,4 @@
+#include <cstdint>
 #include <string>
 
 #include <symbol.h>
@@ -60,10 +61,12 @@ void CreativeTabs::setPage(int page) {
 			if(first_offset + a < cat_count_inCreative) {
 				Logger::debug("jop", patch::to_string<int>(forIt.at(first_offset + a)->v_items.size()).c_str());
 				//models.at(a)->items.resize(forIt.at(first_offset + a)->v_items.size() + 1);
+			
 			} else {
 				//models.at(a)->items.resize(0);
+
 			}
-			VTABLE_CALL<void>(refresh, models.at(a), false);
+			//VTABLE_CALL<void>(refresh, models.at(a), false);
 			//LagrangianRegistries::_vanillaCreativeRegister.categories(LagrangianRegistries::registries.at[]);
 		}
 	}
@@ -75,7 +78,7 @@ void CreativeTabs::prevPage() {
 	setPage(current_page - 1);
 }
 
-void CreativeTabs::populateItems() {
+void CreativeTabs::populateItems(CraftingContainerManagerModel* ths) {	
 	VTABLE_FIND_OFFSET(setItemsToTab, _ZTV22FilteredContainerModel, _ZN22FilteredContainerModel15setItemInstanceEiRK12ItemInstance);
 	VTABLE_FIND_OFFSET(refresh, _ZTV22FilteredContainerModel, _ZN22FilteredContainerModel16refreshContainerEb);
 	
@@ -83,47 +86,32 @@ void CreativeTabs::populateItems() {
 	
 	int first_offset = current_page * PER_PAGE;
 
-	Logger::debug("niobiv0", patch::to_string<int>(current_page).c_str());
-	Logger::debug("niobiv1", patch::to_string<int>(PER_PAGE).c_str());
-
-	Logger::debug("niobiv", patch::to_string<int>(first_offset).c_str());
-
 	for(int a = 0; first_offset + a < cat_count_inCreative && a < PER_PAGE; a++) {
-		Logger::debug("UBLASD", patch::to_string<int>(first_offset + a).c_str());
-		Logger::debug("UBLASD", patch::to_string<int>(a).c_str());
 
 		for(int i = 0; i < forIt.at(first_offset + a)->v_items.size(); i++) {
 			Logger::debug("aplortery", patch::to_string<int>(i).c_str());
-			
-			/*std::__ndk1::pair<ItemInstance, unsigned int> pr(forIt.at(first_offset + a)->v_items.at(i), i);
-			Logger::debug("aplorte", patch::to_string<int>(i).c_str());
-			
-			std::__ndk1::vector<std::__ndk1::pair<ItemInstance,unsigned int>,std::__ndk1::allocator<std::__ndk1::pair<ItemInstance,unsigned int>>>::iterator it = models.at(a)->items.begin() + i;
 
-			models.at(a)->items.insert(it, pr);*/
-			//VTABLE_CALL<void>(setItemsToTab, models.at(a), i, forIt.at(first_offset + a)->v_items.at(i));
+			Logger::debug("apiuiu", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(&forIt.at(first_offset + a)->v_items.at(i))).c_str());
+			
+			VTABLE_CALL<void>(setItemsToTab, models.at(a), i, &forIt.at(first_offset + a)->v_items.at(i));
+
 			Logger::debug("aplortery", "dd");
 		}
 		Logger::debug("sssss", "dddd");
-		VTABLE_CALL<void>(refresh, models.at(a), false);
+		//VTABLE_CALL<void>(refresh, models.at(a), false);
 		Logger::debug("qqqqwww", "wd");
 	}
 	Logger::debug("aplorte", "derrtoip");
 }
 
 void CreativeTabs::invalidateModels(CraftingContainerManagerModel* ths) {
-	newstd::unordered_map<newstd::string, newstd::shared_ptr<ContainerModel>>::iterator at;
-	for(at = ths->containers.begin(); at != ths->containers.end(); ++at) {
-		Logger::debug("Lg0", at->first.c_str());
-		Logger::debug("Lg1", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(at->second.get())).c_str());
-	}
-
 	CreativeTabs::models.clear();
 	
 	FilteredContainerModel* cm0 = (FilteredContainerModel*) ths->containers.at("recipe_construction").get();
 	FilteredContainerModel* cm1 = (FilteredContainerModel*) ths->containers.at("recipe_equipment").get();
 	FilteredContainerModel* cm2 = (FilteredContainerModel*) ths->containers.at("recipe_items").get();
 	FilteredContainerModel* cm3 = (FilteredContainerModel*) ths->containers.at("recipe_nature").get();
+	
 	CreativeTabs::models.push_back(cm0);
 	CreativeTabs::models.push_back(cm1);
 	CreativeTabs::models.push_back(cm2);
@@ -162,45 +150,21 @@ void CreativeTabs::invalidateModels(CraftingContainerManagerModel* ths) {
 	//cache.push_back(items3);
 	*/
 	
-	ContainerCategory cc = cm0->getContainerCategory();
-	ContainerEnumName cen = cm0->getContainerEnumName();
-
-	ContainerCategory cc1 = cm1->getContainerCategory();
-	ContainerEnumName cen1 = cm1->getContainerEnumName();
-
-	ContainerCategory cc2 = cm2->getContainerCategory();
-	ContainerEnumName cen2 = cm2->getContainerEnumName();
-
-	ContainerCategory cc3 = cm3->getContainerCategory();
-	ContainerEnumName cen3 = cm3->getContainerEnumName();
-
-	newstd::function<FilterResult(ItemInstance const&)> filtering_function([](ItemInstance const& i) { return (FilterResult) 0; }); 
-
-	Logger::debug("isFlter", patch::to_string<bool>(cm0->isFiltering()).c_str());
-	
-	Logger::debug("isFlter1", patch::to_string<bool>(cm1->isFiltering()).c_str());
-	
-	Logger::debug("isFlter2", patch::to_string<bool>(cm2->isFiltering()).c_str());
-	
-	Logger::debug("isFlter3", patch::to_string<bool>(cm3->isFiltering()).c_str());
+	//newstd::function<FilterResult(ItemInstance const&)> filtering_function([](ItemInstance const& i) { return (FilterResult) 0; }); 
 	
 	FilteredContainerModel* nfcm = new FilteredContainerModel((ContainerEnumName)15, 1, (ContainerCategory)3, false, false, nullptr);
 
 	Logger::debug("isFlter_custom", patch::to_string<bool>(nfcm->isFiltering()).c_str());
 	Logger::debug("cc_custom", patch::to_string<int>((int)nfcm->getContainerCategory()).c_str());
 	Logger::debug("cen_custom", patch::to_string<int>((int)nfcm->getContainerEnumName()).c_str());
-	time_t start, end;
-	time(&start);
+	
+	
 	newstd::shared_ptr<ContainerModel> spcm = newstd::shared_ptr<ContainerModel>(nfcm);
-	time(&end);
-
-	double time_taken = double(end - start);
-	Logger::debug("time of sharing", patch::to_string<double>(time_taken).c_str());
 	
 	CreativeTabs::containers.clear();
 	CreativeTabs::containers.push_back(spcm);
 	
-	//ths->containers.insert(newstd::pair<newstd::string, newstd::shared_ptr<ContainerModel>>("recipe_construction", spcm));
+	ths->containers.insert(newstd::pair<newstd::string, newstd::shared_ptr<ContainerModel>>("recipe_construction", spcm));
 	
 	//get
 	/*ContainerModel* w = ths->containers.at("inventory_items").get();
