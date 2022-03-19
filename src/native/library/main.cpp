@@ -301,7 +301,7 @@ class CategoryModule : public Module { //
 		
 		HookManager::addCallback(SYMBOL("mcpe", "_ZN29CraftingContainerManagerModel19_populateContainersERj"), LAMBDA((HookManager::CallbackController* controller), {
 			controller->prevent();
-		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER);
+		}, ), HookManager::CALL | HookManager::LISTENER | HookManager::CONTROLLER);
 		
 		HookManager::addCallback(SYMBOL("mcpe", "_ZN29CraftingContainerManagerModel4tickEv"), LAMBDA((HookManager::CallbackController* controller, CraftingContainerManagerModel* ths), {
 			if(is) {

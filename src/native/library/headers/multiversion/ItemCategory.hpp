@@ -13,18 +13,19 @@ class ContainerModel;
 
 class ItemCategory {
 	public:
-	std::__ndk1::string id;
 	int index;
+	int creative_index;
+	std::__ndk1::string id;
+	std::__ndk1::string name;
 
 	std::__ndk1::vector<ItemStackInfo> items;
 	std::__ndk1::vector<ItemInstance> v_items;
 
-	int creative_index;
 	bool isCreative;
 	ItemStackInfo icon;
 	public:
 	ItemCategory(NativeJS::ComplexArgs ca);
-	ItemCategory(std::__ndk1::string id, bool isCreative = false);
+	ItemCategory(std::__ndk1::string id, std::__ndk1::string name, bool isCreative = false);
 	
 	void addItem(NativeJS::ComplexArgs ca);
 	void addItem(ItemStackInfo item);

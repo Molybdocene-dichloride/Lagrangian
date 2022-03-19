@@ -7,10 +7,11 @@
 
 #include <toString.hpp>
 
-ItemCategory::ItemCategory(std::__ndk1::string id, bool isCreative) {
+ItemCategory::ItemCategory(std::__ndk1::string id, std::__ndk1::string name, bool isCreative) {
 	this->creative_index = -1;
 	this->index = CreativeTabs::cat_count;
 	this->id = id;
+	this->name = name;
 	this->isCreative = isCreative;
 	this->items = std::__ndk1::vector<ItemStackInfo>();
 	this->v_items = std::__ndk1::vector<ItemInstance>();
@@ -23,7 +24,7 @@ ItemCategory::ItemCategory(std::__ndk1::string id, bool isCreative) {
 	Logger::debug("333gret", this->id.c_str());
 }
 
-ItemCategory::ItemCategory(NativeJS::ComplexArgs ca) : ItemCategory(ca.get("id").asString(), ca.get("isCreative").asInt()) {}
+ItemCategory::ItemCategory(NativeJS::ComplexArgs ca) : ItemCategory(ca.get("id").asString(), ca.get("name").asString(), ca.get("isCreative").asInt()) {}
 
 void ItemCategory::addItem(NativeJS::ComplexArgs ca) {
 	Logger::debug("loom", patch::to_string<int>(ca.get(std::string("item") + "_id").asInt()).c_str());
