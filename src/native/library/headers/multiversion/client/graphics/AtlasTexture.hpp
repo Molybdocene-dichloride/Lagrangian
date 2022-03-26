@@ -1,6 +1,5 @@
 #pragma once
 
-
 class TextureAtlas;
 class Texture;
 namespace lagrangian {
@@ -8,10 +7,8 @@ namespace lagrangian {
 		class AtlasTexture {
 			TextureAtlas* _vanilla;
 			//std::__ndk1::vector<Magick::Image> ts;
-			AtlasTexture() {
-
-			}
-			AtlasTexture(TextureAtlas* vanilla) {
+			AtlasTexture() {}
+			AtlasTexture(TextureAtlas* vanilla) : AtlasTexture() {
 				_vanilla = vanilla;
 			}
 
@@ -32,6 +29,8 @@ namespace lagrangian {
 			}
 			void postInit(TextureAtlas* vanilla) {
 				_vanilla = vanilla;
+
+
 			}
 
 			//Unsafe
