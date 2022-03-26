@@ -81,10 +81,13 @@ void CreativeTabs::prevPage() {
 }
 
 void CreativeTabs::populateItems(CraftingContainerManagerModel* ths) {
-	ths->containers.insert(newstd::pair<newstd::string, newstd::shared_ptr<ContainerModel>>("recipe_construction", CreativeTabs::containers.at(0)));
+	//ths->containers.insert(newstd::pair<newstd::string const, newstd::shared_ptr<ContainerModel>>("recipe_construction", CreativeTabs::containers.at(0)));
 
-	ContainerCategory wc = CreativeTabs::containers.at(0)->getContainerCategory();
-	Logger::debug("rc", patch::to_string<int>((int)wc).c_str());
+	//ContainerCategory wc = ths->containers.at("recipe_construction")->getContainerCategory();
+	//ContainerCategory wcd = CreativeTabs::containers.at(0)->getContainerCategory();
+
+	//Logger::debug("rc", patch::to_string<int>((int)wc).c_str());
+	//Logger::debug("rdc", patch::to_string<int>((int)wcd).c_str());
 
 	VTABLE_FIND_OFFSET(setItemsToTab, _ZTV22FilteredContainerModel, _ZN22FilteredContainerModel15setItemInstanceEiRK12ItemInstance);
 	VTABLE_FIND_OFFSET(refresh, _ZTV22FilteredContainerModel, _ZN22FilteredContainerModel16refreshContainerEb);
