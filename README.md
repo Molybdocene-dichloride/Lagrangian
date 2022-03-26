@@ -1,4 +1,4 @@
-# Lagrangian Kernel
+# ℒagrangian Kernel
 
 ![Плотность лагранжиана](mod_icon.png "Не имеющая физического смысла плотность лагранжиана")
 С++ library for Minecraft Bedrock Edition Modding & realisation of kernel of Lagrangian on Inner Core technologies.

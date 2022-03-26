@@ -19,6 +19,7 @@
 
 #include <bits/stdc++.h>
 
+CraftingContainerManagerModel* CreativeTabs::ths;
 newstd::vector<FilteredContainerModel*> CreativeTabs::models = newstd::vector<FilteredContainerModel*>();
 
 newstd::map<int, ItemCategory*> CreativeTabs::forIt = newstd::map<int, ItemCategory*>();
@@ -68,6 +69,7 @@ void CreativeTabs::setPage(int page) {
 			}
 			//VTABLE_CALL<void>(refresh, models.at(a), false);
 			//LagrangianRegistries::_vanillaCreativeRegister.categories(LagrangianRegistries::registries.at[]);
+			ths->containers.insert(newstd::pair<newstd::string, newstd::shared_ptr<ContainerModel>>("recipe_construction", CreativeTabs::containers.at(0)));
 		}
 	}
 }
@@ -78,7 +80,12 @@ void CreativeTabs::prevPage() {
 	setPage(current_page - 1);
 }
 
-void CreativeTabs::populateItems(CraftingContainerManagerModel* ths) {	
+void CreativeTabs::populateItems(CraftingContainerManagerModel* ths) {
+	ths->containers.insert(newstd::pair<newstd::string, newstd::shared_ptr<ContainerModel>>("recipe_construction", CreativeTabs::containers.at(0)));
+
+	ContainerCategory wc = CreativeTabs::containers.at(0)->getContainerCategory();
+	Logger::debug("rc", patch::to_string<int>((int)wc).c_str());
+
 	VTABLE_FIND_OFFSET(setItemsToTab, _ZTV22FilteredContainerModel, _ZN22FilteredContainerModel15setItemInstanceEiRK12ItemInstance);
 	VTABLE_FIND_OFFSET(refresh, _ZTV22FilteredContainerModel, _ZN22FilteredContainerModel16refreshContainerEb);
 	
@@ -105,6 +112,8 @@ void CreativeTabs::populateItems(CraftingContainerManagerModel* ths) {
 }
 
 void CreativeTabs::invalidateModels(CraftingContainerManagerModel* ths) {
+	CreativeTabs::ths = ths;
+
 	CreativeTabs::models.clear();
 	
 	FilteredContainerModel* cm0 = (FilteredContainerModel*) ths->containers.at("recipe_construction").get();
@@ -152,7 +161,7 @@ void CreativeTabs::invalidateModels(CraftingContainerManagerModel* ths) {
 	
 	//newstd::function<FilterResult(ItemInstance const&)> filtering_function([](ItemInstance const& i) { return (FilterResult) 0; }); 
 	
-	FilteredContainerModel* nfcm = new FilteredContainerModel((ContainerEnumName)15, 1, (ContainerCategory)3, false, false, nullptr);
+	FilteredContainerModel* nfcm = new FilteredContainerModel((ContainerEnumName)15, 1, (ContainerCategory)2, false, false, nullptr);
 
 	Logger::debug("isFlter_custom", patch::to_string<bool>(nfcm->isFiltering()).c_str());
 	Logger::debug("cc_custom", patch::to_string<int>((int)nfcm->getContainerCategory()).c_str());

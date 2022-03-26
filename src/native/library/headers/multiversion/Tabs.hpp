@@ -11,6 +11,8 @@ class ItemCategory;
 
 class CreativeTabs : public ItemCategory {
 	public:
+	static CraftingContainerManagerModel* ths;
+
 	static std::__ndk1::vector<FilteredContainerModel*> models;
 
 	static std::__ndk1::map<int, ItemCategory*> forIt;

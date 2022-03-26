@@ -300,10 +300,11 @@ class CategoryModule : public Module { //
 		}, ), HookManager::RETURN | HookManager::LISTENER | HookManager::CONTROLLER);
 		
 		HookManager::addCallback(SYMBOL("mcpe", "_ZN29CraftingContainerManagerModel19_populateContainersERj"), LAMBDA((HookManager::CallbackController* controller), {
-			controller->prevent();
+			//controller->prevent();
 		}, ), HookManager::CALL | HookManager::LISTENER | HookManager::CONTROLLER);
 		
 		HookManager::addCallback(SYMBOL("mcpe", "_ZN29CraftingContainerManagerModel4tickEv"), LAMBDA((HookManager::CallbackController* controller, CraftingContainerManagerModel* ths), {
+			Logger::debug("derr", "ddytty");
 			if(is) {
 				CreativeTabs::invalidateModels(ths);
 				is = false;
