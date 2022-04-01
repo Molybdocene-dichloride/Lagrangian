@@ -1,14 +1,17 @@
 #pragma once
 
+#include <multiversion/client/graphics/Operable.hpp>
+
 class TextureAtlas;
 class Texture;
+
 namespace lagrangian {
 	namespace graphics {
-		class AtlasTexture {
+		class Icon : public Operable {
 			TextureAtlas* _vanilla;
 			//std::__ndk1::vector<Magick::Image> ts;
-			AtlasTexture() {}
-			AtlasTexture(TextureAtlas* vanilla) : AtlasTexture() {
+			Icon() {}
+			Icon(TextureAtlas* vanilla) : Icon() {
 				_vanilla = vanilla;
 			}
 

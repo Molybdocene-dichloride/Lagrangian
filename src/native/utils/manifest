@@ -1,0 +1,16 @@
+{
+    	"shared": {
+        	"name": "lagrangianknl_utils",
+		"include": [
+			"headers"
+		]
+    	},
+
+	"depends": [
+		"gnustl_shared",
+    		"minecraftpe",
+    		"innercore",
+		"nativejs",
+		"callbacks"
+	]
+}
