@@ -9,6 +9,7 @@
 #include <multiversion/client/graphics/Operation.hpp>
 #include <multiversion/client/graphics/Icon.hpp>
 #include <multiversion/client/graphics/Vertex.hpp>
+#include <multiversion/client/graphics/Tesselator.hpp>
 
 namespace lagrangian {
 	namespace graphics {
@@ -50,7 +51,8 @@ namespace lagrangian {
             }
             virtual void render(Tessellator tess) {
                 for(int e = 0; e < vertices.size(); e++) {
-                    tess.vertex(vertices.at(e).pos.x, vertices.at(e).pos.y, vertices.at(e).pos.z);
+                    tess.vertexUV(vertices.at(e).pos.x, vertices.at(e).pos.y, vertices.at(e).pos.z);
+                    //tess.color
                 }
             }
         };

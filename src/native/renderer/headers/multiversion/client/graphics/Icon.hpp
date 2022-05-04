@@ -8,38 +8,18 @@ class Texture;
 namespace lagrangian {
 	namespace graphics {
 		class Icon : public Operable {
-			TextureAtlas* _vanilla;
-			//std::__ndk1::vector<Magick::Image> ts;
+			public:
+			//Magick::Image image;
 			Icon() {}
-			Icon(TextureAtlas* vanilla) : Icon() {
-				_vanilla = vanilla;
-			}
+			//Icon() : Icon(Magick::Image) { image = image; }
+			//Icon(TextureAtlas* vanilla) : Icon() {}
+			//Icon(TextureAtlas* vanilla, int num) : Icon() {}
 
-			/*void add(Magick::Image t) {
-				ts.push_back(t);
-			}*/
 			/*void clear() {
-				ts.clear();
+				image.clear();
 			}*/
 
 			void reload();
-
-			void postInit() {
-				//TextureAtlas* vanilla = new TextureAtlas();
-				//_vanilla = vanilla;
-				//Texture tx = new Texture();
-				//_vanilla.push tx
-			}
-			void postInit(TextureAtlas* vanilla) {
-				_vanilla = vanilla;
-
-
-			}
-
-			//Unsafe
-			TextureAtlas* unsafeGet() {
-				return _vanilla;
-			}
 		};
 	}
 }

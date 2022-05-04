@@ -14,4 +14,17 @@ template<class T> struct Vector2 {T x; T y;};
 
 template<class T> struct Indexes {OperableType type; std::vector<std::string> model_id; std::vector<T> ts;};
 
-struct Colour {unsigned char r; unsigned char g; unsigned char b; unsigned char a;};
+class Colour {
+    public:
+    static Colour NONE;
+
+    unsigned char r; unsigned char g; unsigned char b; unsigned char a;
+
+    Colour(unsigned char r, unsigned char g, unsigned char b, unsigned char a) {
+        this->r = r;
+        this->g = g;
+        this->b = b;
+        this->a = a;
+    }
+};
+Colour Colour::NONE = Colour(0, 0, 0, 0);

@@ -9,13 +9,13 @@
 
 namespace lagrangian {
 	namespace graphics {
-        template<class T> class Transformation {
+        template<class O, class T> class Transformation {
             public:
             T defaultval;
-            virtual Transformation<T>& inverse() = 0;
+            virtual Transformation<O, T>& inverse() = 0;
 
             virtual void apply(T&) = 0;
-            virtual void apply(Operable&) = 0;
+            virtual void apply(O&) = 0;
         };
 
         class VertexOperation {
@@ -23,21 +23,23 @@ namespace lagrangian {
             virtual void operate(std::vector<Operable>& vs) = 0;
         };
 
-        template<class T> class VertexTransformationOperation : public VertexOperation, public Transformation<T> {
+        template<class T> class VertexTransformationOperation : public VertexOperation, public Transformation<Vertex, T> {
             public:
-            virtual void apply(Operable& v) override {
-                apply(v.uv);
+            virtual void apply(Vertex& v) override {
+                apply(v);
             }
             virtual void operate(std::vector<Operable>& vs) override {
                 std::vector<Operable>::iterator it;
                 for(it = vs.begin(); it != vs.end(); it++) {
-                    apply(*it);
+                    apply(*dynamic_cast<Vertex*>(&*it));
                 }
             }
         };
 
         class UVOperation : public VertexTransformationOperation<Vector2<long>> {
             public:
+            UVOperation(UVOperation& op) : UVOperation(op.defaultval) {}
+            UVOperation() : UVOperation(0, 0) {}
             UVOperation(Vector2<long> val) {
                 defaultval = val;
             }
@@ -51,10 +53,11 @@ namespace lagrangian {
 
         class UVScaleOperation : public UVOperation {
             public:
+            UVScaleOperation() : UVOperation() { }
             UVScaleOperation(Vector2<long> val) : UVOperation(val) { }
             UVScaleOperation(long x, long y) : UVOperation(x, y) { }
 
-            virtual Transformation<Vector2<long>>& inverse() override {
+            virtual Transformation<Vertex, Vector2<long>>& inverse() override {
                 UVScaleOperation u = UVScaleOperation(1/defaultval.x, 1/defaultval.y);
                 static UVScaleOperation& us = u;
                 return us;

@@ -1,3 +1,5 @@
 #pragma once
 
-class Operable {};
+class Operable {
+    virtual void clear();
+};
