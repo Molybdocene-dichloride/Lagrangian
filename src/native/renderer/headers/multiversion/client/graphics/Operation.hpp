@@ -12,7 +12,6 @@ namespace lagrangian {
         template<class O, class T> class Transformation {
             public:
             T defaultval;
-            virtual Transformation<O, T>& inverse() = 0;
 
             virtual void apply(T&) = 0;
             virtual void apply(O&) = 0;
@@ -57,8 +56,9 @@ namespace lagrangian {
             UVScaleOperation(Vector2<long> val) : UVOperation(val) { }
             UVScaleOperation(long x, long y) : UVOperation(x, y) { }
 
-            virtual Transformation<Vertex, Vector2<long>>& inverse() override {
-                UVScaleOperation u = UVScaleOperation(1/defaultval.x, 1/defaultval.y);
+            virtual Transformation<Vertex, Vector2<long>>& inverse() {
+                UVScaleOperation u(1/defaultval.x, 1/defaultval.y);
+                
                 static UVScaleOperation& us = u;
                 return us;
             };
@@ -67,6 +67,12 @@ namespace lagrangian {
                 v.x *= defaultval.x;
                 v.y *= defaultval.y;
             }
+
+            virtual void applyInv(Vector2<long>& v) {
+                v.x *= -defaultval.x;
+                v.y *= -defaultval.y;
+            }
+
         };
     }
 }

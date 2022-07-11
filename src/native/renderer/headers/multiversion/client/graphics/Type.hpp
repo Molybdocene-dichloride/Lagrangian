@@ -16,8 +16,14 @@ template<class T> struct Indexes {OperableType type; std::vector<std::string> mo
 
 struct Colour {
     static Colour NONE;
+    static Colour WHITE;
+    static Colour BLACK;
 
     unsigned char r; unsigned char g; unsigned char b; unsigned char a;
 };
 
-Colour Colour::NONE = Colour{.r = 0, .g = 0, .b = 0, .a = 0};
+auto Colour::NONE = Colour{r: 0, g: 0, b: 0, a: 0};
+
+auto Colour::WHITE = Colour{r: 255, g: 255, b: 255, a: 255};
+
+auto Colour::BLACK = Colour{r: 0, g: 0, b: 0, a: 255};
