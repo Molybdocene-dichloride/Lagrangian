@@ -1,9 +1,9 @@
 [
-  { "directory": "/home/user/llvm/build",
-    "arguments": ["/usr/bin/clang++", "-I/home/fr/android-ndk-r16b/sysroot/usr/include/", 
-      "-I/home/fr/projects/ot/Kernel/toolchain/stdincludes/gnu_stl/", "-I/home/fr/projects/ot/Kernel/toolchain/stdincludes/horizon/", 
-      "-I/home/fr/projects/ot/Kernel/src/native/library/headers/", "-I/home/fr/projects/ot/Kernel/src/native/utils/headers/", "-I/home/fr/projects/ot/Kernel/src/native/renderer/headers/",
-       "-DSOMEDEF=With spaces, quotes and \\-es.", "-c", "-o", "file.o", "/home/fr/projects/ot/Kernel/src/native/library/main.cpp"],
-    "file": "/home/fr/projects/ot/Kernel/src/native/library/main.cpp" 
+  { "directory": "%USERPROFILE%/llvm/build",
+    "arguments": ["/usr/bin/clang++", "-I%USERPROFILE%/android-ndk-r16b/sysroot/usr/include/", 
+      "-I%USERPROFILE%/Desktop/projects/Lagrangian/toolchain/stdincludes/gnu_stl/", "-I%USERPROFILE%/Desktop/projects/Lagrangian/toolchain/stdincludes/horizon/", 
+      "-I%USERPROFILE%/Desktop/projects/Lagrangian/src/native/library/headers/", "-I%USERPROFILE%/Desktop/projects/Lagrangian/src/native/utils/headers/", "-IC:/Users/111/Desktop/projects/Lagrangian/src/native/renderer/headers/",
+       "-DSOMEDEF=With spaces, quotes and \\-es.", "-c", "-o", "file.o", "%USERPROFILE%/Desktop/projects/Lagrangian/src/native/library/main.cpp"],
+    "file": "%USERPROFILE%/Desktop/projects/Lagrangian/src/native/library/main.cpp" 
   }
 ]

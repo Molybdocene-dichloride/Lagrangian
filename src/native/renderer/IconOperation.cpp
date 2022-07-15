@@ -1,35 +1,26 @@
 #pragma once
 
-#include <multiversion/client/graphics/Operation.hpp>
+#include <multiversion/client/graphics/IconOperation.hpp>
 
 namespace lagrangian {
 	namespace graphics {
-        template<class O> class MonoTransformation {
-            public:
-            O defaultval;
-            virtual MonoTransformation<O>& inverse() = 0;
+        template<class O> class O defaultval;
+        template<class O> class MonoTransformation::MonoTransformation<O>& inverse() = 0;
 
-            virtual void apply(O&) = 0;
-        };
-        class IconOperation : public VertexOperation, MonoTransformation<Icon> {
-            public:
-            IconOperation(IconOperation& op) : IconOperation(op.defaultval) {}
-            IconOperation() {
-                this->defaultval = Icon();
-            }
-            IconOperation(Icon& val) {
-                this->defaultval = val;
-            }
-        };
-        class OverlayIconOperation : public IconOperation {
-            public:
-            OverlayIconOperation() : IconOperation() {}
-            OverlayIconOperation(Icon& val) : IconOperation(val) {}
+        template<class O> class MonoTransformation::apply(O&) = 0;
 
-            virtual void apply(Icon& v) override {
-                //change
+        IconOperation::IconOperation(IconOperation& op) : IconOperation(op.defaultval) {}
+        IconOperation::IconOperation() {
+            this->defaultval = Icon();
+        }
+        IconOperation::IconOperation(Icon& val) {
+            this->defaultval = val;
+        }
+        OverlayIconOperation::OverlayIconOperation() : IconOperation() {}
+        OverlayIconOperation::OverlayIconOperation(Icon& val) : IconOperation(val) {}
 
-            }
-        };
+        virtual void OverlayIconOperation::apply(Icon& v) override {
+            //change
+        }
     }
 }

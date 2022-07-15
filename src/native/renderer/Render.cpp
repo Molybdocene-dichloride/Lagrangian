@@ -4,24 +4,14 @@
 
 namespace lagrangian {
 	namespace graphics {
-        class LRenderPipeline {
-            public:
-            std::map<Indexes<long>, VertexOperation> ops;
+        void LRenderPipeline::operate(LModel& vs) {
+            vs.operate(ops);
+        }
 
-            void operate(LModel& vs) {
-                vs.operate(ops);
-            }
-        };
+        void LRenderer::render(LRenderPipeline& p, LModel& vs) {
+            p.operate(vs);
 
-        namespace LRenderer {
-            //Tessellator tess;
-            void render(LRenderPipeline& p, LModel& vs) {
-                
-                
-                p.operate(vs);
-
-                vs.render(tess);
-            }
+            vs.render(tess);
         }
     }
 }

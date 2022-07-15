@@ -7,20 +7,19 @@ namespace lagrangian {
         template<class O> class MonoTransformation {
             public:
             O defaultval;
-            virtual MonoTransformation<O>& inverse() = 0;
 
             virtual void apply(O&) = 0;
         };
         class IconOperation : public VertexOperation, MonoTransformation<Icon> {
             public:
-            IconOperation(IconOperation& op) : IconOperation(op.defaultval);
+            IconOperation(IconOperation& op);
             IconOperation();
             IconOperation(Icon& val);
         };
         class OverlayIconOperation : public IconOperation {
             public:
-            OverlayIconOperation() : IconOperation();
-            OverlayIconOperation(Icon& val) : IconOperation(val);
+            OverlayIconOperation();
+            OverlayIconOperation(Icon& val);
 
             virtual void apply(Icon& v) override;
         };
