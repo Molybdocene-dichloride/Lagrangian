@@ -13,16 +13,23 @@ namespace lagrangian {
         };
         class IconOperation : public VertexOperation, MonoTransformation<Icon> {
             public:
-            IconOperation(IconOperation& op) : IconOperation(op.defaultval);
-            IconOperation();
-            IconOperation(Icon& val);
+            IconOperation(IconOperation& op) : IconOperation(op.defaultval) {}
+            IconOperation() {
+                this->defaultval = Icon();
+            }
+            IconOperation(Icon& val) {
+                this->defaultval = val;
+            }
         };
         class OverlayIconOperation : public IconOperation {
             public:
-            OverlayIconOperation() : IconOperation();
-            OverlayIconOperation(Icon& val) : IconOperation(val);
+            OverlayIconOperation() : IconOperation() {}
+            OverlayIconOperation(Icon& val) : IconOperation(val) {}
 
-            virtual void apply(Icon& v) override;
+            virtual void apply(Icon& v) override {
+                //change
+
+            }
         };
     }
 }

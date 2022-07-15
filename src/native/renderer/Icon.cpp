@@ -1,6 +1,6 @@
 #pragma once
 
-#include <multiversion/client/graphics/Operable.hpp>
+#include <multiversion/client/graphics/Icon.hpp>
 
 namespace lagrangian {
 	namespace graphics {
@@ -8,12 +8,14 @@ namespace lagrangian {
 			public:
 			//Magick::Image image;
 
-			Icon();
+			Icon() {}
 			//Icon(Magick::Image image) { image = image; }
 			//Icon(TextureAtlas* vanilla) : Icon() {}
 			//Icon(TextureAtlas* vanilla, int num) : Icon() {}
 
-			void clear();
+			void clear() {
+				//image.clear();
+			}
 		};
 	}
 }

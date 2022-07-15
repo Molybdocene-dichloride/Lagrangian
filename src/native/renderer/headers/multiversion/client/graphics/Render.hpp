@@ -9,7 +9,7 @@
 #include <multiversion/client/graphics/Operation.hpp>
 #include <multiversion/client/graphics/Icon.hpp>
 #include <multiversion/client/graphics/Vertex.hpp>
-#include <multiversion/client/graphics/Tesselator.hpp>
+#include <mcpe/Tesselator.hpp>
 #include <multiversion/client/graphics/Model.hpp>
 
 namespace lagrangian {
@@ -18,20 +18,12 @@ namespace lagrangian {
             public:
             std::map<Indexes<long>, VertexOperation> ops;
 
-            void operate(LModel& vs) {
-                vs.operate(ops);
-            }
+            void operate(LModel& vs);
         };
-
         namespace LRenderer {
-            Tessellator tess;
-            void render(LRenderPipeline& p, LModel& vs) {
-                
-                
-                p.operate(vs);
+            //Tessellator tess;
 
-                vs.render(tess);
-            }
+            void render(LRenderPipeline& p, LModel& vs);
         }
     }
 }
