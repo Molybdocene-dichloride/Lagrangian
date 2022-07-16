@@ -11,7 +11,7 @@ namespace lagrangian {
         class LModel {
             public:
             virtual void operate(std::map<Indexes<long>, VertexOperation>& ops) = 0;
-            virtual void render(Tessellator tess) = 0;
+            virtual void render(/*Tessellator tess*/) = 0;
         };
         class LConcreteModel : public LModel {
             std::string id;
@@ -23,14 +23,14 @@ namespace lagrangian {
             std::vector<Operable> slice(Indexes<long>& range);
 
             virtual void operate(std::map<Indexes<long>, VertexOperation>& ops);
-            virtual void render(Tessellator tess);
+            virtual void render(/*Tessellator tess*/);
         };
         class LPackedModel : public LModel {
             std::vector<LModel> models;
 
             public:
             virtual void operate(std::map<Indexes<long>, VertexOperation>& ops);
-            virtual void render(Tessellator tess);
+            virtual void render(/*Tessellator tess*/);
 
             long count();
         };

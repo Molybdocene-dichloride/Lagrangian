@@ -4,7 +4,7 @@
 
 namespace lagrangian {
 	namespace graphics {
-        std::vector<Operable> LModel::slice(Indexes<long>& range) {
+        std::vector<Operable> LConcreteModel::slice(Indexes<long>& range) {
             if(range.type == OperableType::VERTEX) {
                 std::vector<Vertex> vs{};
                 std::vector<long>::iterator it;
@@ -22,27 +22,27 @@ namespace lagrangian {
             }
         }
 
-        virtual void LModel::operate(std::map<Indexes<long>, VertexOperation>& ops) {
+        virtual void LConcreteModel::operate(std::map<Indexes<long>, VertexOperation>& ops) {
             std::map<Indexes<long>, VertexOperation>::iterator it;
             for(it = ops.begin(); it != ops.end(); it++) {
                 if(std::find(it->first.model_id.begin(), it->first.model_id.end(), id) != it->first.model_id.end()) it->second.apply(slice(it->first));
             }
         }
-        virtual void LModel::render(Tessellator tess) {
-            for(int e = 0; e < vertices.size(); e++) {
-                tess.vertexUV(vertices.at(e).pos.x, vertices.at(e).pos.y, vertices.at(e).pos.z);
+        virtual void LConcreteModel::render(/*Tessellator tess*/) {
+            //for(int e = 0; e < vertices.size(); e++) {
+                //tess.vertexUV(vertices.at(e).pos.x, vertices.at(e).pos.y, vertices.at(e).pos.z);
                 //tess.color
-            }
+           //}
         }
         virtual void LPackedModel::operate(std::map<Indexes<long>, VertexOperation>& ops) {
             for(int i = 0; i < count(); i++) {
                 models.at(i).operate(ops);
             }
         }
-        virtual void LPackedModel::render(Tessellator tess) {
-            for(int i = 0; i < count(); i++) {
-                models.at(i).render(tess);
-            }
+        virtual void LPackedModel::render(/*Tessellator tess*/) {
+            //for(int i = 0; i < count(); i++) {
+               // models.at(i).render(tess);
+            //}
         }
 
         long LPackedModel::count() {

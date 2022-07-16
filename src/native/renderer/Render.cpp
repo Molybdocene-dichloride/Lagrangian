@@ -9,9 +9,9 @@ namespace lagrangian {
         }
 
         void LRenderer::render(LRenderPipeline& p, LModel& vs) {
-            p.operate(vs);
+            //p.operate(vs);
 
-            vs.render(tess);
+            //vs.render(tess);
         }
     }
 }
