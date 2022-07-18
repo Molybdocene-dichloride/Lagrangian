@@ -1,5 +1,3 @@
-#pragma once
-
 #include <multiversion/client/graphics/Icon.hpp>
 
 namespace lagrangian {
@@ -9,7 +7,7 @@ namespace lagrangian {
 			//Icon::Icon(TextureAtlas* vanilla) : Icon() {}
 			//Icon::Icon(TextureAtlas* vanilla, int num) : Icon() {}
 
-		Icon::clear() {
+		void Icon::clear() {
 			//image.clear();
 		}
 	}

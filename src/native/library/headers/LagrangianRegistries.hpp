@@ -28,5 +28,5 @@ namespace LagrangianRegistries {
 	/*PotionEffect* getEffect(id) {
 		return eff;
 	}*/
-	void registerCategory(ItemCategory* cic);
+	//void registerCategory(ItemCategory* cic);
 }

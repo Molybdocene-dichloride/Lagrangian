@@ -1,71 +1,49 @@
-#pragma once
+#include <multiversion/client/graphics/Operation.hpp>
 
 namespace lagrangian {
 	namespace graphics {
-        template<class O, class T> class Transformation {
-            public:
-            T defaultval;
-
-            virtual void apply(T&) = 0;
-            virtual void apply(O&) = 0;
-        };
-
-        class VertexOperation {
-            public:
-            virtual void operate(std::vector<Operable>& vs) = 0;
-        };
-
-        template<class T> class VertexTransformationOperation : public VertexOperation, public Transformation<Vertex, T> {
-            public:
-            virtual void apply(Vertex& v) override {
-                apply(v);
+        template<class T> void VertexTransformationOperation<T>::apply(Vertex& v) {
+            apply(v);
+        }
+        template<class T> void VertexTransformationOperation<T>::operate(std::vector<Operable>& vs) {
+            std::vector<Operable>::iterator it;
+            for(it = vs.begin(); it != vs.end(); it++) {
+                apply(*dynamic_cast<Vertex*>(&*it));
             }
-            virtual void operate(std::vector<Operable>& vs) override {
-                std::vector<Operable>::iterator it;
-                for(it = vs.begin(); it != vs.end(); it++) {
-                    apply(*dynamic_cast<Vertex*>(&*it));
-                }
-            }
-        };
+        }
 
-        class UVOperation : public VertexTransformationOperation<Vector2<long>> {
-            public:
-            UVOperation(UVOperation& op) : UVOperation(op.defaultval) {}
-            UVOperation() : UVOperation(0, 0) {}
-            UVOperation(Vector2<long> val) {
-                defaultval = val;
-            }
-            UVOperation(long x, long y) {
-                defaultval = {.x=x, .y=y};
-            }
-            virtual void apply(Vertex& v) {
-                apply(v.uv);
-            }
-        };
+        UVOperation::UVOperation(UVOperation& op) : UVOperation(op.defaultval) {}
+        UVOperation::UVOperation() : UVOperation(0, 0) {}
+        UVOperation::UVOperation(Vector2<long> val) {
+            defaultval = val;
+        }
+        UVOperation::UVOperation(long x, long y) {
+            defaultval = {.x=x, .y=y};
+        }
 
-        class UVScaleOperation : public UVOperation {
-            public:
-            UVScaleOperation() : UVOperation() { }
-            UVScaleOperation(Vector2<long> val) : UVOperation(val) { }
-            UVScaleOperation(long x, long y) : UVOperation(x, y) { }
+        UVScaleOperation::UVScaleOperation() : UVOperation() { }
+        UVScaleOperation::UVScaleOperation(Vector2<long> val) : UVOperation(val) { }
+        UVScaleOperation::UVScaleOperation(long x, long y) : UVOperation(x, y) { }
 
-            virtual Transformation<Vertex, Vector2<long>>& inverse() {
+        Transformation<Vertex, Vector2<long>>& UVScaleOperation::inverse() {
                 UVScaleOperation u(1/defaultval.x, 1/defaultval.y);
                 
                 static UVScaleOperation& us = u;
                 return us;
-            }
+        }
 
-            virtual void apply(Vector2<long>& v) override {
+        void UVScaleOperation::apply(Vertex& v) {
+            apply(v.uv);
+        }
+
+        void UVScaleOperation::apply(Vector2<long>& v) override {
                 v.x *= defaultval.x;
                 v.y *= defaultval.y;
-            }
+        }
 
-            virtual void applyInv(Vector2<long>& v) {
+        void UVScaleOperation::applyInv(Vector2<long>& v) {
                 v.x *= -defaultval.x;
                 v.y *= -defaultval.y;
-            }
-
-        };
+        }
     }
 }

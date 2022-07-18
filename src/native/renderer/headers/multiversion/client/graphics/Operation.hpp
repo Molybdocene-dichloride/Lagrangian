@@ -34,7 +34,6 @@ namespace lagrangian {
             UVOperation();
             UVOperation(Vector2<long> val);
             UVOperation(long x, long y);
-            virtual void apply(Vertex& v);
         };
 
         class UVScaleOperation : public UVOperation {
@@ -44,6 +43,9 @@ namespace lagrangian {
             UVScaleOperation(long x, long y);
 
             virtual Transformation<Vertex, Vector2<long>>& inverse();
+
+            virtual void apply(Vertex& v) override;
+
             virtual void apply(Vector2<long>& v) override;
 
             virtual void applyInv(Vector2<long>& v);

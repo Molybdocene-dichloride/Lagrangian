@@ -1,5 +1,3 @@
-#pragma once
-
 #include <multiversion/client/graphics/Render.hpp>
 
 namespace lagrangian {
@@ -12,6 +10,14 @@ namespace lagrangian {
             //p.operate(vs);
 
             //vs.render(tess);
+        }
+
+        void LRenderer::begin() {
+            //tess.end();
+        }
+
+        void LRenderer::draw() {
+            //tess.end();
         }
     }
 }

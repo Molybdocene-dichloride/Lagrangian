@@ -241,15 +241,15 @@ JS_EXPORT_COMPLEX(LocalizationSystem, _translateToCurrent, "S(SS)", (JNIEnv* env
 
 
 
-JS_EXPORT_COMPLEX(LagrangianRegistries, registerCategory, "I(SI)", (JNIEnv* env, NativeJS::ComplexArgs ca) {
-	Logger::debug("u89fh", ca.get("id").asString());
+//JS_EXPORT_COMPLEX(LagrangianRegistries, registerCategory, "I(SI)", (JNIEnv* env, NativeJS::ComplexArgs ca) {
+	//Logger::debug("u89fh", ca.get("id").asString());
 
-	ItemCategory* cc = new ItemCategory(ca);
+	//ItemCategory* cc = new ItemCategory(ca);
 
-	LagrangianRegistries::registerCategory(cc);
+	//LagrangianRegistries::registerCategory(cc);
 
-	return NativeJS::wrapIntegerResult(reinterpret_cast<uintptr_t>(cc));
-});
+	//return NativeJS::wrapIntegerResult(reinterpret_cast<uintptr_t>(cc));
+//});
 
 JS_EXPORT_COMPLEX(Category, addItems, "I(SI)", (JNIEnv* env, NativeJS::ComplexArgs ca) {
 	

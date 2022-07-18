@@ -4,7 +4,7 @@
 #include <multiversion/client/graphics/Operation.hpp>
 #include <multiversion/client/graphics/Icon.hpp>
 #include <multiversion/client/graphics/Vertex.hpp>
-#include <multiversion/client/graphics/Tesselator.hpp>
+//#include <multiversion/client/graphics/Tesselator.hpp>
 
 namespace lagrangian {
 	namespace graphics {

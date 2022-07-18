@@ -1,6 +1,6 @@
 {
     	"shared": {
-        	"name": "lagrangianknl",
+        	"name": "lagrangianknl_renderer",
 			"include": [
 				"headers"
 			]

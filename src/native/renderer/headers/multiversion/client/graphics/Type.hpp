@@ -22,8 +22,8 @@ struct Colour {
     unsigned char r; unsigned char g; unsigned char b; unsigned char a;
 };
 
-auto Colour::NONE = Colour{r: 0, g: 0, b: 0, a: 0};
+Colour Colour::NONE = Colour{r: 0, g: 0, b: 0, a: 0};
 
-auto Colour::WHITE = Colour{r: 255, g: 255, b: 255, a: 255};
+Colour Colour::WHITE = Colour{r: 255, g: 255, b: 255, a: 255};
 
-auto Colour::BLACK = Colour{r: 0, g: 0, b: 0, a: 255};
+Colour Colour::BLACK = Colour{r: 0, g: 0, b: 0, a: 255};

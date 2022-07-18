@@ -9,7 +9,7 @@
 #include <multiversion/client/graphics/Operation.hpp>
 #include <multiversion/client/graphics/Icon.hpp>
 #include <multiversion/client/graphics/Vertex.hpp>
-#include <mcpe/Tesselator.hpp>
+//#include <mcpe/Tesselator.hpp>
 #include <multiversion/client/graphics/Model.hpp>
 
 namespace lagrangian {
@@ -23,7 +23,9 @@ namespace lagrangian {
         namespace LRenderer {
             //Tessellator tess;
 
+            void begin(); //To Do
             void render(LRenderPipeline& p, LModel& vs);
+            void draw();
         }
     }
 }
