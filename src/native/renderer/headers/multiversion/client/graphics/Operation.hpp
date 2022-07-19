@@ -19,13 +19,13 @@ namespace lagrangian {
 
         class VertexOperation {
             public:
-            virtual void operate(std::vector<Operable>& vs) = 0;
+            virtual void operate(std::vector<Operable*>& vs) = 0;
         };
 
         template<class T> class VertexTransformationOperation : public VertexOperation, public Transformation<Vertex, T> {
             public:
             virtual void apply(Vertex& v) override;
-            virtual void operate(std::vector<Operable>& vs) override;
+            virtual void operate(std::vector<Operable*>& vs) override;
         };
 
         class UVOperation : public VertexTransformationOperation<Vector2<long>> {

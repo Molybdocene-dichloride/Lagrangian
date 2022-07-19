@@ -16,7 +16,7 @@ namespace lagrangian {
 	namespace graphics {
         class LRenderPipeline {
             public:
-            std::map<Indexes<long>, VertexOperation> ops;
+            std::map<Indexes<long>, VertexOperation*> ops;
 
             void operate(LModel& vs);
         };

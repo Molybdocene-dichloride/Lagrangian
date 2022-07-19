@@ -5,10 +5,10 @@ namespace lagrangian {
         template<class T> void VertexTransformationOperation<T>::apply(Vertex& v) {
             apply(v);
         }
-        template<class T> void VertexTransformationOperation<T>::operate(std::vector<Operable>& vs) {
-            std::vector<Operable>::iterator it;
+        template<class T> void VertexTransformationOperation<T>::operate(std::vector<Operable*>& vs) {
+            std::vector<Operable*>::iterator it;
             for(it = vs.begin(); it != vs.end(); it++) {
-                apply(*dynamic_cast<Vertex*>(&*it));
+                apply(*dynamic_cast<Vertex*>(*it));
             }
         }
 
@@ -36,7 +36,7 @@ namespace lagrangian {
             apply(v.uv);
         }
 
-        void UVScaleOperation::apply(Vector2<long>& v) override {
+        void UVScaleOperation::apply(Vector2<long>& v) {
                 v.x *= defaultval.x;
                 v.y *= defaultval.y;
         }
