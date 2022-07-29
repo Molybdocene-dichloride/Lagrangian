@@ -1,25 +1,46 @@
+% !TEX program = lualatex
+
 \documentclass[12pt]{article}
+%\geometry{a4paper, portrait, margin=30mm, rmargin=15mm, bmargin=20mm, tmargin=20mm}
+
+\usepackage{geometry}
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\usepackage{unicode-math}
+
+\setmainlanguage{english}
+
+\setmainfont{Jetbrains}
+\setmathfont{Times New Roman}
+
+\title{ℒagrangian Kernel \\ Long term roadmap}
 
 \begin{document}
-	Long term roadmap
+	\maketitle
 
-	peculiarities
+	\section{Peculiarities}
 
-	OpenSource forever
+	\subsection{OpenSource forever}
+	
 	Only third party FOSS dependicies used (with Minecraft and Inner Core exception)
 
-	Future features
+	\section{Future features}
 
-	Renderer lib (WIP)
-	To Do:
-		Use smart pointers and make some changes for memory safety (references, const etc), in Operations class hierarchy etc
-		Test concepts of model changing operations
-		Realize a render by Tesselator
-		set Own texture atlas
+	\subsection{Renderer lib (WIP)}
+	    
+		To Do: \\
+		Use smart pointers and make some changes for memory safety (references, const etc), in Operations class hierarchy etc \\
+		Test concepts of model changing operations \\
+		Realize a render by Tesselator \\
+		set Own texture atlas \\
 		Test concepts of model render
+	
+	\subsection{Ore deposits generation lib} 
+	
+	Almost Not implemented - not in public repositories
 
-	Ore deposits generation lib (Almost Not implemented - not in public repositories)
-
-	Micro block API (Almost-- not implemented - in GTBE REPOSITORY)
+	\subsection{Micro block API} 
+	Almost-- not implemented - in GTBE REPOSITORY
 
 \end{document}
