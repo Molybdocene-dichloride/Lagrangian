@@ -4,6 +4,10 @@ output
 .cache
 *.log
 *.icmod
+*.aux
+*.fls
+*.gz
+*.fdb_latexmk
 
 !toolchain/declarations/
 !toolchain/stdincludes/

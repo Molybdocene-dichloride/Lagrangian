@@ -1,5 +1,3 @@
-% !TEX program = lualatex
-
 \documentclass[12pt]{article}
 %\geometry{a4paper, portrait, margin=30mm, rmargin=15mm, bmargin=20mm, tmargin=20mm}
 
@@ -11,36 +9,54 @@
 
 \setmainlanguage{english}
 
-\setmainfont{Jetbrains}
-\setmathfont{Times New Roman}
+\setmainfont{Times New Roman}
+\setmathfont{Cambria Math}
 
-\title{ℒagrangian Kernel \\ Long term roadmap}
+\newfontfamily\Cambria{Cambria}[Scale=MatchLowercase, Ligatures=TeX]
+
+\title{$\mathcal{L}$agrangian Kernel \\ roadmap}
 
 \begin{document}
 	\maketitle
 
+	The unordered list of aims, plans and suggestions for $\mathcal{L}$agrangian Kernel development.
+
+	\section{Aims}
+	\begin{enumerate}
+		\item Replacement of old and no well architected Inner Core abstractions 
+		\item Code separation that can be used by other people
+	\end{enumerate}
+
 	\section{Peculiarities}
 
-	\subsection{OpenSource forever}
-	
-	Only third party FOSS dependicies used (with Minecraft and Inner Core exception)
+	\begin{enumerate}
+	\item fully Open Source
+	\item To Do
+	\end{enumerate}
 
 	\section{Future features}
 
 	\subsection{Renderer lib (WIP)}
-	    
-		To Do: \\
-		Use smart pointers and make some changes for memory safety (references, const etc), in Operations class hierarchy etc \\
-		Test concepts of model changing operations \\
-		Realize a render by Tesselator \\
-		set Own texture atlas \\
-		Test concepts of model render
-	
-	\subsection{Ore deposits generation lib} 
-	
-	Almost Not implemented - not in public repositories
+	To Do:
 
-	\subsection{Micro block API} 
-	Almost-- not implemented - in GTBE REPOSITORY
+	\begin{enumerate}
+		\item Compile my bad code - OK
+		\item Use smart pointers and make some changes for memory safety (references, const etc), in Operations class hierarchy etc
+		\item Test concepts of model changing operations
+		\item Realize a render by Tesselator
+		\item set Own texture atlas
+		\item Test concepts of model render
+	\end{enumerate}
+	
+	\subsection{Ore deposits generation lib (Almost not implemented)} 
+	
+	Not in public repositories
+
+	\subsection{Micro block API (Almost not implemented)} 
+	
+	in GTBE REPOSITORY
+
+	\section{Future features}
+
 
 \end{document}
