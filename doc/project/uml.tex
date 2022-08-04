@@ -1,0 +1,55 @@
+\documentclass[12pt]{article}
+
+\usepackage[paperheight=16cm,paperwidth=22cm, margin=1cm]{geometry}
+
+\usepackage{tikz-uml}
+\usepackage{calc}
+
+\title{$\mathcal{L}$agrangian modules}
+
+\begin{document}
+  \maketitle
+
+  \thispagestyle{empty}
+
+  \begin{tikzpicture}
+    \begin{umlpackage}[x=0, y=0]{Kernel}
+    \end{umlpackage}
+  
+    \begin{umlpackage}[x=-7, y=-3]{"Steam"}
+    \end{umlpackage}
+
+    \begin{umlpackage}[x=-4, y=-3]{Ores}
+    \end{umlpackage}
+  
+    \begin{umlpackage}[x=0, y=-3]{Electromagnetic}
+    \end{umlpackage}
+  
+    \begin{umlpackage}[x=6, y=-3]{Chemistry}
+    \end{umlpackage}
+  
+    \begin{umlpackage}[x=0, y=-6]{Semiconductivity}
+    \end{umlpackage}
+  
+    %\begin{umlpackage}{Mechanical?}
+    %\end{umlpackage}
+  
+    \umlCNimport{"Steam"}{-7, 0}{Kernel}
+    
+    \umlCNimport{Ores}{-4, 0}{Kernel}
+    \umlimport{Electromagnetic}{Kernel}
+    \umlCNimport[anchor2=15]{Chemistry}{6, 0.3}{Kernel}
+  
+
+    \umlNarynode[x=3, name=naryassoc, below, draw=white, fill = white, width=0]{} 
+
+    \umlCNimport[geometry=-|-]{Semiconductivity}{3,-6}{naryassoc}
+    \umlimport[geometry=-|-]{naryassoc}{Kernel}
+
+    \umlimport{Semiconductivity}{Electromagnetic}
+    \umlimport[arg1=soft]{Chemistry}{Electromagnetic}
+
+    \umlimport[arg1=soft]{Ores}{Electromagnetic}
+
+  \end{tikzpicture}
+\end{document}
