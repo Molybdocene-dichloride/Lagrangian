@@ -10,7 +10,7 @@
 
 namespace lagrangian {
 	namespace graphics {
-        class LModel {
+        class LModel { //interface
             public:
             virtual void operate(std::map<Indexes<long>, VertexOperation*>& ops) = 0;
             virtual void render(/*Tessellator tess*/) = 0;
@@ -22,16 +22,16 @@ namespace lagrangian {
             std::vector<Vertex*> vertices;
 
             public:
-            std::vector<Operable*>& slice(const Indexes<long>& range);
+            std::vector<Operable*> slice(const Indexes<long>& range);
 
-            virtual void operate(std::map<Indexes<long>, VertexOperation*>& ops);
+            virtual void operate(std::map<Indexes<long>, VertexOperation*>& ops, LRenderState& state);
             virtual void render(/*Tessellator tess*/);
         };
         class LPackedModel : public LModel {
             std::vector<LModel*> models;
 
             public:
-            virtual void operate(std::map<Indexes<long>, VertexOperation*>& ops);
+            virtual void operate(std::map<Indexes<long>, VertexOperation*>& ops, LRenderState& state);
             virtual void render(/*Tessellator tess*/);
 
             long count();

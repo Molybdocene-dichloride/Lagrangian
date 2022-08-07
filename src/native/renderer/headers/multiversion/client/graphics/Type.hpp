@@ -4,6 +4,7 @@
 #include <string>
 
 enum class OperableType {
+    PADDING,
     VERTEX,
     ICON
 };

@@ -24,7 +24,9 @@ namespace lagrangian {
             //Tessellator tess;
 
             void begin(); //To Do
-            void render(LRenderPipeline& p, LModel& vs);
+            void render(LModel& vs);
+            void render(LModel& vs, LRenderPipeline& p);
+            void render(LModel& vs, LRenderPipeline& p, LRenderState& state);
             void draw();
         }
     }

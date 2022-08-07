@@ -2,13 +2,13 @@
 
 namespace lagrangian {
 	namespace graphics {
-        template<class T> void VertexTransformationOperation<T>::apply(Vertex& v) {
+        template<class T> void VertexTransformationOperation<T>::apply(Vertex& v, LRenderState& state) {
             apply(v);
         }
-        template<class T> void VertexTransformationOperation<T>::operate(std::vector<Operable*>& vs) {
+        template<class T> void VertexTransformationOperation<T>::operate(std::vector<Operable*>& vs, LRenderState& state) {
             std::vector<Operable*>::iterator it;
             for(it = vs.begin(); it != vs.end(); it++) {
-                apply(*dynamic_cast<Vertex*>(*it));
+                apply(*dynamic_cast<Vertex*>(*it), state);
             }
         }
 
@@ -32,18 +32,18 @@ namespace lagrangian {
                 return us;
         }
 
-        void UVScaleOperation::apply(Vertex& v) {
-            apply(v.uv);
+        void UVScaleOperation::apply(Vertex& v, Vertex& statev) {
+            apply(v.uv, statev.uv);
         }
 
-        void UVScaleOperation::apply(Vector2<long>& v) {
-                v.x *= defaultval.x;
-                v.y *= defaultval.y;
+        void UVScaleOperation::apply(Vector2<long>& v, Vector2<long>& statev) {
+                statev.x = v.x * defaultval.x;
+                statev.y = v.y * defaultval.y;
         }
 
-        void UVScaleOperation::applyInv(Vector2<long>& v) {
-                v.x *= -defaultval.x;
-                v.y *= -defaultval.y;
+        void UVScaleOperation::applyInv(Vector2<long>& v, Vector2<long>& statev) {
+                statev.x = v.x * -defaultval.x;
+                statev.y = v.y * -defaultval.y;
         }
     }
 }
