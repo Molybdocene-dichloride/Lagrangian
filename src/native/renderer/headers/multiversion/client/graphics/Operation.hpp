@@ -17,15 +17,15 @@ namespace lagrangian {
             virtual void apply(O&) = 0;
         };
 
-        class VertexOperation {
+        template<class T> class VertexOperation {
             public:
-            virtual void operate(std::vector<Operable*>& vs) = 0;
+            virtual void operate(std::vector<Operable*>& vs, T& state) = 0;
         };
 
-        template<class T> class VertexTransformationOperation : public VertexOperation, public Transformation<Vertex, T> {
+        template<class T> class VertexTransformationOperation : public VertexOperation<Vertex>, public Transformation<Vertex, T> {
             public:
-            virtual void apply(Vertex& v) override;
-            virtual void operate(std::vector<Operable*>& vs) override;
+            virtual void apply(Vertex& v, Vertex& state) override;
+            virtual void operate(std::vector<Operable*>& vs, Vertex& state) override;
         };
 
         class UVOperation : public VertexTransformationOperation<Vector2<long>> {
@@ -44,11 +44,11 @@ namespace lagrangian {
 
             virtual Transformation<Vertex, Vector2<long>>& inverse();
 
-            virtual void apply(Vertex& v) override;
+            virtual void apply(Vertex& v, Vertex& statev) override;
 
-            virtual void apply(Vector2<long>& v) override;
+            virtual void apply(Vector2<long>& v, Vector2<long>& statev) override;
 
-            virtual void applyInv(Vector2<long>& v);
+            virtual void applyInv(Vector2<long>& v, Vector2<long>& statev);
         };
     }
 }

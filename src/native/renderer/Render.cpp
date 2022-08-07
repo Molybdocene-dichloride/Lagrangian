@@ -2,14 +2,22 @@
 
 namespace lagrangian {
 	namespace graphics {
-        void LRenderPipeline::operate(LModel& vs) {
-            vs.operate(ops);
+        void LRenderPipeline::operate(LModel& vs, LRenderState& state) {
+            vs.operate(ops, state);
         }
 
-        void LRenderer::render(LRenderPipeline& p, LModel& vs) {
-            //p.operate(vs);
-
+        void render(LModel& vs) {
             //vs.render(tess);
+        }
+
+        void render(LModel& vs, LRenderPipeline& p) {
+            //render(vs, p, {.verts, .icons});
+        }
+
+        void LRenderer::render(LModel& vs, LRenderPipeline& p, LRenderState& state) {
+            //p.operate(vs, state);
+
+            //render(vs);
         }
 
         void LRenderer::begin() {
