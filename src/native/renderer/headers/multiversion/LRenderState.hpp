@@ -1,10 +1,13 @@
 #pragma once
 
+#include <memory>
+
 namespace lagrangian {
 	namespace graphics {
         class LRenderState { //result and cache
-            std::vector<Icon*> icons;
-            std::vector<Vertex*> vertices;
+            public:
+            std::vector<std::shared_ptr<Operable>> icons;
+            std::vector<std::shared_ptr<Operable>> vertices;
         };
     }
 }

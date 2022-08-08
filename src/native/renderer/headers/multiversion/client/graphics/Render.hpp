@@ -11,14 +11,15 @@
 #include <multiversion/client/graphics/Vertex.hpp>
 //#include <mcpe/Tesselator.hpp>
 #include <multiversion/client/graphics/Model.hpp>
+#include <multiversion/LRenderState.hpp>
 
 namespace lagrangian {
 	namespace graphics {
         class LRenderPipeline {
             public:
-            std::map<Indexes<long>, VertexOperation*> ops;
+            std::map<Indexes<long>, std::shared_ptr<VertexOperation<Operable>>> ops;
 
-            void operate(LModel& vs);
+            void operate(LModel& vs, LRenderState& state);
         };
         namespace LRenderer {
             //Tessellator tess;
