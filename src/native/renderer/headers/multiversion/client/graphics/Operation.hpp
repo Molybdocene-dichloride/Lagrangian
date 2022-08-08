@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <vector>
 #include <map>
 
@@ -13,19 +14,19 @@ namespace lagrangian {
             public:
             T defaultval;
 
-            virtual void apply(T&) = 0;
-            virtual void apply(O&) = 0;
+            virtual void apply(T&, T&) = 0;
+            virtual void apply(O&, O&) = 0;
         };
 
         template<class T> class VertexOperation {
             public:
-            virtual void operate(std::vector<Operable*>& vs, T& state) = 0;
+            virtual void operate(std::vector<std::shared_ptr<T>>& vs, std::vector<std::shared_ptr<T>>& state) = 0;
         };
 
         template<class T> class VertexTransformationOperation : public VertexOperation<Vertex>, public Transformation<Vertex, T> {
             public:
             virtual void apply(Vertex& v, Vertex& state) override;
-            virtual void operate(std::vector<Operable*>& vs, Vertex& state) override;
+            virtual void operate(std::vector<std::shared_ptr<Vertex>>& vs, std::vector<std::shared_ptr<Vertex>>& state) override;
         };
 
         class UVOperation : public VertexTransformationOperation<Vector2<long>> {

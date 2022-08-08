@@ -2,13 +2,12 @@
 
 namespace lagrangian {
 	namespace graphics {
-        template<class T> void VertexTransformationOperation<T>::apply(Vertex& v, LRenderState& state) {
-            apply(v);
+        template<class T> void VertexTransformationOperation<T>::apply(Vertex& v, Vertex& state) {
+            apply(v, state);
         }
-        template<class T> void VertexTransformationOperation<T>::operate(std::vector<Operable*>& vs, LRenderState& state) {
-            std::vector<Operable*>::iterator it;
-            for(it = vs.begin(); it != vs.end(); it++) {
-                apply(*dynamic_cast<Vertex*>(*it), state);
+        template<class T> void VertexTransformationOperation<T>::operate(std::vector<std::shared_ptr<Vertex>>& vs, std::vector<std::shared_ptr<Vertex>>& state) {
+            for(int i = 0; i < vs.size(); i++) {
+                apply(*vs.at(i), *state.at(i));
             }
         }
 

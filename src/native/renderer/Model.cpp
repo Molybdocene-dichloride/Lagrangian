@@ -2,18 +2,28 @@
 
 namespace lagrangian {
 	namespace graphics {
-        std::vector<Operable*> LConcreteModel::slice(const Indexes<long>& range) { //smart pointers!
+        template<class T> std::vector<std::shared_ptr<T>> slice(const Indexes<long>& range, std::vector<std::shared_ptr<T>> ops) {
+            std::vector<std::shared_ptr<Operable>> vs{};
+            std::vector<long>::const_iterator it;
+            for(it = range.ts.begin(); it != range.ts.end(); it++) {
+                vs.push_back(ops.at(*it));
+            }
+            return vs;
+        }
+
+        std::vector<std::shared_ptr<Operable>> LConcreteModel::slice(const Indexes<long>& range) {
             if(range.type == OperableType::VERTEX) {
-                return slice(vertices, range);
+                return lagrangian::graphics::slice(range, vertices);
             } else if(range.type == OperableType::ICON) {
-                return slice(icons, range);
+                return lagrangian::graphics::slice(range, icons);
             }
         }
 
-        void LConcreteModel::operate(std::map<Indexes<long>, VertexOperation*>& ops, LRenderState& state) {
-            std::map<Indexes<long>, VertexOperation*>::iterator it;
-            for(it = ops.begin(); it != ops.end(); it++) {
-                if(std::find(it->first.model_id.begin(), it->first.model_id.end(), id) != it->first.model_id.end()) it->second->operate(slice(it->first), slice(it->first, state));
+        void LConcreteModel::operate(std::map<Indexes<long>, std::shared_ptr<VertexOperation<Operable>>>& ops, LRenderState& state) {
+            for(auto it = ops.begin(); it != ops.end(); it++) {
+                std::vector<std::shared_ptr<Operable>> ops_slc = slice(it->first);
+                std::vector<std::shared_ptr<Operable>> st_slc = lagrangian::graphics::slice(it->first, state.vertices);
+                /*if(std::find(i, ops.size(), id) != ops.size())*/ it->second->operate(ops_slc, st_slc);
             }
         }
         void LConcreteModel::render(/*Tessellator tess*/) {
@@ -22,7 +32,7 @@ namespace lagrangian {
                 //tess.color
            //}
         }
-        void LPackedModel::operate(std::map<Indexes<long>, VertexOperation*>& ops, LRenderState& state) {
+        void LPackedModel::operate(std::map<Indexes<long>, std::shared_ptr<VertexOperation<Operable>>>& ops, LRenderState& state) {
             for(int i = 0; i < count(); i++) {
                 models.at(i)->operate(ops, state);
             }
@@ -35,15 +45,6 @@ namespace lagrangian {
 
         long LPackedModel::count() {
             return models.size();
-        }
-
-        std::vector<Operable*> slice(std::vector<Operable*> ops, const Indexes<long>& range) { //smart pointers!
-            std::vector<Operable*> vs{};
-            std::vector<long>::const_iterator it;
-            for(it = range.ts.begin(); it != range.ts.end(); it++) {
-                vs.push_back(ops.at(*it));
-            }
-            return vs;
         }
     }
 }
