@@ -11,6 +11,8 @@ namespace lagrangian {
             Vector2<long> uv;
             Colour colour = Colour::NONE;
 
+            Vertex();
+            Vertex(Vector3<long> pos);
             Vertex(Vector3<long> pos, Vector2<long> uv, Colour colour);
 
             void clear();

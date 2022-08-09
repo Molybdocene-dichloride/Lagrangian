@@ -22,3 +22,8 @@ struct Colour {
 
     unsigned char r; unsigned char g; unsigned char b; unsigned char a;
 };
+
+template<class T> class IndexesHash<Indexes<T>> {
+    public:
+    std::size_t operator()(Indexes<T> const& s) const;
+};
