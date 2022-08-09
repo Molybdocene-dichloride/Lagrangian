@@ -4,6 +4,7 @@
 #include <memory>
 
 #include <map>
+#include <unordered_map>
 
 #include <multiversion/client/graphics/Type.hpp>
 #include <multiversion/client/graphics/Operation.hpp>
@@ -16,7 +17,7 @@ namespace lagrangian {
 	namespace graphics {
         class LModel { //interface
             public:
-            virtual void operate(std::map<Indexes<long>, std::shared_ptr<VertexOperation<Operable>>>& ops, LRenderState& state) = 0;
+            virtual void operate(std::unordered_map<Indexes<long>, std::shared_ptr<VertexOperation<Operable>>>& ops, LRenderState& state) = 0;
             virtual void render(/*Tessellator tess*/) = 0;
         };
         class LConcreteModel : public LModel {
@@ -28,14 +29,14 @@ namespace lagrangian {
             public:
             std::vector<std::shared_ptr<Operable>> slice(const Indexes<long>& range);
 
-            virtual void operate(std::map<Indexes<long>, std::shared_ptr<VertexOperation<Operable>>>& ops, LRenderState& state);
+            virtual void operate(std::unordered_map<Indexes<long>, std::shared_ptr<VertexOperation<Operable>>>& ops, LRenderState& state);
             virtual void render(/*Tessellator tess*/);
         };
         class LPackedModel : public LModel {
             std::vector<LModel*> models;
 
             public:
-            virtual void operate(std::map<Indexes<long>, std::shared_ptr<VertexOperation<Operable>>>& ops, LRenderState& state);
+            virtual void operate(std::unordered_map<Indexes<long>, std::shared_ptr<VertexOperation<Operable>>>& ops, LRenderState& state);
             virtual void render(/*Tessellator tess*/);
 
             long count();

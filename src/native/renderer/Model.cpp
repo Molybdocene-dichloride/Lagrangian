@@ -19,7 +19,7 @@ namespace lagrangian {
             }
         }
 
-        void LConcreteModel::operate(std::map<Indexes<long>, std::shared_ptr<VertexOperation<Operable>>>& ops, LRenderState& state) {
+        void LConcreteModel::operate(std::unordered_map<Indexes<long>, std::shared_ptr<VertexOperation<Operable>>>& ops, LRenderState& state) {
             for(auto it = ops.begin(); it != ops.end(); it++) {
                 std::vector<std::shared_ptr<Operable>> ops_slc = slice(it->first);
                 std::vector<std::shared_ptr<Operable>> st_slc = lagrangian::graphics::slice(it->first, state.vertices);
@@ -32,7 +32,7 @@ namespace lagrangian {
                 //tess.color
            //}
         }
-        void LPackedModel::operate(std::map<Indexes<long>, std::shared_ptr<VertexOperation<Operable>>>& ops, LRenderState& state) {
+        void LPackedModel::operate(std::unordered_map<Indexes<long>, std::shared_ptr<VertexOperation<Operable>>>& ops, LRenderState& state) {
             for(int i = 0; i < count(); i++) {
                 models.at(i)->operate(ops, state);
             }
