@@ -6,7 +6,7 @@ Colour Colour::WHITE = Colour{r: 255, g: 255, b: 255, a: 255};
 
 Colour Colour::BLACK = Colour{r: 0, g: 0, b: 0, a: 255};
 
-template<class T> std::size_t IndexesHash<Indexes<T>>::operator()(Indexes<T> const& s) const {
+template<class T> std::size_t IndexesHash<T>::operator()(Indexes<T> const& s) const {
     std::size_t seed = s.ts.size();
     for(auto x : s.ts) {
         x = ((x >> 16) ^ x) * 0x45d9f3b;
@@ -17,6 +17,17 @@ template<class T> std::size_t IndexesHash<Indexes<T>>::operator()(Indexes<T> con
     return seed;
 }
 
-{
-    if(this->type == other.type && this->model_id == other.model_id && this->ts == other.ts)
+template<class T> bool Indexes<T>::operator==(const Indexes<T>& other) const {
+    if(this->type == other.type && this->model_id == other.model_id && this->ts == other.ts) return true;
+    
+    return false;
+}
+
+void crutchy() {
+    Indexes<long> ind;
+    ind.type = OperableType::VERTEX;
+    bool i = ind == ind;
+    
+    IndexesHash<long> ih;
+    ih(ind);
 }

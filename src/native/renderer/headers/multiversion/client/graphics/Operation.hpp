@@ -10,6 +10,14 @@
 
 namespace lagrangian {
 	namespace graphics {
+        template <class Out, class In> std::shared_ptr<Out> operation_cast(const std::shared_ptr<In> in) {
+            In* raw = in.get();
+
+            Out* raw_to = (Out*) raw;
+
+            return std::shared_ptr<Out>(raw_to);
+        }
+
         template<class O, class T> class Transformation {
             public:
             T defaultval;
