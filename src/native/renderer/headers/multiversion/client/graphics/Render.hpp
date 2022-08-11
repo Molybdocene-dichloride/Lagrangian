@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <string>
 #include <algorithm>
 
@@ -17,7 +17,7 @@ namespace lagrangian {
 	namespace graphics {
         class LRenderPipeline {
             public:
-            std::map<Indexes<long>, std::shared_ptr<VertexOperation<Operable>>> ops;
+            std::unordered_map<Indexes<long>, std::shared_ptr<VertexOperation<Operable>>, IndexesHash<long>> ops;
 
             void operate(LModel& vs, LRenderState& state);
         };
