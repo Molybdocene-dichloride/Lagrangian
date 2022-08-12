@@ -10,12 +10,12 @@
 
 namespace lagrangian {
 	namespace graphics {
-        template <class Out, class In> std::shared_ptr<Out> operation_cast(const std::shared_ptr<In> in) {
+        template <class Out, class In> std::shared_ptr<Out>* operation_cast(const std::shared_ptr<In> in) { //очень костыльно very crutch
             In* raw = in.get();
 
             Out* raw_to = (Out*) raw;
 
-            return std::shared_ptr<Out>(raw_to);
+            return new std::shared_ptr<Out>(raw_to);
         }
 
         template<class O, class T> class Transformation {
@@ -51,7 +51,7 @@ namespace lagrangian {
             UVScaleOperation(Vector2<long> val);
             UVScaleOperation(long x, long y);
 
-            virtual Transformation<Vertex, Vector2<long>>& inverse();
+            virtual UVScaleOperation inverse();
 
             virtual void apply(Vertex& v, Vertex& statev) override;
 
@@ -59,5 +59,8 @@ namespace lagrangian {
 
             virtual void applyInv(Vector2<long>& v, Vector2<long>& statev);
         };
+
+        using VertexOperationMap = std::unordered_map<Indexes<long>, std::shared_ptr<VertexOperation<Operable>>, IndexesHash<long>>;
+        template<class Hash> using HVertexOperationMap = std::unordered_map<Indexes<long>, std::shared_ptr<VertexOperation<Operable>>, Hash>;
     }
 }
