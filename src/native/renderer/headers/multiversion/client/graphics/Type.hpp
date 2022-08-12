@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 
+#include <unordered_map>
+
 enum class OperableType {
     PADDING,
     VERTEX,
