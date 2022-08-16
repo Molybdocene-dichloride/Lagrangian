@@ -8,8 +8,6 @@
 \title{$\mathcal{L}$agrangian modules}
 
 \begin{document}
-  \maketitle
-
   \thispagestyle{empty}
 
   \begin{tikzpicture}
@@ -19,7 +17,7 @@
     \begin{umlpackage}[x=-7, y=-3]{"Steam"}
     \end{umlpackage}
 
-    \begin{umlpackage}[x=-4, y=-3]{Ores}
+    \begin{umlpackage}[x=-4, y=-3]{Geology}
     \end{umlpackage}
   
     \begin{umlpackage}[x=0, y=-3]{Electromagnetic}
@@ -36,7 +34,7 @@
   
     \umlCNimport{"Steam"}{-7, 0}{Kernel}
     
-    \umlCNimport{Ores}{-4, 0}{Kernel}
+    \umlCNimport{Geology}{-4, 0}{Kernel}
     \umlimport{Electromagnetic}{Kernel}
     \umlCNimport[anchor2=15]{Chemistry}{6, 0.3}{Kernel}
   
@@ -49,7 +47,7 @@
     \umlimport{Semiconductivity}{Electromagnetic}
     \umlimport[arg1=soft]{Chemistry}{Electromagnetic}
 
-    \umlimport[arg1=soft]{Ores}{Electromagnetic}
+    \umlimport[arg1=soft]{Geology}{Electromagnetic}
 
   \end{tikzpicture}
 \end{document}
