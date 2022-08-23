@@ -14,41 +14,55 @@
 
     Fully custom generation support.
 
-    Just one step of gen is not enough.
+    Pos lower 0 and above 256 not supported (too hard to implement).
 
-    3D biome many ids system
+    Just one step of generation is not enough.
+
+    Flexible generation API (Abstraction layer on top of Feature and Biome)
+
+    GenFeature - a zone of crust, with complex form, 3D pos and many IDs support
+    For example Oceans, Orogens etc.
+
+    Biome - biological purpose GenFeature.
+    For example Deadlands (by default), Micro mats, Boreal forests etc.
+
+    pre GenFeature -> Biome -> post GenFeature
+
+    "MapChunk" structure 2x2x2 to 8x8x8 blocks (32 to 128 nodes) used only for generation.
+
+    MapGen interface with makeChunk(BlockMake) method for generation.
+
+    World divided by tectonic plates (getted post-factum (tricky) in predefined generations).
 
     Rocks
 
     Can generate rocks on predefined and custom generations.  
 
-    Collided or not (Giant impact hypothesis, true - igneous rocks, false - metamorphic dominant).
-
-    World divided by tectonic plates (getted post-factum (tricky) in predefined generations).
-
-    Divided by areas of rocks (orogen, shield, yield etc)
+    Giant impact hypothesis (true - igneous rocks, false - metamorphic dominant).
 
     Dominant elements is oxygen and silicon in vanilla generation.
 
-    Main types of rock
+    Main types of rocks
 
-    Igneous {intrusive, extrusive}
-
-    Sedimentary {Clastic, Chemical, Clay, Other}
-
-    Metamorphic {meta if known}{texture: Schists, Gneisses, Granofels}{faces: Eclogite, Blueschist etc}
-    {sedimentary para or igneous meta}
-    A hornfels is a granofels that is known to result from contact metamorphism.
-
+    \begin{itemize}
+		\item Igneous {intrusive, extrusive}
+        \item Sedimentary {Clastic, Chemical, Clay, Other}{sedimentary para or igneous meta}
+        \item Metamorphic {meta if known}{texture: Schists, Gneisses, Granofels}
+    \end{itemize}
+    
     //Dominant minerals ionic.
 
     trace and antitrace element
 
-    Continental
-    Oceanic
+    Crust types
 
-    Islands
-    Mounts
+    \begin{itemize}
+		\item Continental
+        \item subcontinental
+        \item suboceanic
+        \item Oceanic
+    \end{itemize}
+    
     Volcano
 
 
