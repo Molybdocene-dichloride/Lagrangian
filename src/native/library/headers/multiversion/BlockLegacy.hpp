@@ -1,5 +1,0 @@
-namespace adapter {
-	class BlockLegacy {
-	
-	}
-}
