@@ -7,28 +7,28 @@
 \setmainfont{Times New Roman}
 \setmathfont{Cambria Math}
 
-\title{$\mathcal{L}$agrangian Geology module \\ Bad docs}
+\title{$\mathcal{L}$agrangian Geology module \\ Ref}
 
 \begin{document}
     \maketitle
 
     Fully custom generation support.
 
-    Pos lower 0 and above 256 not supported (too hard to implement).
+    Pos lower 0 and above 256 not supported (extremely hard and complex to implement).
 
     Just one step of generation is not enough.
 
     Flexible generation API (Abstraction layer on top of Feature and Biome)
 
-    GenFeature - a zone of crust, with complex form, 3D pos and many IDs support
+    GenFeature - a zone of crust, with 3D complex form, 3D position and many IDs support
     For example Oceans, Orogens etc.
 
     Biome - biological purpose GenFeature.
-    For example Deadlands (by default), Micro mats, Boreal forests etc.
+    For example Deadlands (by default), Microb mats, Boreal forests etc.
 
     pre GenFeature -> Biome -> post GenFeature
 
-    "MapChunk" structure 2x2x2 to 8x8x8 blocks (32 to 128 nodes) used only for generation.
+    MapChunk structure 2x2x2 to 8x8x8 blocks("chunks") (32 to 128 nodes("blocks")) used only for generation.
 
     MapGen interface with makeChunk(BlockMake) method for generation.
 
@@ -52,19 +52,18 @@
     
     //Dominant minerals ionic.
 
-    trace and antitrace element
+    Trace and antitrace element
 
     Crust types
 
     \begin{itemize}
 		\item Continental
-        \item subcontinental
-        \item suboceanic
+        \item Subcontinental
+        \item Suboceanic
         \item Oceanic
     \end{itemize}
-    
-    Volcano
 
+    Volcano
 
     World layers
 
@@ -73,7 +72,7 @@
     \begin{enumerate}
         \item Regolith (soil)
         \item Bedrock layers
-        \item "Bedrock" and Void (instead mantle - too small height)
+        \item "Bedrock" and Void (instead of a mantle, as the height is too small)
     \end{enumerate}
 
     Bedrock parts

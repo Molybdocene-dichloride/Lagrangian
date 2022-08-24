@@ -14,7 +14,7 @@ Performance & 64 bit numbers supporting API for creating, combining, checking Fl
 
 Vanilla Minecraft Bedrock Edition localizations manipulation API.
 
-### Low level creative inventory editor
+### Low level creative inventory editor (Temporary not on development)
 
 API for Creative category & Creative tab creation and managing.
 
