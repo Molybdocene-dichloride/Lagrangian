@@ -6,18 +6,18 @@ namespace lagrangian {
             vs.operate(ops, state);
         }
 
-        void render(LModel& vs) {
-            //vs.render(tess);
+        void tessellate(LModel& vs) {
+            //vs.tessellate(tess);
         }
 
-        void render(LModel& vs, LRenderPipeline& p) {
-            //render(vs, p, {.verts, .icons});
+        void tessellate(LModel& vs, LRenderPipeline& p) {
+            //tessellate(vs, p, {.verts, .icons});
         }
 
-        void LRenderer::render(LModel& vs, LRenderPipeline& p, LRenderState& state) {
+        void LRenderer::tessellate(LModel& vs, LRenderPipeline& p, LRenderState& state) {
             //p.operate(vs, state);
 
-            //render(vs);
+            //tessellate(vs);
         }
 
         void LRenderer::begin() {

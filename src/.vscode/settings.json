@@ -23,5 +23,16 @@
     "git.pullTags": false,
     "workbench.settings.enableNaturalLanguageSearch": false,
     "npm.fetchOnlinePackageInfo": false,
-    "json.schemaDownload.enable": false
+    "json.schemaDownload.enable": false,
+
+    "C_Cpp.intelliSenseEngine": "Disabled",
+        
+    "clangd.path": "/home/fr/.var/app/com.vscodium.codium/config/VSCodium/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/13.0.0/clangd_13.0.0/bin/clangd",
+    "clangd.arguments": [
+        "-log=verbose", 
+        "-pretty", 
+        "--background-index", 
+        "--query-driver=/home/fr/android-ndk-r16b/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64", //for cross compile usage
+        "--compile-commands-dir=/home/fr/projects/ot/Kernel/master/compile_commands.json"
+    ]
 }

@@ -1,21 +1,22 @@
 #pragma once
 
-struct Vec3 {
-    float x;
-    float y;
-    float z;
-};
+#include <mcpe/math/BlockPos.hpp>
+#include <mcpe/math/Vec3.hpp>
+
+#include "BlockActorRenderer.hpp"
+
+class CompoundTag;
+class BlockSource;
+class Level;
+class Player;
+class LevelChunk;
+class DataLoadHelper;
+class UIProfanityContext;
 
 struct AABB {
     Vec3 start;
     Vec3 end;
     bool empty;
-};
-
-struct BlockPos {
-    int x;
-    int y;
-    int z;
 };
 
 enum BlockActorType {
@@ -112,7 +113,7 @@ class BlockActor { //from Ghidra
     undefined field33_0x4d;
     undefined field34_0x4e;
     undefined field35_0x4f;
-    basic_string custom_name;
+    newstd::string custom_name;
     undefined field37_0x51;
     undefined field38_0x52;
     undefined field39_0x53;
@@ -136,7 +137,7 @@ class BlockActor { //from Ghidra
     undefined field57_0x65;
     undefined field58_0x66;
     undefined field59_0x67;
-    uint repair_cost;
+    unsigned int repair_cost;
     bool client_side_only;
     bool movable;
     bool custom_name_saved;
@@ -176,8 +177,9 @@ class BlockActor { //from Ghidra
     bool changed;
 
     BlockActor(BlockActorType, BlockPos const&, newstd::string const&);
-    virtual ~BlockActor();
-    virtual void load(Level &, CompoundTag const &, DataLoadHelper &); //from Element Zero and Ghidra
+    
+    virtual ~BlockActor(); //from Element Zero and Ghidra
+    virtual void load(Level &, CompoundTag const &, DataLoadHelper &);
     virtual bool save(CompoundTag &) const;
     virtual bool saveItemInstanceData(CompoundTag &);
     virtual void saveBlockData(CompoundTag &, BlockSource &) const;
