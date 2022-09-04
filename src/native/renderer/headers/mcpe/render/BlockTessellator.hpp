@@ -14,7 +14,6 @@ class BlockTessellator { //from Ghidra
     public:
 
 
-
     void tessellateInWorld(Tessellator&, Block const&, BlockPos const&, TextureUVCoordinateSet const&); //Func with hardcoded tessellation
     void tessellateInWorld(Tessellator&, Block const&, BlockPos const&, bool); //Func with hardcoded tessellation
 

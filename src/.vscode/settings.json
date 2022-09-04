@@ -32,7 +32,7 @@
         "-log=verbose", 
         "-pretty", 
         "--background-index", 
-        "--query-driver=/home/fr/android-ndk-r16b/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64", //for cross compile usage
+        //"--query-driver=/home/fr/android-ndk-r16b/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64", //for cross compile usage
         "--compile-commands-dir=/home/fr/projects/ot/Kernel/master/compile_commands.json"
     ]
 }

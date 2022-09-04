@@ -1,8 +1,8 @@
 [
   { 
     "directory": "%USERPROFILE%/llvm/build",
-    "arguments": ["/usr/bin/clang++", "-I/home/fr/projects/ot/Kernel/master/toolchain/stdincludes/gnu_stl/", "-I/home/fr/projects/ot/Kernel/master/toolchain/stdincludes/horizon/", 
-      "-I/home/fr/projects/ot/Kernel/master/src/native/shared_headers/", "-I/home/fr/projects/ot/Kernel/master/src/native/renderer/headers/",
+    "arguments": ["/usr/bin/clang++", "-m32", "-std=c++17", "-ferror-limit=0",    "-I/home/fr/projects/ot/Kernel/master/toolchain/stdincludes/gnu_stl/", "-I/home/fr/projects/ot/Kernel/master/toolchain/stdincludes/horizon/", 
+      "-I/home/fr/projects/ot/Kernel/master/toolchain/stdincludes/mc", "-I/home/fr/projects/ot/Kernel/master/src/native/renderer/headers/",
        "-c", "-o", "file.o", "/home/fr/projects/ot/Kernel/master/src/native/renderer/Render.cpp"],
     "file": "/home/fr/projects/ot/Kernel/master/src/native/renderer/Render.cpp" 
   }

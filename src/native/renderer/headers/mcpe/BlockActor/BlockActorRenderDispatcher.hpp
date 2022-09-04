@@ -1,3 +1,9 @@
+
+#include <stl/map>
+#include <stl/function>
+
+#include "../stdCrutch.hpp"
+
 class BlockActorRenderDispatcher {
     newstd::map renderers_idz;
     undefined field1_0x1;

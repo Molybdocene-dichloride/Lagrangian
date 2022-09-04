@@ -1,7 +1,15 @@
 #pragma once
 
+//#include <cstddef>
+
+#include <stl/string>
+#include <stl/vector>
+
+#include "../stdCrutch.hpp"
+
 #include <mcpe/math/BlockPos.hpp>
 #include <mcpe/math/Vec3.hpp>
+#include <mcpe/math/AABB.hpp>
 
 #include "BlockActorRenderer.hpp"
 
@@ -12,12 +20,7 @@ class Player;
 class LevelChunk;
 class DataLoadHelper;
 class UIProfanityContext;
-
-struct AABB {
-    Vec3 start;
-    Vec3 end;
-    bool empty;
-};
+class Block;
 
 enum BlockActorType {
     Furnace          = 0x01,
@@ -79,7 +82,7 @@ class BlockActor { //from Ghidra
     public:
     //undefined * * vtable; auto
     int counter;
-    struct Block * block;
+    Block * block;
     undefined1 destroy_field0;
     undefined field4_0xd;
     undefined field5_0xe;
@@ -176,7 +179,8 @@ class BlockActor { //from Ghidra
     undefined field96_0x8f;
     bool changed;
 
-    BlockActor(BlockActorType, BlockPos const&, newstd::string const&);
+    BlockActor();
+    //BlockActor(BlockActorType, BlockPos const&, newstd::string const&);
     
     virtual ~BlockActor(); //from Element Zero and Ghidra
     virtual void load(Level &, CompoundTag const &, DataLoadHelper &);
@@ -216,3 +220,19 @@ class BlockActor { //from Ghidra
     virtual void _onUpdatePacket(CompoundTag const&, BlockSource&);
     virtual void _playerCanUpdate(Player const&) const;
 };
+
+#define offset_d(i,f)    (long(&(i)->f) - long(i))
+#define offset_s(t,f)    offset_d((t*)1000, f)
+
+#define dyn(inst,field) {\
+    cout << "Dynamic offset of " #field " in " #inst ": "; \
+    cout << offset_d(&i##inst, field) << endl; }
+
+#define stat(type,field) {\
+    cout << "Static offset of " #field " in " #type ": "; \
+    cout.flush(); \
+    cout << offset_s(type, field) << endl; }
+
+//static_assert(sizeof(BlockActor) == 144, "shared");
+
+//static_assert(offsetOf(&BlockActor::changed) == 222, "BlockActor");

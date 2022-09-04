@@ -1,7 +1,7 @@
-# ℒagrangian Kernel
+# ℒagrangian Kernel Module
 
 ![Плотность лагранжиана](mod_icon.png "Не имеющая физического смысла плотность лагранжиана")
-С++ library for Minecraft Bedrock Edition Modding & realisation of kernel of Lagrangian on Inner Core technologies.
+Kernel Module for InnerCore with several API for ℒagrangian plugin and InnerCore mods.
 Library in alpha development, use with caution.
 
 ## Capabilities
@@ -12,9 +12,9 @@ Performance & 64 bit numbers supporting API for creating, combining, checking Fl
 
 ### Low level manipulation of Localizations
 
-Vanilla Minecraft Bedrock Edition localizations manipulation API.
+Localizations manipulation API.
 
-### Low level creative inventory editor (Temporary not on development)
+### Low level creative inventory editor (BROKEN, temporarily out of development)
 
 API for Creative category & Creative tab creation and managing.
 
