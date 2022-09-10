@@ -37,86 +37,6 @@ std::map<float, long> iblockdatas;
 std::map<float, std::shared_ptr<Block>> blks;
 std::map<float, std::shared_ptr<Block>>::iterator cur;
 
-
-
-/*namespace Stones {
-	void ends() {
-		//FurnaceSystem::addFurnaceRecipes
-
-		Logger::debug("b", "gotoir");
-		Logger::debug("v", patch::to_string<size_t>(blockids.size()).c_str());
-		sizeid = 1.0f / blockids.size();
-		sizedata = 1.0f / blockdatas.size();
-		Logger::debug("jsd", patch::to_string<long>(blockids[7]).c_str());
-		for(it = blockids.begin(); it != blockids.end(); ++it) {
-			iblockids.insert(std::pair<float, long>(sizeid * (it - blockids.begin()), *it));
-			iblockdatas.insert(std::pair<float, long>(sizedata * (it - blockids.begin()), blockdatas[it - blockids.begin()]));
-			Logger::debug("nukew", patch::to_string<float>(sizeid * (it - blockids.begin())).c_str());
-
-			Block* b = BlockRegistry::getBlockStateForIdData(*it, blockdatas[it - blockids.begin()]);
-			std::shared_ptr<Block> bsh(b);
-			Logger::debug("Ys", patch::to_string<long>(*it).c_str());
-			Logger::debug("Es", patch::to_string<long>(blockdatas[it - blockids.begin()]).c_str());
-			Logger::debug("s", patch::to_string<bool>(b == nullptr).c_str());
-			blks.insert(std::pair<float, std::shared_ptr<Block>>(sizeid * (it - blockids.begin()), bsh));
-			Logger::debug("zoolium", patch::to_string<void const*>((void const*) b).c_str());
-		}
-		Logger::debug("grt", patch::to_string<size_t>(blks.size()).c_str());
-		Logger::debug("grt", patch::to_string<size_t>(iblockids.size()).c_str());
-		Logger::debug("grt", patch::to_string<size_t>(iblockdatas.size()).c_str());
-	}
-}
-long getNearest(long pos, short mode) {
-	switch(mode) {
-		case 0:
-		return floor(pos / sizeid) * sizeid;
-		case 1:
-		return floor(pos / sizedata) * sizedata;
-	}
-	return 0;
-}
-bool ifLoaded = false;
-void generate(long x, long z) {
-	if(!ifLoaded) {
-		Stones::ends();
-		ifLoaded = true;
-	}
-	//BlockLegacy* stone = BlockRegistry::getBlockById(8);
-	//Logger::debug("BGTY", patch::to_string<int>((int) stone->id).c_str());
-
-	//BlockPos xc((float)x * 16 + 4, (float)43, (float)z * 16 + 4);
-	//Block* b = BlockSourceProvider::getBlockSource().getBlock(xc);
-	//Logger::debug("pexes", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(b)).c_str());
-	//Logger::debug("jjsw", patch::to_string<int>((int)b->getVariant()).c_str());
-
-	//BlockLegacy* bli = b->getBlockLegacy();
-	//Logger::debug("vczx", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(bli)).c_str());
-	//Logger::debug("bll", bli->id);
-	/*for(int x = 0; x < 16; x++) {
-		for(int y = 0; y < 170; y++) {
-			for(int z = 0; z < 16; z++) {
-				int xx = x * 16 + x;
-				int zz = z * 16 + z;
-
-				BlockPos xc((float) xx, (float) y, (float) zz);
-				Block* b = BlockSourceProvider::getBlockSource().getBlock(xc);
-				Logger::debug("pexes", patch::to_string<bool>(b != nullptr).c_str());
-				Logger::debug("jjsw", patch::to_string<int>((int)b->getVariant()).c_str());
-
-				BlockLegacy* bli = b->getBlockLegacy();
-				//Logger::debug("vczx", patch::to_string<bool>(bli != nullptr).c_str());
-				//Logger::debug("vaasdd", patch::to_string<short>(bli->id).c_str());
-				//Logger::debug("bll", patch::to_string<short>(bl->getBlockItemId()).c_str());
-				IdConversion::dynamicToStatic(bli->id, IdConversion::Scope::BLOCK);
-				//delete xc;
-				/*if(chunk.getBlock(*cbp).getRuntimeId() != VanillaBlocks::mStone->getRuntimeId()) continue;
-				PerlinSimplexNoise* psn = new PerlinSimplexNoise(chunkSource.getLevel().getSeed(), 2);
-				if(iblockids[getNearest(psn->getValue(*new Vec3(*new BlockPos(cp, *cbp, 256))), 0)] != 0 && iblockdatas[getNearest(psn->getValue(*new Vec3(*new BlockPos(cp, *cbp, 256))), 1)] != 0) BlockSourceProvider::getBlockSource().setBlock(*new BlockPos(chunk.getPosition().x + x, chunk.getPosition().y + y, chunk.getPosition().z + z), *blks[iblockids[getNearest(psn->getValue(*new Vec3(*new BlockPos(*cp, *cbp, 256))), 0)]], iblockdatas[getNearest(psn->getValue(*new Vec3(*new BlockPos(*cp, *cbp, 256))), 1)], nullptr);
-			}
-		}
-	}
-}*/
-
 //JS_MODULE_VERSION(Stones, 1);
 JS_MODULE_VERSION(LagrangianRegistries, 1);
 JS_MODULE_VERSION(Flags, 1);
@@ -137,16 +57,10 @@ JS_MODULE_VERSION(CreativeTabs, 1);
 	return 0;
 });*/
 
-JS_EXPORT(Scientific, NO, "F()", (JNIEnv* env) {
-	return NativeJS::wrapDoubleResult(-1);
-});
 JS_EXPORT(Flags, hasFlag, "I(LL)", (JNIEnv* env, long long value1, long long value2) {
 	return NativeJS::wrapIntegerResult(hasFlag(value1, value2));
 });
-/*JS_EXPORT(Stones, generate, "V(II)", (JNIEnv* env, long x, long z) {
-	generate(x, z);
-	return 0;
-});*/
+
 JS_EXPORT(Flags, createFlag, "I(L)", (JNIEnv* env, long long value1) {
 	return NativeJS::wrapIntegerResult(createFlag(value1));
 });
@@ -238,8 +152,6 @@ JS_EXPORT_COMPLEX(LocalizationSystem, _translateToCurrent, "S(SS)", (JNIEnv* env
 	Logger::debug("89fh", patch::to_string<uintptr_t>(reinterpret_cast<uintptr_t>(ca.get("_pointer").asPointer())).c_str());
 	return NativeJS::wrapStringResult(env, ((LocalizationSystem::PrefixPostfixTranslator*)ca.get("_pointer").asPointer())->translateToCurrent(ca.get("key").asString()).c_str());
 });
-
-
 
 //JS_EXPORT_COMPLEX(LagrangianRegistries, registerCategory, "I(SI)", (JNIEnv* env, NativeJS::ComplexArgs ca) {
 	//Logger::debug("u89fh", ca.get("id").asString());

@@ -179,8 +179,7 @@ class BlockActor { //from Ghidra
     undefined field96_0x8f;
     bool changed;
 
-    BlockActor();
-    //BlockActor(BlockActorType, BlockPos const&, newstd::string const&);
+    BlockActor(BlockActorType, BlockPos const&, newstd::string const&);
     
     virtual ~BlockActor(); //from Element Zero and Ghidra
     virtual void load(Level &, CompoundTag const &, DataLoadHelper &);
@@ -225,13 +224,12 @@ class BlockActor { //from Ghidra
 #define offset_s(t,f)    offset_d((t*)1000, f)
 
 #define dyn(inst,field) {\
-    cout << "Dynamic offset of " #field " in " #inst ": "; \
-    cout << offset_d(&i##inst, field) << endl; }
+    Logger::debug("Dynamic offset of " #field " in " #inst ": "); \
+    Logger::debug(offset_d(&i##inst, field)); }
 
 #define stat(type,field) {\
-    cout << "Static offset of " #field " in " #type ": "; \
-    cout.flush(); \
-    cout << offset_s(type, field) << endl; }
+    Logger::debug("Static offset of " #field " in " #type ": "); \
+    Logger::debug(offset_s(type, field)); }
 
 //static_assert(sizeof(BlockActor) == 144, "shared");
 

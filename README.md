@@ -23,8 +23,10 @@ API for Creative category & Creative tab creation and managing.
 Recommended tools: \
     Visual Studio Code \
     ESLint and Clangd \
+    LaTeX Workshop \
     Python 3.6 or higher \
-    Node.js 10.15.1 or higher
+    Node.js 10.15.1 or higher \
+    TEXLive with LuaTeX, polyglossia and TIKZ packages
 
 ## Thanks
 
